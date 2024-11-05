@@ -36,7 +36,7 @@
             <!--End right sidebar-->
 
             <!--Start footer-->
-            <?php require_once "layout/footer.php" ?>
+            <?php require_once "layout/script.php" ?>
             <!--End footer-->
         </div>
     </div>

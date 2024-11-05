@@ -22,4 +22,4 @@
 <!-- Sidebar CSS-->
 <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
 <!-- Custom Style-->
-<link href="assets/css/mainStyle.css" rel="stylesheet"/>
+<link href="assets/css/mainSTYLE1.css" rel="stylesheet"/>

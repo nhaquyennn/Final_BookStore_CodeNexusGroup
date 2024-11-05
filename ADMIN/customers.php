@@ -5,7 +5,7 @@
     <?php require_once "layout/header.php" ?>
 </head>
 
-<body class="bg-theme bg-theme2">
+<body class="bg-theme bg-theme9">
     <div class="clearfix"></div>
     <div class="content-wrapper">
         <div class="container-fluid">

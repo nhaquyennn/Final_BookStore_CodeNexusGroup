@@ -23,7 +23,6 @@
                 <!--End topbar header-->
 
                 <!--Start main content-->
-
                 <div class="row">
                     <div class="col-9 col-lg-12">
                         <div class="card">
@@ -75,7 +74,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!--End main content-->
 
             </div>

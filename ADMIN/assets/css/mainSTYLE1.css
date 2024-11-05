@@ -4228,26 +4228,13 @@ table.grid td {
     }
 }
 
-.sidebar-menu {
-    width: 200px;
-    background-color: #333;
-    padding: 0;
-}
-
-.sidebar-link {
-    display: block;
-    padding: 15px;
-    color: #ccc;
-    text-decoration: none;
-}
-
 .sidebar-link:hover {
     background-color: #555;
     color: white;
 }
 
 .sidebar-link.active {
-    background-color: #444;
-    color: white;
+    background-color: rgba(255, 255, 255, 0.65);
+    color: black;
     font-weight: bold;
 }
