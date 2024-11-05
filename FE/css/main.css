@@ -398,7 +398,7 @@ Header
 .header__menu ul li {
     list-style: none;
     display: inline-block;
-    margin-right: 53px;
+    margin-right: 54px;
     position: relative;
 }
 
@@ -473,7 +473,7 @@ Header
     padding: 24px 0;
 }
 
-/* .header__cart ul {
+.header__cart ul {
     display: inline-block;
     margin-right: 25px;
 }
@@ -495,9 +495,9 @@ Header
 .header__cart ul li a i {
     font-size: 18px;
     color: #1c1c1c;
-} */
+}
 
-/* .header__cart ul li a span {
+.header__cart ul li a span {
     height: 13px;
     width: 13px;
     background: #FCDEE6;
@@ -511,16 +511,16 @@ Header
     position: absolute;
     top: 0;
     right: -12px;
-} */
+}
 
 .header__cart .header__cart__price {
     font-size: 14px;
-    color: red;
+    color: #6f6f6f;
     display: inline-block;
 }
 
 .header__cart .header__cart__price span {
-    color: red;
+    color: #252525;
     font-weight: 700;
 }
 
@@ -560,6 +560,7 @@ Hero
 
 .hero.hero-normal .hero__search {
     margin-bottom: 0;
+   
 }
 
 .hero__categories__all {
