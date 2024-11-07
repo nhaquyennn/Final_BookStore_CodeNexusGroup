@@ -15,7 +15,7 @@
         <li><a href="product.php" class="sidebar-link"><span>Ấn phẩm</span></a></li>
         <li><a href="cart.php" class="sidebar-link"><span>Đơn hàng</span></a></li>
         <li><a href="category.html" class="sidebar-link"><span>Danh mục</span></a></li>
-        <li><a href="statistics.php" class="sidebar-link"><span>Thống kê</span></a></li>
+        <li><a href="statistics.php" class="sidebar-link"><span>Thống kê ấn phẩm</span></a></li>
         <li><a href="bill.html" class="sidebar-link"><span>Hóa đơn</span></a></li>
         <li><a href="employees.php" class="sidebar-link"><span>Nhân viên</span></a></li>
         <li><a href="customers.php" class="sidebar-link"><span>Khách hàng</span></a></li>
