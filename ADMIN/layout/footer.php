@@ -1,4 +1,5 @@
 <!-- Bootstrap core JavaScript-->
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
@@ -12,5 +13,7 @@
 <script src="assets/js/app-script.js"></script>
 <!-- Chart js -->
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
+<!-- Statistics js -->
+<script src="assets/js/statistics.js"></script>  
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
