@@ -1,13 +1,14 @@
-document
-  .getElementById("statsLink")
-  .addEventListener("click", function (event) {
-    event.preventDefault();
-    console.log("Đã nhấn vào Thống kê ấn phẩm"); // Kiểm tra
+document.addEventListener("DOMContentLoaded", function () {
+  const statsLink = document.getElementById("statsLink");
+  const dateList = document.getElementById("dateList");
 
-    const dateList = document.getElementById("dateList");
-    if (dateList.style.display === "none" || dateList.style.display === "") {
+  if (statsLink && dateList) {
+    statsLink.addEventListener("click", function (event) {
+      event.preventDefault(); // Ngăn chặn điều hướng mặc định
+      // Hiển thị dateList khi nhấn vào "Thống kê ấn phẩm"
       dateList.style.display = "block";
-    } else {
-      dateList.style.display = "none";
-    }
-  });
+    });
+  } else {
+    console.error("Không tìm thấy phần tử 'statsLink' hoặc 'dateList'");
+  }
+});
