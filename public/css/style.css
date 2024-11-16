@@ -1,0 +1,16 @@
+.navbar-nav .nav-item {
+  margin: 0 10px;
+}
+
+.dropdown-menu {
+  min-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
+    text-align: center;
+  }
+  .form-inline {
+    margin-top: 10px;
+  }
+}
