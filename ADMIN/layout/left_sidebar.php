@@ -10,8 +10,11 @@
         <li>
             <hr>
         </li>
-        <li>
-            <a href="requirements.php" class="sidebar-link"><span>Yêu cầu</span><span class="caret"></span>
+        <li class="dropdown">
+            <a href="requirements.php">
+                <i class="zmdi"></i>
+                <span class="dropdown-toggle" data-toggle="dropdown">Yêu cầu</span>
+                
                 <ul class="dropdown-menu">
                     <li><a href="#">Yêu cầu xóa khách hàng</a></li>
                     <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
