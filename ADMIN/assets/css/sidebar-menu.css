@@ -3,7 +3,6 @@
 	position: relative;
 	transition: all 0.3s ease;
 }
-
 .animate-menu-push.animate-menu-push-right {
 	left: 200px;
 }
@@ -19,7 +18,6 @@
 	height: 100%;
 	transition: all 0.3s ease;
 }
-
 .animate-menu-left {
 	left: -200px;
 }
@@ -35,20 +33,17 @@
 .animate-menu-right.animate-menu-open {
 	right: 0;
 }
-
 .sidebar-menu {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 	background-color: transparent;
 }
-
 .sidebar-menu>li {
 	position: relative;
 	margin: 0;
 	padding: 0;
 }
-
 .sidebar-menu>li>a {
 	padding: 13px 5px 13px 15px;
 	display: block;
@@ -79,7 +74,6 @@
 	font-size: 12px;
 	color: rgba(255, 255, 255, 0.5);
 }
-
 .sidebar-menu li>a>.fa-angle-left {
 	width: auto;
 	height: auto;
@@ -95,12 +89,10 @@
 .sidebar-menu li.active>.sidebar-submenu {
 	display: block;
 }
-
 .sidebar-menu a {
 	color: #b8c7ce;
 	text-decoration: none;
 }
-
 .sidebar-menu .sidebar-submenu {
 	display: none;
 	list-style: none;
@@ -112,14 +104,12 @@
 .sidebar-menu .sidebar-submenu .sidebar-submenu {
 	padding-left: 20px;
 }
-
 .sidebar-menu .sidebar-submenu>li>a {
 	padding: 5px 5px 5px 15px;
 	display: block;
 	font-size: 14px;
 	color: rgba(255, 255, 255, 0.65);
 }
-
 .sidebar-menu .sidebar-submenu>li>a>.fa {
 	width: 20px;
 	font-size: 13px;
@@ -134,20 +124,17 @@
 .sidebar-menu .sidebar-submenu>li>a:hover {
 	color: #ffffff;
 }
-
 .sidebar-menu-rtl {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 	background-color: #222d32;
 }
-
 .sidebar-menu-rtl>li {
 	position: relative;
 	margin: 0;
 	padding: 0;
 }
-
 .sidebar-menu-rtl>li>a {
 	padding: 12px 15px 12px 5px;
 	display: block;
@@ -171,14 +158,12 @@
 	margin-top: 3px;
 	margin-right: 5px;
 }
-
 .sidebar-menu-rtl li.sidebar-header {
 	padding: 10px 15px 10px 25px;
 	font-size: 12px;
 	color: #4b646f;
 	background: #1a2226;
 }
-
 .sidebar-menu-rtl li>a>.fa-angle-left {
 	width: auto;
 	height: auto;
@@ -199,7 +184,6 @@
 	color: #b8c7ce;
 	text-decoration: none;
 }
-
 .sidebar-menu-rtl .sidebar-submenu {
 	display: none;
 	list-style: none;
@@ -264,3 +248,4 @@
 }
 
 /*Gia Hi*/
+
