@@ -10,7 +10,14 @@
         <li>
             <hr>
         </li>
-        <li><a href="requirements.php" class="sidebar-link"><span>Yêu cầu</span></a></li>
+        <li>
+            <a href="requirements.php" class="sidebar-link"><span>Yêu cầu</span><span class="caret"></span>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Yêu cầu xóa khách hàng</a></li>
+                    <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
+                </ul>
+            </a>
+        </li>
         <li><a href="promotion.html" class="sidebar-link"><span>Khuyến mãi</span></a></li>
         <li><a href="product.php" class="sidebar-link"><span>Ấn phẩm</span></a></li>
         <li><a href="cart.php" class="sidebar-link"><span>Đơn hàng</span></a></li>
