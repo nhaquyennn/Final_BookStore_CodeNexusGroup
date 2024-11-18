@@ -30,6 +30,13 @@
             padding: 2px 10px;
             font-size: 12px;
         }
+        .btn-danger a {
+            color: white;
+            text-decoration: none;
+        }
+        .btn-danger a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -38,7 +45,7 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h5>NHÂN VIÊN QUẢN LÝ KHO</h5>
             <div>
-                <button class="btn btn-secondary btn-sm">Admin</button>
+                <button class="btn btn-secondary btn-sm">Nhân viên kho A</button>
                 <button class="btn btn-outline-secondary btn-sm">Đăng xuất</button>
             </div>
         </div>
@@ -70,7 +77,7 @@
 
         <!-- Table -->
         <table class="table table-bordered text-center">
-            <thead class="thead-dark">
+            <thead>
                 <tr>
                     <th>Mã sách</th>
                     <th>Tên sách</th>
@@ -102,7 +109,9 @@
                     <td>Công ty A</td>
                     <td>
                         <button class="btn btn-warning btn-sm">Sửa</button>
-                        <button class="btn btn-danger btn-sm">Xóa</button>
+                        <button class="btn btn-danger btn-sm">
+                            <a href="gui_yeucau_xoa.php">Xóa</a>
+                        </button>
                     </td>
                 </tr>
                 <!-- Book 2 -->
@@ -120,7 +129,9 @@
                     <td>Công ty B</td>
                     <td>
                         <button class="btn btn-warning btn-sm">Sửa</button>
-                        <button class="btn btn-danger btn-sm">Xóa</button>
+                        <button class="btn btn-danger btn-sm">
+                            <a href="gui_yeucau_xoa.php">Xóa</a>
+                        </button>
                     </td>
                 </tr>
             </tbody>
