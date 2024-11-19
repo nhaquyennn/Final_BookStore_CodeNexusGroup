@@ -56,13 +56,13 @@
                 <a class="nav-link" href="index.php">KIỂM KÊ KHO</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">CẬP NHẬT THÔNG TIN</a>
+                <a class="nav-link" href="capnhapthongtin.php">CẬP NHẬT THÔNG TIN</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">PHIẾU NHẬP KHO</a>
+                <a class="nav-link" href="phieunhapkho.php">PHIẾU NHẬP KHO</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">PHIẾU XUẤT KHO</a>
+                <a class="nav-link" href="phieuxuatkho.php">PHIẾU XUẤT KHO</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="danhmuc_sanpham.php">DANH MỤC SẢN PHẨM</a>
