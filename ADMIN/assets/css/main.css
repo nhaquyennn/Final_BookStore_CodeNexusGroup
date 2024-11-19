@@ -1849,6 +1849,7 @@ table.grid td {
 }
 .table.align-items-center td, .table.align-items-center th {
     vertical-align: middle;
+    font-size: 15px;
 }
 .table thead th {
     font-size: .72rem;
@@ -2999,7 +3000,7 @@ table.grid td {
 [class*="icheck-material"] {
   min-height: 22px;
   margin-top: 6px;
-  margin-bottom: 6px 
+  margin-bottom: 6px ;
   padding-left: 0px; }
   [class*="icheck-material"] > label {
     padding-left: 29px !important;
@@ -3649,7 +3650,90 @@ table.grid td {
 
 
 }
-
-
+/*Gia Hi*/
+.rental-voucher{
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-weight: 600;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+   
+}
+.detail thead tr th {
+    padding: 15px;
+    letter-spacing: 1px;
+    font-size: 15px;
+    text-align: center;
+    align-items: center;
+    border:1px solid black;
+    border-radius: 10px;
+}
+.detail tbody td{
+    padding: 15px;
+    letter-spacing: 1px;
+    font-size: 15px;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 10px;
+    
+}
+.detail{
+    margin:auto;
+    background-color: #f1f1e6;
+    color: black;
+    
+}
+.btn-create {
+    margin:auto; 
+    margin-bottom: 20px;
+    margin-top:30px;
+}
+.promotion{
+    margin:auto;
+    margin-top:30px;
+}
+.PM{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.btn-create-PM{
+    text-align: right;
+    align-items: center;
+}
+.taoPM{
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-weight: 600;
+    font-size: 27px;
+    color: #ffffff;
+    text-align: center;
+}
+.btn-add-AP{
+    margin-top:30px;
+}
+.form-createPM{
+    margin-top: 20px;
+}
+.form-createPM table tr{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.form-createPM td{
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+.form-createPM input{
+    background-color:rgba(255, 255, 255, 0.2);
+    border:none;
+    color: white;
+}
+.btn-create{
+    text-align:center
+}
+/*Gia Hi*/
 
 

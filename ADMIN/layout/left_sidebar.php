@@ -14,7 +14,7 @@
             <a href="requirements.php">
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Yêu cầu</span>
-                <span class="caret"></span>
+
                 <ul class="dropdown-menu">
                     <li><a href="#">Yêu cầu xóa khách hàng</a></li>
                     <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
@@ -30,6 +30,17 @@
         <li><a href="bill.html" target="_blank"><i class="zmdi"></i><span>Hóa đơn</span></a></li>
         <li><a href="employee.php" target="_blank"><i class="zmdi"></i><span>Nhân viên</span></a></li>
         <li><a href="customer.html" target="_blank"><i class="zmdi"></i><span>Khách hàng</span></a></li>
+        <li class="dropdown">
+            <a href="taophieu.php">
+                <i class="zmdi"></i>
+                <span class="dropdown-toggle" data-toggle="dropdown">Tạo phiếu</span>
+
+                <ul class="dropdown-menu">
+                    <li><a href="phieumuon.php">Phiếu mượn</a></li>
+                    <li><a href="phieutra.php">Phiếu trả</a></li>
+                </ul>
+            </a>
+        </li>
         <li>
             <hr>
         </li>
