@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Sách</title>
+    <title>Quản Lý Danh Mục Sản Phẩm</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -53,7 +53,7 @@
         <!-- Tabs -->
         <ul class="nav nav-tabs mb-3">
             <li class="nav-item">
-                <a class="nav-link active" href="#">KIỂM KÊ KHO</a>
+                <a class="nav-link" href="index.php">KIỂM KÊ KHO</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">CẬP NHẬT THÔNG TIN</a>
@@ -65,13 +65,13 @@
                 <a class="nav-link" href="#">PHIẾU XUẤT KHO</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="danhmuc_sanpham.php">DANH MỤC SẢN PHẨM</a>
+                <a class="nav-link active" href="danhmuc_sanpham.php">DANH MỤC SẢN PHẨM</a>
             </li>
         </ul>
 
         <!-- Table Header -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4>QUẢN LÝ SÁCH</h4>
+            <h4>QUẢN LÝ DANH MỤC SẢN PHẨM</h4>
             <div class="d-flex">
                 <input type="text" class="form-control me-2" placeholder="Search">
                 <button class="btn btn-success">Search</button>
@@ -82,34 +82,20 @@
         <table class="table table-bordered text-center">
             <thead>
                 <tr>
-                    <th>Mã sách</th>
-                    <th>Tên sách</th>
-                    <th>Số lượng</th>
+                    <th>Mã danh mục</th>
+                    <th>Tên danh mục</th>
+                    <th>Số lượng sản phẩm</th>
                     <th>Mô tả</th>
-                    <th>Giá bán</th>
-                    <th>Giá nhập</th>
-                    <th>Thương hiệu</th>
-                    <th>Hình ảnh</th>
-                    <th>HSD</th>
-                    <th>Loại sách</th>
-                    <th>Nhà cung cấp</th>
                     <th>Tính năng</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Book 1 -->
+                <!-- Category 1 -->
                 <tr>
                     <td>1</td>
-                    <td>Sách A</td>
-                    <td>100</td>
-                    <td>Đây là mô tả của sách A</td>
-                    <td>200.000 VNĐ</td>
-                    <td>150.000 VNĐ</td>
-                    <td>NXB A</td>
-                    <td><img src="public/images/book1.jpg" alt="Sách A"></td>
-                    <td>10/10/2025</td>
-                    <td>1</td>
-                    <td>Công ty A</td>
+                    <td>Điện Thoại</td>
+                    <td>120</td>
+                    <td>Danh mục chứa các loại điện thoại di động</td>
                     <td>
                         <button class="btn btn-warning btn-sm">Sửa</button>
                         <button class="btn btn-danger btn-sm">
@@ -117,19 +103,12 @@
                         </button>
                     </td>
                 </tr>
-                <!-- Book 2 -->
+                <!-- Category 2 -->
                 <tr>
                     <td>2</td>
-                    <td>Sách B</td>
-                    <td>50</td>
-                    <td>Đây là mô tả của sách B</td>
-                    <td>250.000 VNĐ</td>
-                    <td>180.000 VNĐ</td>
-                    <td>NXB B</td>
-                    <td><img src="public/images/book2.jpg" alt="Sách B"></td>
-                    <td>15/08/2024</td>
-                    <td>2</td>
-                    <td>Công ty B</td>
+                    <td>Máy Tính</td>
+                    <td>80</td>
+                    <td>Danh mục chứa các loại máy tính và laptop</td>
                     <td>
                         <button class="btn btn-warning btn-sm">Sửa</button>
                         <button class="btn btn-danger btn-sm">
@@ -137,6 +116,7 @@
                         </button>
                     </td>
                 </tr>
+                <!-- Add more categories if needed -->
             </tbody>
         </table>
     </div>
