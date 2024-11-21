@@ -16,6 +16,7 @@ class login extends Dcontroller {
   }
 
   public function login() {
+   
     $this->load->view('header');
     Session::init();
     if(Session::get('login') == true){

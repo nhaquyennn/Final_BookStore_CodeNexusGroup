@@ -13,6 +13,7 @@ class Load{
   public function model($fileName){
     include "app/models/{$fileName}.php";
     return new $fileName();
+    
   }
 
   
