@@ -41,7 +41,7 @@
             <hr>
         </li>
         <li><a href="profile.php" class="sidebar-link"><span>Thông tin cá nhân</span></a></li>
-        <li><a href="login.html" class="sidebar-link"><span>Đăng xuất</span></a></li>
+        <li><a href="user/logout.php" class="sidebar-link"><span>Đăng xuất</span></a></li>
     </ul>
 </div>
 <script>
