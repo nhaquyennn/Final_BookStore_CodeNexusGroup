@@ -57,7 +57,7 @@
               </div>
             </div>
             <div class="text-right mt-3 mb-3">
-              <a href="forgot_password.php" class="text-warning">Quên mật khẩu?</a>
+              <a href="emailResetPassword.php" class="text-warning">Quên mật khẩu?</a>
             </div>
             <button type="submit" class="btn btn-light btn-block">Đăng nhập</button>
           </form>

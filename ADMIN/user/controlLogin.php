@@ -1,5 +1,5 @@
 <?php
-include_once '../database/db_connect.php';  // Kết nối cơ sở dữ liệu
+include_once '../database/db_connect.php';  
 
 // Lấy dữ liệu từ biểu mẫu
 $email = $_POST['email'] ?? '';
@@ -27,11 +27,18 @@ if ($result->num_rows > 0) {
 
     // So sánh mật khẩu đã mã hóa với mật khẩu trong cơ sở dữ liệu
     if ($hashedPassword === $user['matkhau']) {
-        // Đăng nhập thành công, chuyển hướng đến trang chủ
-        session_start();
-        $_SESSION['user'] = $user['email'];  // Lưu email vào session
-        header("Location: ../index.php");
-        exit();
+        // Kiểm tra vai trò là admin
+        if ($user['vaitro'] === 'admin') {
+            // Đăng nhập thành công, chuyển hướng đến trang chủ
+            session_start();
+            $_SESSION['user'] = $user['email'];  // Lưu email vào session
+            header("Location: ../index.php");
+            exit();
+        } else {
+            // Vai trò không phải admin
+            header("Location: login.php?error=Bạn không có quyền truy cập.");
+            exit();
+        }
     } else {
         // Mật khẩu không đúng
         header("Location: login.php?error=Mật khẩu không đúng.");
