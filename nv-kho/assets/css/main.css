@@ -3736,4 +3736,20 @@ table.grid td {
 }
 /*Gia Hi*/
 
+/*Minh Thinh*/
+select {
+    background-color: #fff; 
+    color: #000; 
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px; 
+    width: 100%; 
+    box-sizing: border-box; 
+}
+option {
+    background-color: #fff;
+    color: #fff; 
+}
+/*Minh Thinh*/
 
