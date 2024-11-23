@@ -14,16 +14,15 @@
             <a href="requirements.php">
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Yêu cầu</span>
-
                 <ul class="dropdown-menu">
                     <li><a href="guiYeuCauXoaAP.php">Yêu cầu xóa ấn phẩm</a></li>
                 </ul>
             </a>
-        </li> -->
+        </li>
 
-        <li><a href="DSAP.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
-        <li><a href="#"><i class="zmdi"></i><span>Danh mục</span></a></li>
-        <li><a href="listPhieuNhapSach.php"><i class="zmdi"></i><span>Phiếu nhập sách</span></a></li>
+        <li><a href="product.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
+        <li><a href="category.html"><i class="zmdi"></i><span>Danh mục</span></a></li>
+      
         <li>
             <hr>
         </li>
