@@ -40,8 +40,8 @@
                                 <table class="table align-items-center table-flush table-borderless">
                                     <thead>
                                         <tr>
-                                            <th style="font-size: 15px;">Mã sản phẩm</th>
-                                            <th style="font-size: 15px;">Tên sản phẩm</th>
+                                            <th style="font-size: 15px;">Mã ấn phẩm</th>
+                                            <th style="font-size: 15px;">Tên ấn phẩm</th>
                                             <th style="font-size: 15px;">Số lượng</th>
                                             <th style="font-size: 15px;">Giá</th>
                                             <th style="font-size: 15px;">Mô tả</th>
@@ -50,12 +50,13 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>hii</td>
-                                            <td>hii</td>
-                                            <td>hii</td>
-                                            <td>hii</td>
-                                            <td>hii</td>
-                                            <td>hii</td>
+                                            <td>A01</td>
+                                            <td>Sách trinh thám</td>
+                                            <td>13</td>
+                                            <td>98000đ</td>
+                                            <td>Sách mới 100%</td>
+                                            <td><a href="../nv-kho/img/cat-4.jpg"></a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

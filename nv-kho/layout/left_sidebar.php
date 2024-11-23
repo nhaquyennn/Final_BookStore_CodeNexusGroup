@@ -2,7 +2,7 @@
     <div class="brand-logo">
         <a href="index.html">
             <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-            <h5 class="logo-text">Admin</h5>
+            <h5 class="logo-text">Nhân viên kho</h5>
         </a>
     </div>
     <ul class="sidebar-menu do-nicescrol">
@@ -16,31 +16,14 @@
                 <span class="dropdown-toggle" data-toggle="dropdown">Yêu cầu</span>
 
                 <ul class="dropdown-menu">
-                    <li><a href="#">Yêu cầu xóa khách hàng</a></li>
                     <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
                 </ul>
             </a>
         </li>
 
-        <li><a href="promotion.html"><i class="zmdi"></i><span>Khuyến mãi</span></a></li>
         <li><a href="product.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
-        <li><a href="cart.php"><i class="zmdi"></i><span>Đơn hàng</span></a></li>
         <li><a href="category.html"><i class="zmdi"></i><span>Danh mục</span></a></li>
-        <li><a href="statistics.html" target="_blank"><i class="zmdi"></i><span>Thống kê</span></a></li>
-        <li><a href="bill.html" target="_blank"><i class="zmdi"></i><span>Hóa đơn</span></a></li>
-        <li><a href="employee.php" target="_blank"><i class="zmdi"></i><span>Nhân viên</span></a></li>
-        <li><a href="customer.html" target="_blank"><i class="zmdi"></i><span>Khách hàng</span></a></li>
-        <li class="dropdown">
-            <a href="taophieu.php">
-                <i class="zmdi"></i>
-                <span class="dropdown-toggle" data-toggle="dropdown">Tạo phiếu</span>
-
-                <ul class="dropdown-menu">
-                    <li><a href="phieumuon.php">Phiếu mượn</a></li>
-                    <li><a href="phieutra.php">Phiếu trả</a></li>
-                </ul>
-            </a>
-        </li>
+      
         <li>
             <hr>
         </li>
