@@ -20,7 +20,7 @@
       <!-- Form thêm phiếu nhập -->
       <div class="row mt-5">
         <div class="col-12">
-          <h4 class="fw-bold text-center">Phiếu Nhập Sách</h4>
+          <h4 class="fw-bold text-center">Phiếu Nhập Ấn Phẩm</h4>
           <form class="form-createPM">
             <!-- Nhập thông tin nhân viên -->
             <div class="mb-3">
@@ -31,11 +31,11 @@
             <!-- Thông tin phiếu nhập -->
             <div class="row g-3">
               <div class="col-md-3">
-                <label for="idSanPham" class="form-label fw-bold">Mã Sản Phẩm:</label>
+                <label for="idSanPham" class="form-label fw-bold">Mã Ấn Phẩm:</label>
                 <input type="text" class="form-control" id="idSanPham" placeholder="Nhập mã sản phẩm">
               </div>
               <div class="col-md-3">
-                <label for="tenSanPham" class="form-label fw-bold">Tên Sản Phẩm:</label>
+                <label for="tenSanPham" class="form-label fw-bold">Tên Ấn Phẩm:</label>
                 <input type="text" class="form-control" id="tenSanPham" placeholder="Nhập tên sản phẩm">
               </div>
               <div class="col-md-3">
@@ -52,6 +52,18 @@
             <div class="mb-3 mt-4">
               <label for="ngayNhap" class="form-label fw-bold">Ngày Nhập Kho:</label>
               <input type="date" class="form-control" id="ngayNhap">
+            </div>
+
+            <!-- Thể loại -->
+            <div class="mb-3 mt-4">
+              <label for="form-label fw-bold">Chọn thể loại sách</label>
+              <select id="book-category">
+                <option value="giao-duc">Giáo dục</option>
+                <option value="tieu-thuyet">Tiểu thuyết</option>
+                <option value="truyen-tranh">Truyện tranh</option>
+                <option value="tap-chi">Tạp chí</option>
+                <option value="tieng-anh">Sách Tiếng Anh</option>
+              </select>
             </div>
 
             <!-- Kệ chứa -->
@@ -74,6 +86,7 @@
                 <label class="form-check-label" for="ke4">Kệ số 4</label>
               </div>
             </div>
+
 
             <!-- Nút Tạo Phiếu -->
             <div class="mt-4">
