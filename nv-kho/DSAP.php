@@ -45,17 +45,25 @@
                                             <th style="font-size: 15px;">Số lượng</th>
                                             <th style="font-size: 15px;">Giá</th>
                                             <th style="font-size: 15px;">Mô tả</th>
+                                            <th style="font-size: 15px;">Thể loại</th>
                                             <th style="font-size: 15px;">Hình ảnh</th>
+                                            <th style="font-size: 15px;">Tùy chọn</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>A01</td>
-                                            <td>Sách trinh thám</td>
+                                            <td>Tomato TOEIC</td>
                                             <td>13</td>
-                                            <td>98000đ</td>
+                                            <td>98.000 đ</td>
                                             <td>Sách mới 100%</td>
-                                            <td><a href="../nv-kho/img/cat-4.jpg"></a>
+                                            <td>Giáo dục</td>
+                                            <td><img src="../ADMIN/img/cat-5.jpg" width="70px" height="90px" alt=""></a></td>
+                                            <td>
+                                                <button class="btn btn-warning btn-sm"><i class='fa fa-pencil ' aria-hidden='true'></i></button>
+                                                <button class="btn btn-danger btn-sm">
+                                                    <a href="guiyeucauxoaAP.php"><i class='fa fa-trash-o' aria-hidden='true'></i></a>
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>

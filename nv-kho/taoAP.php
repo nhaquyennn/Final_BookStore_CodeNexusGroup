@@ -26,18 +26,17 @@
                 <!--Start main content-->
 
                 <!-- CODE Ở ĐÂY -->
-
                 <div class="row">
                     <div class="col-9 col-lg-12">
                         <div class="taoPM">TẠO ẤN PHẨM</div>
                         <form class="form-createPM col-12">
                             <table>
                                 <tr>
-                                    <td>Tên nhân viên:</td>
+                                    <td>Tên ấn phẩm</td>
                                     <td><input type="text"></td>
                                 </tr>
                                 <tr>
-                                    <td>Mã khách hàng:</td>
+                                    <td>Số lượng</td>
                                     <td><input type="text"></td>
                                     <td style="padding-left:12px">Tên khách hàng:</td>
                                     <td><input type="text"></td>
