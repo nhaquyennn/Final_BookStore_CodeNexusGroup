@@ -10,19 +10,23 @@
         <li>
             <hr>
         </li>
-        <!-- <li class="dropdown">
-            <a href="requirements.php">
+
+        <li><a href="DSAP.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
+        <li><a href="listPhieuNhapAP.php"><i class="zmdi"></i><span>Phiếu nhập kho</span></a></li>
+        <li class="dropdown">
+            <a>
                 <i class="zmdi"></i>
-                <span class="dropdown-toggle" data-toggle="dropdown">Yêu cầu</span>
+                <span class="dropdown-toggle" data-toggle="dropdown">Danh mục</span>
                 <ul class="dropdown-menu">
-                    <li><a href="guiYeuCauXoaAP.php">Yêu cầu xóa ấn phẩm</a></li>
+                    <li><a href="danhMucTheoAnPham.php">Sách Giáo dục</a></li>
+                    <li><a href="danhMucTheoAnPham.php">Tiểu thuyết</a></li>
+                    <li><a href="danhMucTheoAnPham.php">Truyện tranh</a></li>
+                    <li><a href="danhMucTheoAnPham.php">Tạp chí</a></li>
+                    <li><a href="danhMucTheoAnPham.php">Sách Tiếng Anh</a></li>
                 </ul>
             </a>
         </li>
 
-        <li><a href="product.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
-        <li><a href="category.html"><i class="zmdi"></i><span>Danh mục</span></a></li>
-      
         <li>
             <hr>
         </li>
