@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    
-</head>
 
 <body class="bg-theme bg-theme2">
     <div class="clearfix"></div>
