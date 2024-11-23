@@ -1,3 +1,12 @@
+<?php
+session_start(); 
+// Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
+if (!isset($_SESSION['user'])) {
+    // Nếu chưa đăng nhập, chuyển hướng về trang login
+    header("Location: user/login.php?error=Vui lòng đăng nhập.");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +14,7 @@
   <?php require_once "layout/header.php" ?>
 </head>
 
-<body class="bg-theme bg-theme2">
+<body class="bg-theme bg-theme9">
   <!-- Start wrapper-->
   <div id="wrapper">
 
