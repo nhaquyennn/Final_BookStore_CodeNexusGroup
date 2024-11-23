@@ -15,3 +15,4 @@
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
+<script src="../public/js/danhMucTheoAnPham.js"></script>

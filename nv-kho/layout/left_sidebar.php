@@ -14,7 +14,6 @@
             <a href="requirements.php">
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Yêu cầu</span>
-
                 <ul class="dropdown-menu">
                     <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
                 </ul>
@@ -22,8 +21,16 @@
         </li>
 
         <li><a href="product.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
-        <li><a href="category.html"><i class="zmdi"></i><span>Danh mục</span></a></li>
-      
+
+        <!-- Danh mục Ấn Phẩm -->
+
+        <li>
+            <a href="danhMucTheoAnPham.php">
+                <i class="zmdi"></i>
+                <span>Danh mục Ấn Phẩm</span>
+            </a>
+        </li>
+
         <li>
             <hr>
         </li>
