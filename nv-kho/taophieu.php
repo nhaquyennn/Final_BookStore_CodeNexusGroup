@@ -25,7 +25,7 @@
 
                 <!--Start main content-->
 
-                <!-- CODE Ở ĐÂY -->
+          
                 <div class="PM row">
                     <div class="btn-create-PM col-12">
                         <a href="taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
