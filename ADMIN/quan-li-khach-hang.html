@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Khách Hàng</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/app-style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../FE/css/quan-li-khach-hang.css">
+
+</head>
+
+<body class="bg-theme bg-theme2">
+    <div class="container mt-5">
+        <h3 class="text-center text-white">Quản lí khách hàng</h3>
+        <div class="form-inline mb-3">
+            <input type="text" class="form-control mr-2" placeholder="Nhập tiêu chí tìm kiếm ">
+            <button class="btn btn-primary">Tìm kiếm</button>
+            <button class="btn btn-success btn-create">Tạo thành viên</button>
+        </div>
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th>Tên tài khoản</th>
+                    <th>Mật khẩu</th>
+                    <th>Vai trò</th>
+                    <th>Mã khách hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Địa chỉ</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>user1</td>
+                    <td>password123</td>
+                    <td>Khách hàng</td>
+                    <td>KH001</td>
+                    <td>Nguyễn Văn A</td>
+                    <td>123 Đường ABC, Quận 1</td>
+                    <td><button class="btn btn-warning btn-sm">Tạo yêu cầu xóa</button></td>
+                </tr>
+                <tr>
+                    <td>user2</td>
+                    <td>password456</td>
+                    <td>Khách hàng</td>
+                    <td>KH002</td>
+                    <td>Trần Thị B</td>
+                    <td>456 Đường XYZ, Quận 2</td>
+                    <td><button class="btn btn-warning btn-sm">Tạo yêu cầu xóa</button></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
