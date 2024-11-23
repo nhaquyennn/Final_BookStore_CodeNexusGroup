@@ -31,6 +31,20 @@
                         <a href="taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
                     </div>
                 </div>
+
+                <div class="form-row test">
+                    <div class="form-group col-md-3">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input type="hidden" value="">
+                        <button type="reset" class="btnCus3 btnCus">Reset</button>
+                        <button type="submit" name='btnAdd' class="btnCus3 btnCus">Add</button>
+                    </div>
+                    <div class="form-group col-md-4">
+                    </div>
+                </div>    
+            </form>
+
                 <div class="row">
                     <div class="col-9 col-lg-12">
                         <div class="card">
