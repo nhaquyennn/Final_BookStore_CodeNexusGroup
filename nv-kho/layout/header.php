@@ -23,5 +23,3 @@
 <link href="assets/css/sidebar-menu.css" rel="stylesheet" />
 <!-- Custom Style-->
 <link rel="stylesheet" href="assets/css/main.css">
-<!-- giao diện danh mục theo ấn phẩm -->
-<link rel="stylesheet" href="../public/css/style.css">

@@ -23,13 +23,8 @@
         <li><a href="product.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
 
         <!-- Danh mục Ấn Phẩm -->
+        <li><a href="./danhMucTheoAnPham.php"><i class="zmdi"></i><span>Danh mục Ấn phẩm</span></a></li>
 
-        <li>
-            <a href="danhMucTheoAnPham.php">
-                <i class="zmdi"></i>
-                <span>Danh mục Ấn Phẩm</span>
-            </a>
-        </li>
 
         <li>
             <hr>
