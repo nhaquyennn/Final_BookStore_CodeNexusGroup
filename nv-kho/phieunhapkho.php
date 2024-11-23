@@ -68,7 +68,7 @@
         <table class="table table-bordered text-center">
             <thead>
                 <tr>
-                    <th>Mã Phiếu</th>
+                    <th>Mã Phiếu</th> 
                     <th>Ngày Nhập</th>
                     <th>Nhân Viên</th>
                     <th>Danh Mục Sách</th>
