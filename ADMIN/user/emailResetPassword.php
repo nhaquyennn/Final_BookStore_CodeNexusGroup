@@ -35,7 +35,7 @@
               echo "<p style='color: red;'>" . htmlspecialchars($_GET['error']) . "</p>";
             }
             ?>
-            <form action="controlForgotPassword.php" method="post">
+            <form action="../controlUser/controlForgotPassword.php" method="post">
               <div class="form-group">
                 <div class="position-relative has-icon-right">
                   <input type="email" name="email" id="email" class="form-control input-shadow"

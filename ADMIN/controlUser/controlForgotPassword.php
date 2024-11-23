@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 $email = $_POST['email'] ?? '';
 
 if (empty($email)) {
-    header("Location: forgot_password.php?error=Vui lòng nhập email.");
+    header("Location: ../user/emailResetPassword.php?error=Vui lòng nhập email.");
     exit();
 }
 
@@ -53,14 +53,14 @@ if ($result->num_rows > 0) {
     );
 
     if ($mail->send()) {
-        header("Location: verifyOTP.php");
+        header("Location: ../user/verifyOTP.php");
         exit();
     } else {
-        header("Location: emailResetPassword.php?error=Gửi OTP thất bại. Vui lòng thử lại.");
+        header("Location: ../user/emailResetPassword.php?error=Gửi OTP thất bại. Vui lòng thử lại.");
         exit();
     }
 } else {
-    header("Location: emailResetPassword.php?error=Tài khoản không tồn tại.");
+    header("Location: ../user/emailResetPassword.php?error=Tài khoản không tồn tại.");
     exit();
 }
 ?>

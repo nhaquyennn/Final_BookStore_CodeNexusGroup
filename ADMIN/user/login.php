@@ -35,7 +35,7 @@
           }
           ?>
 
-          <form action="controlLogin.php" method="POST">
+          <form action="../controlUser/controlLogin.php" method="POST">
             <div class="form-group">
               <label for="exampleInputUsername" class="sr-only">Email</label>
               <div class="position-relative has-icon-right">

@@ -35,7 +35,7 @@
                             echo "<p style='color: red;'>" . htmlspecialchars($_GET['error']) . "</p>";
                         }
                         ?>
-                        <form action="controlResetPassword.php" method="post">
+                        <form action="../controlUser/controlResetPassword.php" method="post">
                             <div class="form-group">
                                 <div class="position-relative has-icon-right">
                                     <input type="password" name="new_password" id="new_password"
