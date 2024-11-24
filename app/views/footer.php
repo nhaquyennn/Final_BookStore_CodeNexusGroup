@@ -1,1 +1,0 @@
-<h1>This is a footer page</h1>
