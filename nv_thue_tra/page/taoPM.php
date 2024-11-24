@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <?php require_once "layout/header.php" ?>
 
 </head>
 
@@ -26,10 +25,10 @@
                 <!--Start main content-->
 
                 <!-- CODE Ở ĐÂY -->
-               
+
                 <div class="row">
                     <div class="col-9 col-lg-12">
-                        <div class="taoPM">TẠO PHIẾU TRẢ</div>
+                        <div class="taoPM">TẠO PHIẾU MƯỢN</div>
                         <form class="form-createPM col-12">
                             <table>
                                 <tr>
@@ -89,7 +88,6 @@
                                                     <th>Giá thuê</th>
                                                     <th>Cọc</th>
                                                     <th>Tình trạng</th>
-                                                    <th>Tính phí phạt</th>
                                                     <th>Ghi chú</th>
                                                 </tr>
                                             </thead>
@@ -102,7 +100,6 @@
                                                     <td>100.000vnd</td>
                                                     <td>..............</td>
                                                     <td>..............</td>
-                                                    <td>..............</td>
                                                 </tr>
                                                 <tr>
                                                     <td>2</td>
@@ -112,18 +109,21 @@
                                                     <td>100.000vnd</td>
                                                     <td>..............</td>
                                                     <td>..............</td>
-                                                    <td>..............</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </table>
-                                
+                                <div class="promotion">
+                                    <input type="text" placeholder="Nhập mã khuyến mãi"
+                                        style="background-color:grey; border-radius:5px; border:none; padding:7px">
+                                    <button class="btn btn-sm btn-warning" style="font-size:12px;">Áp dụng</button>
+                                </div>
                         </form>
 
                     </div>
                     <div class="btn-create" >
-                        <a href="ctphieutra.php"><button class="btn btn-sm btn-danger"
+                        <a href="ctphieumuon.php"><button class="btn btn-sm btn-danger"
                                 style="font-size:15px;">Tạo</button></a>
 
                     </div>

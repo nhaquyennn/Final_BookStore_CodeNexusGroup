@@ -4,9 +4,6 @@
 <meta name="description" content=""/>
 <meta name="author" content=""/>
 <title>Dashtreme Admin - Free Dashboard for Bootstrap 4 by Codervent</title>
-<!-- loader-->
-<link href="assets/css/pace.min.css" rel="stylesheet"/>
-<script src="assets/js/pace.min.js"></script>
 <!--favicon-->
 <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 <!-- Vector CSS -->
@@ -23,3 +20,7 @@
 <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
 <!-- Custom Style-->
 <link rel="stylesheet" href="assets/css/main.css">
+
+<link href="assets/css/app-style.css" rel="stylesheet" />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -2,25 +2,23 @@
 <html lang="en">
 
 <head>
-    <?php require_once "layout/header.php" ?>
+    
 
 </head>
 
 <body class="bg-theme bg-theme2">
-    <div class="clearfix"></div>
+    <!-- <div class="clearfix"></div> -->
     <div class="content-wrapper">
         <div class="container-fluid">
             <!-- Start wrapper-->
             <div id="wrapper">
 
                 <!--Start sidebar-wrapper-->
-                <?php require_once "layout/left_sidebar.php" ?>
+                
                 <!--End sidebar-wrapper-->
 
                 <!--Start topbar header-->
-                <header class="topbar-nav">
-                    <?php require_once "layout/topbar.php" ?>
-                </header>
+                
                 <!--End topbar header-->
 
                 <!--Start main content-->
@@ -28,10 +26,9 @@
                 <!-- CODE Ở ĐÂY -->
                 <div class="PM row">
                     <div class="btn-create-PM col-12">
-                        <a href="taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
+                        <a href="page/taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-9 col-lg-12">
                         <div class="card">
@@ -65,11 +62,11 @@
             <!-- End wrapper-->
 
             <!--Start right sidebar-->
-            <?php require_once "layout/right_sidebar.php" ?>
+           
             <!--End right sidebar-->
 
             <!--Start footer-->
-            <?php require_once "layout/script.php" ?>
+           
             <!--End footer-->
         </div>
     </div>
