@@ -36,7 +36,7 @@
                                 <input type="text" class="form-control" id="" placeholder="Nhập giá">
                             </div>
                             <div class="col-md-3">
-                                <label for="form-label fw-bold">Chọn thể loại sách</label>
+                                <label for="form-label fw-bold">Chọn danh mục sách</label>
                                 <select id="book-category">
                                     <option value="giao-duc">Giáo dục</option>
                                     <option value="tieu-thuyet">Tiểu thuyết</option>

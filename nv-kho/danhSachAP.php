@@ -45,7 +45,7 @@
                                             <th style="font-size: 15px;">Số lượng</th>
                                             <th style="font-size: 15px;">Giá</th>
                                             <th style="font-size: 15px;">Mô tả</th>
-                                            <th style="font-size: 15px;">Thể loại</th>
+                                            <th style="font-size: 15px;">Danh mục</th>
                                             <th style="font-size: 15px;">Hình ảnh</th>
                                             <th style="font-size: 15px;">Tùy chọn</th>
                                         </tr>

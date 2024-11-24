@@ -34,7 +34,7 @@
                                 <th>Giá Nhập</th>
                                 <th>Ngày Nhập</th>
                                 <th>Kệ Chứa</th>
-                                <th>Thể Loại</th>
+                                <th>Danh Mục</th>
                                 <th>Tùy Chọn</th>
                             </tr>
                         </thead>
