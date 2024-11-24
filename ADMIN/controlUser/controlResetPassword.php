@@ -1,5 +1,4 @@
 <?php
-// reset_password.php
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,30 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Đăng nhập và chuyển hướng về trang đăng nhập
         session_destroy();
-        header("Location: login.php?success=Mật khẩu đã được thay đổi.");
+        header("Location: ../user/login.php?success=Mật khẩu đã được thay đổi.");
         exit();
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đặt lại mật khẩu</title>
-</head>
-<body>
-    <h2>Đặt lại mật khẩu</h2>
-    <form method="post">
-        <label for="new_password">Mật khẩu mới:</label>
-        <input type="password" name="new_password" id="new_password" required>
-        <br>
-        <label for="confirm_password">Xác nhận mật khẩu mới:</label>
-        <input type="password" name="confirm_password" id="confirm_password" required>
-        <br>
-        <button type="submit">Lưu mật khẩu mới</button>
-    </form>
-    <?php if (!empty($error)) { echo "<p style='color:red;'>$error</p>"; } ?>
-</body>
-</html>
