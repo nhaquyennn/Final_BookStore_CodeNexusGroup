@@ -58,7 +58,8 @@
                         </div>
 
                         <div class="mt-4">
-                            <a href="DSAP.php"><button type="button" class="btn btn-primary">Tạo</button></a>
+                            <a href="danhSachAP.php" class="btn btn-secondary">Quay lại</a>
+                            <a href="danhSachAP.php"><button type="button" class="btn btn-primary">Tạo</button></a>
                         </div>
 
                     </form>

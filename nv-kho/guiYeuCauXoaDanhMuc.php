@@ -27,7 +27,7 @@
 
                 <!-- CODE Ở ĐÂY -->
                 <div class="container">
-                    <h4 class="text-center mb-4">PHIẾU GỬI YÊU CẦU XÓA ẤN PHẨM</h4>
+                    <h4 class="text-center mb-4">PHIẾU GỬI YÊU CẦU XÓA DANH MỤC</h4>
                     <form action="submit_request.php" method="POST">
                         <!-- Tên nhân viên -->
                         <div class="mb-3">
@@ -37,8 +37,8 @@
 
                         <!-- Tên ấn phẩm -->
                         <div class="mb-3">
-                            <label for="categoryName" class="form-label">Tên ấn phẩm cần xóa</label>
-                            <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="Lấy tên ấn phẩm hiển thị lên" required>
+                            <label for="categoryName" class="form-label">Tên danh mục cần xóa</label>
+                            <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="Lấy tên danh mục hiển thị lên" required>
                         </div>
 
                         <!-- Lý do xóa -->
@@ -56,8 +56,8 @@
 
                         <!-- Nút Gửi Yêu Cầu -->
                         <div>
-                            <a href="danhSachAP.php" class="btn btn-secondary">Quay lại</a>
-                            <a href="danhSachAP.php"><button type="submit" class="btn btn-primary">Gửi yêu cầu</button></a>
+                            <a href="danhMucAP.php" class="btn btn-secondary">Quay lại</a>
+                            <a href="danhMucAP.php"><button type="submit" class="btn btn-primary">Gửi yêu cầu</button></a>
                         </div>
                     </form>
                 </div>

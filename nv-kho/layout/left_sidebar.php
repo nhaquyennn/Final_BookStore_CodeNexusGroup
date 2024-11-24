@@ -11,18 +11,18 @@
             <hr>
         </li>
 
-        <li><a href="DSAP.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
+        <li><a href="danhSachAP.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
         <li><a href="listPhieuNhapAP.php"><i class="zmdi"></i><span>Phiếu nhập kho</span></a></li>
         <li class="dropdown">
-            <a>
+            <a href="danhMucAP.php">
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Danh mục</span>
                 <ul class="dropdown-menu">
-                    <li><a href="danhMucTheoAnPham.php">Sách Giáo dục</a></li>
-                    <li><a href="danhMucTheoAnPham.php">Tiểu thuyết</a></li>
-                    <li><a href="danhMucTheoAnPham.php">Truyện tranh</a></li>
-                    <li><a href="danhMucTheoAnPham.php">Tạp chí</a></li>
-                    <li><a href="danhMucTheoAnPham.php">Sách Tiếng Anh</a></li>
+                    <li><a href="danhMucTheoAP.php">Sách Giáo dục</a></li>
+                    <li><a href="danhMucTheoAP.php">Tiểu thuyết</a></li>
+                    <li><a href="danhMucTheoAP.php">Truyện tranh</a></li>
+                    <li><a href="danhMucTheoAP.php">Tạp chí</a></li>
+                    <li><a href="danhMucTheoAP.php">Sách Tiếng Anh</a></li>
                 </ul>
             </a>
         </li>
