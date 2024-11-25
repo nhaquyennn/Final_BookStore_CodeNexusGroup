@@ -7,6 +7,7 @@ require 'PHPMailer-6.9.2/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 $email = $_POST['email'] ?? '';
 
 if (empty($email)) {
@@ -33,10 +34,10 @@ if ($result->num_rows > 0) {
 
     $mail = new PHPMailer;
     $mail->isSMTP();  // Sử dụng giao thức SMTP
-    $mail->Host = 'smtp.gmail.com';  // Cấu hình SMTP server (ví dụ: Gmail)
+    $mail->Host = 'smtp.gmail.com';  // Cổng host: Gmail
     $mail->SMTPAuth = true;
     $mail->Username = 'nhaquyenvo2003@gmail.com';  // Thay bằng email của bạn
-    $mail->Password = 'twzk oifq bshn tfbx'; 
+    $mail->Password = 'twzk oifq bshn tfbx'; #coi lại cách tạo mật khẩu ứng dụng của google
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
 
@@ -63,5 +64,3 @@ if ($result->num_rows > 0) {
     header("Location: ../user/emailResetPassword.php?error=Tài khoản không tồn tại.");
     exit();
 }
-?>
-

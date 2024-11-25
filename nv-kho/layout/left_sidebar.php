@@ -10,16 +10,16 @@
         <li>
             <hr>
         </li>
-<<<<<<< HEAD
+
         <li class="dropdown">
             <a href="requirements.php">
-=======
+
 
         <li><a href="danhSachAP.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
         <li><a href="listPhieuNhapAP.php"><i class="zmdi"></i><span>Phiếu nhập kho</span></a></li>
         <li class="dropdown">
             <a href="danhMucAP.php">
->>>>>>> 1fafbc58c6039510f226ee1ee31bae808777f195
+
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Danh mục</span>
                 <ul class="dropdown-menu">
@@ -32,12 +32,9 @@
             </a>
         </li>
 
-<<<<<<< HEAD
         <li><a href="DSAP.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
         <li><a href="#"><i class="zmdi"></i><span>Danh mục</span></a></li>
         <li><a href="listPhieuNhapSach.php"><i class="zmdi"></i><span>Phiếu nhập sách</span></a></li>
-=======
->>>>>>> 1fafbc58c6039510f226ee1ee31bae808777f195
         <li>
             <hr>
         </li>

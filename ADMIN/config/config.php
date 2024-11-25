@@ -1,3 +1,3 @@
 <?php
-define('BASE_URL', '/Final_BookStore_CodeNexusGroup/ADMIN/');
-?>
+
+define("BASE_URL", "http://localhost:84/nvkho/ADMIN/"); #điều hướng trên đường dẫn của bạn 
