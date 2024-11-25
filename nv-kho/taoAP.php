@@ -36,7 +36,7 @@
                                 <input type="text" class="form-control" id="" placeholder="Nhập giá">
                             </div>
                             <div class="col-md-3">
-                                <label for="form-label fw-bold">Chọn thể loại sách</label>
+                                <label for="form-label fw-bold">Chọn danh mục sách</label>
                                 <select id="book-category">
                                     <option value="giao-duc">Giáo dục</option>
                                     <option value="tieu-thuyet">Tiểu thuyết</option>
@@ -58,7 +58,8 @@
                         </div>
 
                         <div class="mt-4">
-                            <a href="DSAP.php"><button type="button" class="btn btn-primary">Tạo</button></a>
+                            <a href="danhSachAP.php" class="btn btn-secondary">Quay lại</a>
+                            <a href="danhSachAP.php"><button type="button" class="btn btn-primary">Tạo</button></a>
                         </div>
 
                     </form>

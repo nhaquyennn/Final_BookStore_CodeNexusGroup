@@ -56,7 +56,7 @@
 
             <!-- Thể loại -->
             <div class="mb-3 mt-4">
-              <label for="form-label fw-bold">Chọn thể loại sách</label>
+              <label for="form-label fw-bold">Chọn danh mục sách</label>
               <select id="book-category">
                 <option value="giao-duc">Giáo dục</option>
                 <option value="tieu-thuyet">Tiểu thuyết</option>
