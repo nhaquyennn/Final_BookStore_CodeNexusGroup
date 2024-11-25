@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,24 +11,29 @@
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
         }
+
         .container {
             background-color: white;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         .nav-tabs .nav-link.active {
             background-color: #198754;
             color: white;
         }
+
         .btn-success {
             background-color: #28a745;
         }
+
         .btn-success:hover {
             background-color: #218838;
         }
     </style>
 </head>
+
 <body>
     <div class="container mt-4">
         <!-- Header -->
@@ -68,7 +74,7 @@
         <table class="table table-bordered text-center">
             <thead>
                 <tr>
-                    <th>Mã Phiếu</th> 
+                    <th>Mã Phiếu</th>
                     <th>Ngày Nhập</th>
                     <th>Nhân Viên</th>
                     <th>Danh Mục Sách</th>
@@ -129,4 +135,5 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

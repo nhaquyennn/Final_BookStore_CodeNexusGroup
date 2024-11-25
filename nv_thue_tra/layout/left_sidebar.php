@@ -6,38 +6,19 @@
         </a>
     </div>
     <ul class="sidebar-menu do-nicescrol">
-        <li><a href="index.html"><i class="zmdi zmdi-view-dashboard"></i><span>Dashboard</span></a></li>
-        <li>
+        <!-- <li><a href="index.php"><i class="zmdi zmdi-view-dashboard"></i><span>Dashboard</span></a></li>  -->
+        <!-- <li>
             <hr>
-        </li>
-        <li class="dropdown">
-            <a href="requirements.php">
-                <i class="zmdi"></i>
-                <span class="dropdown-toggle" data-toggle="dropdown">Yêu cầu</span>
-
-                <ul class="dropdown-menu">
-                    <li><a href="#">Yêu cầu xóa khách hàng</a></li>
-                    <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
-                </ul>
-            </a>
-        </li>
-
-        <li><a href="promotion.html"><i class="zmdi"></i><span>Khuyến mãi</span></a></li>
-        <li><a href="product.php"><i class="zmdi"></i><span>Ấn phẩm</span></a></li>
-        <li><a href="cart.php"><i class="zmdi"></i><span>Đơn hàng</span></a></li>
-        <li><a href="category.html"><i class="zmdi"></i><span>Danh mục</span></a></li>
-        <li><a href="statistics.html" target="_blank"><i class="zmdi"></i><span>Thống kê</span></a></li>
-        <li><a href="bill.html" target="_blank"><i class="zmdi"></i><span>Hóa đơn</span></a></li>
-        <li><a href="employee.php" target="_blank"><i class="zmdi"></i><span>Nhân viên</span></a></li>
-        <li><a href="customer.html" target="_blank"><i class="zmdi"></i><span>Khách hàng</span></a></li>
+        </li> -->
+        <li><a href="#"><i class="zmdi"></i><span>Quản lý khách hàng </span></a></li>
         <li class="dropdown">
             <a href="taophieu.php">
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Tạo phiếu</span>
 
                 <ul class="dropdown-menu">
-                    <li><a href="phieumuon.php">Phiếu mượn</a></li>
-                    <li><a href="phieutra.php">Phiếu trả</a></li>
+                    <li><a href="page/phieumuon.php">Phiếu mượn</a></li>
+                    <li><a href="page/phieutra.php">Phiếu trả</a></li>
                 </ul>
             </a>
         </li>
