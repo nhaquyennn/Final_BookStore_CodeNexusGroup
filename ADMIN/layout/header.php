@@ -22,4 +22,8 @@
 <!-- Sidebar CSS-->
 <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
 <!-- Custom Style-->
+<<<<<<< HEAD
 <link href="assets/css/mainSTYLE1.css" rel="stylesheet"/>
+=======
+<link href="assets/css/mainSTYLE1.css" rel="stylesheet"/>
+>>>>>>> 1fafbc58c6039510f226ee1ee31bae808777f195

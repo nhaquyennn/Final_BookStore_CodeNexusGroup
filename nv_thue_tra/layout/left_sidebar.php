@@ -6,6 +6,7 @@
         </a>
     </div>
     <ul class="sidebar-menu do-nicescrol">
+<<<<<<< HEAD
         <li><a href="index.html"><i class="zmdi zmdi-view-dashboard"></i><span>Dashboard</span></a></li>
         <li>
             <hr>
@@ -30,14 +31,26 @@
         <li><a href="bill.html" target="_blank"><i class="zmdi"></i><span>Hóa đơn</span></a></li>
         <li><a href="employee.php" target="_blank"><i class="zmdi"></i><span>Nhân viên</span></a></li>
         <li><a href="customer.html" target="_blank"><i class="zmdi"></i><span>Khách hàng</span></a></li>
+=======
+        <!-- <li><a href="index.php"><i class="zmdi zmdi-view-dashboard"></i><span>Dashboard</span></a></li>  -->
+        <!-- <li>
+            <hr>
+        </li> -->
+        <li><a href="#"><i class="zmdi"></i><span>Quản lý khách hàng </span></a></li>
+>>>>>>> 1fafbc58c6039510f226ee1ee31bae808777f195
         <li class="dropdown">
             <a href="taophieu.php">
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Tạo phiếu</span>
 
                 <ul class="dropdown-menu">
+<<<<<<< HEAD
                     <li><a href="phieumuon.php">Phiếu mượn</a></li>
                     <li><a href="phieutra.php">Phiếu trả</a></li>
+=======
+                    <li><a href="page/phieumuon.php">Phiếu mượn</a></li>
+                    <li><a href="page/phieutra.php">Phiếu trả</a></li>
+>>>>>>> 1fafbc58c6039510f226ee1ee31bae808777f195
                 </ul>
             </a>
         </li>
