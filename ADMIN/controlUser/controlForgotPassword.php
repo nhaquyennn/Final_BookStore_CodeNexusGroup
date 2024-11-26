@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../database/db_connect.php';  // Kết nối cơ sở dữ liệu
+require '../database/db_connect.php';
 require 'PHPMailer-6.9.2/src/Exception.php';
 require 'PHPMailer-6.9.2/src/PHPMailer.php';
 require 'PHPMailer-6.9.2/src/SMTP.php';
