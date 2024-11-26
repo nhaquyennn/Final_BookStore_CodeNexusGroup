@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    
-   
+
+
 </head>
 
 <body class="bg-theme bg-theme2">
@@ -52,12 +52,12 @@
                                             <td>12/10/2024</td>
                                             <td>Chờ Duyệt</td>
                                             <td>
-                                            <button class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>
                                                 <button class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
                                                 <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
