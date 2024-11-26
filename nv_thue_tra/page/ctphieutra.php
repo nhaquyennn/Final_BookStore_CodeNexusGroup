@@ -25,26 +25,26 @@
                 <div class="row">
                     <div class="col-9 col-lg-12">
                         <div class="card">
-                            <div class="rental-voucher" >PHIẾU TRẢ</div>
+                            <div class="rental-voucher">PHIẾU TRẢ</div>
                             <div class="table-voucher">
                                 <table class="table align-items-center table-flush table-borderless">
                                     <thead>
                                         <tr>
-                                            <th> Mã phiếu : PM1<br>  
-                                             Mã nhân viên : NV1 <br>
-                                             
+                                            <th> Mã phiếu : PM1<br>
+                                                Mã nhân viên : NV1 <br>
+
                                             </th>
                                             <th style="text-align:right">Ngày mượn : ..........................
                                                 <br> Ngày trả: ..........................
                                             </th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <th>Tên khách hàng: <br>
-                                            Số điện thoại: <br>
-                                            Địa chỉ: 
+                                                Số điện thoại: <br>
+                                                Địa chỉ:
                                             </th>
                                         </tr>
                                         <div class="table-detail">
@@ -84,8 +84,8 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>     
-                                        
+                                        </div>
+
                                     </tbody>
                                 </table>
                             </div>
