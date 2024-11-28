@@ -14,13 +14,11 @@
             <div id="wrapper">
 
                 <!--Start sidebar-wrapper-->
-                <?php require_once "layout/left_sidebar.php" ?>
+
                 <!--End sidebar-wrapper-->
 
                 <!--Start topbar header-->
-                <header class="topbar-nav">
-                    <?php require_once "layout/topbar.php" ?>
-                </header>
+
                 <!--End topbar header-->
 
                 <!--Start main content-->
