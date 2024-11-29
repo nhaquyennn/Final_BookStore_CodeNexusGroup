@@ -1,3 +1,5 @@
+<?php require_once '../config/config.php' ?>
+
 <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
     <div class="brand-logo">
         <a href="index.html">
@@ -5,6 +7,7 @@
             <h5 class="logo-text">Admin</h5>
         </a>
     </div>
+
     <ul class="sidebar-menu do-nicescrol">
         <li><a href="index.php" class="sidebar-link"><span>Dashboard</span></a></li>
         <li>
