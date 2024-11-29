@@ -28,7 +28,7 @@ class Product
                     JOIN products ON orders.product_id = products.id
                     WHERE YEAR(order_date) = ? AND MONTH(order_date) = ?
                     GROUP BY products.name";
-      list($year, $month) = explode('-', $value);
+      [$year, $month] = explode('-', $value);
       $stmt = $this->conn->prepare($sql);
       $stmt->bind_param("ii", $year, $month);
     } elseif ($type === 'year') {

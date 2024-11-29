@@ -15,3 +15,8 @@ function getDbConnection()
     }
     return $conn;
 }
+
+function closeDbConnection($conn)
+{
+    mysqli_close($conn);
+}
