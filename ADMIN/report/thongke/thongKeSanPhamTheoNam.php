@@ -28,7 +28,8 @@
                         <div class="row row-group m-0">
                             <div class="col-12 col-lg-6 col-xl-4 border-light">
                                 <div class="card-body">
-                                    <h5 class="text-white mb-0">22 <span class="float-right"><i class="fa fa-shopping-cart"></i></span></h5>
+                                    <h5 class="text-white mb-0">22 <span class="float-right"><i class="fa fa-shopping-cart"></i></span>
+                                    </h5>
                                     <div class="progress my-3" style="height:3px;">
                                         <div class="progress-bar" style="width:55%"></div>
                                     </div>
@@ -37,7 +38,8 @@
                             </div>
                             <div class="col-12 col-lg-6 col-xl-4 border-light">
                                 <div class="card-body">
-                                    <h5 class="text-white mb-0">100.000.000 <span class="float-right"><i class="fa fa-usd"></i></span></h5>
+                                    <h5 class="text-white mb-0">100.000.000 <span class="float-right"><i class="fa fa-usd"></i></span>
+                                    </h5>
                                     <div class="progress my-3" style="height:3px;">
                                         <div class="progress-bar" style="width:55%"></div>
                                     </div>
@@ -46,7 +48,8 @@
                             </div>
                             <div class="col-12 col-lg-6 col-xl-4 border-light">
                                 <div class="card-body">
-                                    <h5 class="text-white mb-0">3 <span class="float-right"><i class="zmdi zmdi-assignment"></i></span></h5>
+                                    <h5 class="text-white mb-0">3 <span class="float-right"><i class="zmdi zmdi-assignment"></i></span>
+                                    </h5>
                                     <div class="progress my-3" style="height:3px;">
                                         <div class="progress-bar" style="width:55%"></div>
                                     </div>
