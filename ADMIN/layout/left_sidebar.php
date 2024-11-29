@@ -26,14 +26,25 @@
         <li><a href="cart.php" class="sidebar-link"><span>Đơn hàng</span></a></li>
         <li><a href="category.html" class="sidebar-link"><span>Danh mục</span></a></li>
         <li class="list-group-item">
-            <a href="#" class="sidebar-link" id="statsLink"><span>Thống kê ấn phẩm</span></a>
+            <a href="#" class="sidebar-link" id="statsLinkPublications"><span>Thống kê ấn phẩm</span></a>
             <!-- Danh sách ngày tháng năm, ẩn ban đầu -->
-            <ul id="dateList" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
+            <ul id="dateListPublications" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
                 <li class="list-group-item"><a href="report/day_statistics.php">Ngày</a></li>
                 <li class="list-group-item"><a href="report/month_statistics.php">Tháng</a></li>
                 <li class="list-group-item"><a href="report/year_statistics.php">Năm</a></li>
             </ul>
         </li>
+
+        <li class="list-group-item">
+            <a href="#" class="sidebar-link" id="statsLinkRevenue"><span>Thống kê doanh thu</span></a>
+            <!-- Danh sách ngày tháng năm, ẩn ban đầu -->
+            <ul id="dateListRevenue" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
+                <li class="list-group-item"><a href="report/day_statistics.php">Ngày</a></li>
+                <li class="list-group-item"><a href="report/month_statistics.php">Tháng</a></li>
+                <li class="list-group-item"><a href="report/year_statistics.php">Năm</a></li>
+            </ul>
+        </li>
+
         <li><a href="bill.html" class="sidebar-link"><span>Hóa đơn</span></a></li>
         <li><a href="employees.php" class="sidebar-link"><span>Nhân viên</span></a></li>
         <li><a href="customers.php" class="sidebar-link"><span>Khách hàng</span></a></li>
@@ -45,16 +56,21 @@
     </ul>
 </div>
 <script>
-    // Lấy tất cả các mục có lớp 'sidebar-link'
-    const navLinks = document.querySelectorAll('.sidebar-link');
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); // Ngăn chặn chuyển hướng
+            const targetId = link.getAttribute('id') === 'statsLinkPublications' ? 'dateListPublications' : 'dateListRevenue';
+            const targetList = document.getElementById(targetId);
 
-    // Lấy URL hiện tại
-    const currentUrl = window.location.href;
+            // Đóng các danh sách khác trước khi mở danh sách hiện tại
+            document.querySelectorAll('.list-group').forEach(list => {
+                if (list !== targetList) {
+                    list.style.display = 'none';
+                }
+            });
 
-    // Duyệt qua từng mục và kiểm tra nếu URL khớp
-    navLinks.forEach(link => {
-        if (link.href === currentUrl) {
-            link.classList.add('active');
-        }
+            // Chuyển đổi hiển thị của danh sách hiện tại
+            targetList.style.display = targetList.style.display === 'block' ? 'none' : 'block';
+        });
     });
 </script>
