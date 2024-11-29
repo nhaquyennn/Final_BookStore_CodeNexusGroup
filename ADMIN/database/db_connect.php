@@ -1,18 +1,19 @@
 <?php
 function getDbConnection()
 {
-    $host = 'localhost';
-    $username = 'root';
-    $password = 'root';
-    $dbname = 'nexus_store';
+    $host = 'localhost';     // Tên host (hoặc IP)
+    $username = 'root';      // Tên người dùng MySQL
+    $password = 'root';      // Mật khẩu MySQL (trên MAMP mặc định là 'root')
+    $dbname = 'nexus_store'; // Tên database của bạn
 
-    // Kết nối MySQLi
+    // Tạo kết nối MySQLi
     $conn = mysqli_connect($host, $username, $password, $dbname);
 
     // Kiểm tra kết nối
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
+
     return $conn;
 }
 
