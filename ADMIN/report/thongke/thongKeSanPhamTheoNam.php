@@ -1,28 +1,42 @@
+<?php
+session_start();
+// Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
+if (!isset($_SESSION['user'])) {
+    // Nếu chưa đăng nhập, chuyển hướng về trang login
+    header("Location: user/login.php?error=Vui lòng đăng nhập.");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <?php require_once "../layout/header.php"; ?>
+    <?php require_once "layout/header.php" ?>
 </head>
 
-<body class="bg-theme bg-theme2">
-    <div class="clearfix"></div>
-    <div class="content-wrapper">
-        <div class="container-fluid">
-            <!-- Start wrapper-->
-            <div id="wrapper">
+<body class="bg-theme bg-theme9">
+    <!-- Start wrapper-->
+    <div id="wrapper">
 
-                <!--Start sidebar-wrapper-->
-                <?php require_once "../layout/left_sidebar.php"; ?>
-                <!--End sidebar-wrapper-->
+        <!--Start sidebar-wrapper-->
+        <?php require_once "layout/left_sidebar.php" ?>
+        <!--End sidebar-wrapper-->
 
-                <!--Start topbar header-->
-                <header class="topbar-nav">
-                    <?php require_once "../layout/topbar.php"; ?>
-                </header>
-                <!--End topbar header-->
+        <!--Start topbar header-->
+        <header class="topbar-nav">
+            <?php require_once "layout/topbar.php" ?>
+        </header>
+        <!--End topbar header-->
 
-                <!--Start main content-->
+        <div class="clearfix"></div>
+
+        <!--Start content-wrapper-->
+        <div class="content-wrapper">
+
+            <!--Start container-fluid-->
+            <div class="container-fluid">
+
+                <!--Start Dashboard Content-->
                 <div class="card mt-3">
                     <div class="card-content">
                         <div class="row row-group m-0">
@@ -59,20 +73,54 @@
                         </div>
                     </div>
                 </div>
-                <!--End main content-->
+                <!--End Dashboard Content-->
 
+                <!--start overlay-->
+                <div class="overlay toggle-menu"></div>
+                <!--end overlay-->
+
+                <!--Start Charts-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <h5 class="text-white font-weight-bold">Biểu đồ sản phẩm thuê trong ngày</h5>
+                                <canvas id="rentedProductsChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <h5 class="text-white font-weight-bold">Biểu đồ doanh thu 7 ngày gần đây</h5>
+                                <canvas id="revenueChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Charts-->
             </div>
-            <!-- End wrapper-->
+            <!-- End container-fluid-->
 
-            <!--Start right sidebar-->
-            <?php require_once "../layout/right_sidebar.php"; ?>
-            <!--End right sidebar-->
-
-            <!--Start footer-->
-            <?php require_once "../layout/script.php"; ?>
-            <!--End footer-->
         </div>
+        <!--End content-wrapper-->
+
+        <!--Start Back To Top Button-->
+        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+        <!--End Back To Top Button-->
+
+        <!--Start right sidebar-->
+        <?php require_once "layout/right_sidebar.php" ?>
+        <!--End right sidebar-->
+
     </div>
+    <!--End wrapper-->
+
+    <!--Start footer-->
+    <?php require_once "layout/script.php" ?>
+    <!--End footer-->
+
 </body>
 
 </html>

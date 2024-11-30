@@ -57,21 +57,36 @@
     </ul>
 </div>
 <script>
+    // Gán sự kiện click cho các liên kết trong sidebar
     document.querySelectorAll('.sidebar-link').forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault(); // Ngăn chặn chuyển hướng
-            const targetId = link.getAttribute('id') === 'statsLinkPublications' ? 'dateListPublications' : 'dateListRevenue';
+            e.preventDefault(); // Ngăn chặn hành động mặc định
+
+            // Lấy ID của danh sách cần hiển thị
+            let targetId = null;
+            if (link.getAttribute('id') === 'statsLinkPublications') {
+                targetId = 'dateListPublications';
+            } else if (link.getAttribute('id') === 'statsLinkRevenue') {
+                targetId = 'dateListRevenue';
+            }
+
+            // Nếu không có danh sách con liên quan, bỏ qua
+            if (!targetId) return;
+
+            // Lấy danh sách cần hiển thị
             const targetList = document.getElementById(targetId);
 
-            // Đóng các danh sách khác trước khi mở danh sách hiện tại
+            // Đóng tất cả các danh sách con khác
             document.querySelectorAll('.list-group').forEach(list => {
                 if (list !== targetList) {
-                    list.style.display = 'none';
+                    list.style.display = 'none'; // Ẩn các danh sách không liên quan
                 }
             });
 
-            // Chuyển đổi hiển thị của danh sách hiện tại
-            targetList.style.display = targetList.style.display === 'block' ? 'none' : 'block';
+            // Chuyển đổi hiển thị danh sách hiện tại
+            if (targetList) {
+                targetList.style.display = targetList.style.display === 'block' ? 'none' : 'block';
+            }
         });
     });
 </script>
