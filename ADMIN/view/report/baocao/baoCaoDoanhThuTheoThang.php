@@ -3,7 +3,7 @@ session_start();
 // Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
 if (!isset($_SESSION['user'])) {
   // Nếu chưa đăng nhập, chuyển hướng về trang login
-  header("Location: user/login.php?error=Vui lòng đăng nhập.");
+  header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
   exit();
 }
 ?>
@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
 <html lang="en">
 
 <head>
-  <?php require_once "layout/header.php" ?>
+  <?php require_once "../../../layout/header.php"; ?>
 </head>
 
 <body class="bg-theme bg-theme9">
@@ -19,12 +19,12 @@ if (!isset($_SESSION['user'])) {
   <div id="wrapper">
 
     <!--Start sidebar-wrapper-->
-    <?php require_once "layout/left_sidebar.php" ?>
+    <?php require_once "../../../layout/left_sidebar.php"; ?>
     <!--End sidebar-wrapper-->
 
     <!--Start topbar header-->
     <header class="topbar-nav">
-      <?php require_once "layout/topbar.php" ?>
+      <?php require_once "../../../layout/topbar.php"; ?>
     </header>
     <!--End topbar header-->
 
@@ -111,14 +111,14 @@ if (!isset($_SESSION['user'])) {
     <!--End Back To Top Button-->
 
     <!--Start right sidebar-->
-    <?php require_once "layout/right_sidebar.php" ?>
+    <?php require_once "../../../layout/right_sidebar.php"; ?>
     <!--End right sidebar-->
 
   </div>
   <!--End wrapper-->
 
   <!--Start footer-->
-  <?php require_once "layout/script.php" ?>
+  <?php require_once "../../../layout/script.php"; ?>
   <!--End footer-->
 
 </body>
