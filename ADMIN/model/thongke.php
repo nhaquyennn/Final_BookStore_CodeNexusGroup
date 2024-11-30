@@ -1,6 +1,6 @@
 <?php
 
-class ProductModel
+class thongKeModel
 {
   #hàm dùng để lấy dữ liệu từ database
   public function __construct()
