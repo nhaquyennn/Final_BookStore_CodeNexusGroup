@@ -79,27 +79,7 @@ if (!isset($_SESSION['user'])) {
         <div class="overlay toggle-menu"></div>
         <!--end overlay-->
 
-        <!--Start Charts-->
-        <div class="row">
-          <div class="col-md-6">
-            <div class="card mt-5">
-              <div class="card-body">
-                <h5 class="text-white font-weight-bold">Biểu đồ sản phẩm thuê trong ngày</h5>
-                <canvas id="rentedProductsChart" height="200"></canvas>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-md-6">
-            <div class="card mt-5">
-              <div class="card-body">
-                <h5 class="text-white font-weight-bold">Biểu đồ doanh thu 7 ngày gần đây</h5>
-                <canvas id="revenueChart" height="200"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--End Charts-->
       </div>
       <!-- End container-fluid-->
 
