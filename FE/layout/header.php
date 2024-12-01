@@ -66,7 +66,7 @@
                             </ul>
                         </li>
                         <li><a href="./contact.php">Liên hệ</a></li>
-                        <li><a href="./contact.php">Chính sách</a></li>
+                        <li><a href="./policy.php">Chính sách</a></li>
                     </ul>
                 </nav>
                 <div class="hero__search">

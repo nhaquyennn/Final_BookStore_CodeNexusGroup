@@ -1,3 +1,12 @@
+<?php
+session_start();
+// Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
+if (!isset($_SESSION['user'])) {
+  // Nếu chưa đăng nhập, chuyển hướng về trang login
+  header("Location: user/login.php?error=Vui lòng đăng nhập.");
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +24,7 @@
 
     <!--Start topbar header-->
     <header class="topbar-nav">
-    <?php require_once "layout/topbar.php" ?>
+      <?php require_once "layout/topbar.php" ?>
     </header>
     <!--End topbar header-->
 
@@ -107,7 +116,7 @@
 
   </div>
   <!--End wrapper-->
-  
+
   <!--Start footer-->
   <?php require_once "layout/script.php" ?>
   <!--End footer-->
