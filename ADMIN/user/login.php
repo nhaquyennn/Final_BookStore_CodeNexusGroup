@@ -64,11 +64,6 @@
 
         </div>
       </div>
-      <div class="card-footer text-center py-3">
-        <p class="text-warning mb-0">
-          Không có tài khoản? <a href="register.html"> Đăng ký tại đây</a>
-        </p>
-      </div>
     </div>
 
   </div>

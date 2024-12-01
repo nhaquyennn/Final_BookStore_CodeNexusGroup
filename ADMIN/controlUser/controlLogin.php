@@ -1,5 +1,5 @@
 <?php
-include_once '../database/db_connect.php';  
+include_once '../database/db_connect.php';
 
 // Lấy dữ liệu từ biểu mẫu
 $email = $_POST['email'] ?? '';
@@ -15,8 +15,7 @@ if (empty($email) || empty($password)) {
 $sql = "SELECT * FROM taikhoan WHERE email = ?";
 $stmt = $conn->prepare($sql);
 
-// Thay 'var: $email' bằng biến $email
-$stmt->bind_param('s', $email);  // Liên kết tham số
+$stmt->bind_param('s', $email);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -52,4 +51,3 @@ if ($result->num_rows > 0) {
     header("Location: ../user/login.php?error=Tài khoản không tồn tại.");
     exit();
 }
-?>
