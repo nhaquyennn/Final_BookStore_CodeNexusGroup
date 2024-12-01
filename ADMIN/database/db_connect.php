@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
 $username = 'root';
-$password = '';
+$password = 'root';
 $dbname = 'nexus_store';
 
 // Kết nối MySQLi

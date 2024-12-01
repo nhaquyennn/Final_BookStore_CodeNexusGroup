@@ -1,11 +1,21 @@
 <?php
 session_start();
-// Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
+// Kiểm tra nếu session 'user' không tồn tại
 if (!isset($_SESSION['user'])) {
-    // Nếu chưa đăng nhập, chuyển hướng về trang login
     header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
     exit();
 }
+
+// Khởi tạo biến cho lỗi và dữ liệu
+$error = '';
+$data = [];
+
+// Xử lý khi form được submit
+// Gọi Controller để lấy dữ liệu
+require_once "../../../controller/thongKeController.php";
+$controller = new ThongKeController();
+$data = $controller->thongKeSanPhamTheoThang(); // Gọi hàm từ Controller
+$error = $controller->getError();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,39 +48,48 @@ if (!isset($_SESSION['user'])) {
 
                 <!--Start Dashboard Content-->
                 <div class="card mt-3">
-                    <div class="card-content">
-                        <div class="row row-group m-0">
-                            <div class="col-12 col-lg-6 col-xl-4 border-light">
-                                <div class="card-body">
-                                    <h5 class="text-white mb-0">22 <span class="float-right"><i class="fa fa-shopping-cart"></i></span>
-                                    </h5>
-                                    <div class="progress my-3" style="height:3px;">
-                                        <div class="progress-bar" style="width:55%"></div>
-                                    </div>
-                                    <p class="mb-0 text-white small-font">Tổng đơn hàng hôm nay</p>
+                    <div class="card-body">
+                        <!-- Hiển thị lỗi nếu có -->
+                        <?php if (!empty($error)): ?>
+                            <div class="alert alert-danger"><?= $error ?></div>
+                        <?php endif; ?>
+
+                        <!-- Form nhập liệu cho thống kê -->
+                        <form method="POST" action="">
+                            <div class="form-row">
+                                <!-- Tháng bắt đầu -->
+                                <div class="form-group col-md-3">
+                                    <label for="thangBatDau" class="text-white">Tháng bắt đầu:</label>
+                                    <select name="thangBatDau" id="thangBatDau" class="form-control" required>
+                                        <?php for ($i = 1; $i <= 12; $i++): ?>
+                                            <option value="<?= $i ?>" <?= (isset($thangBatDau) && $thangBatDau == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                </div>
+
+                                <!-- Tháng kết thúc -->
+                                <div class="form-group col-md-3">
+                                    <label for="thangKetThuc" class="text-white">Tháng kết thúc:</label>
+                                    <select name="thangKetThuc" id="thangKetThuc" class="form-control" required>
+                                        <?php for ($i = 1; $i <= 12; $i++): ?>
+                                            <option value="<?= $i ?>" <?= (isset($thangKetThuc) && $thangKetThuc == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                </div>
+
+                                <!-- Năm -->
+                                <div class="form-group col-md-3">
+                                    <label for="nam" class="text-white">Năm:</label>
+                                    <select name="nam" id="nam" class="form-control" required>
+                                        <?php for ($i = 2021; $i <= 2024; $i++): ?>
+                                            <option value="<?= $i ?>" <?= (isset($nam) && $nam == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                                        <?php endfor; ?>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-6 col-xl-4 border-light">
-                                <div class="card-body">
-                                    <h5 class="text-white mb-0">100.000.000 <span class="float-right"><i class="fa fa-usd"></i></span>
-                                    </h5>
-                                    <div class="progress my-3" style="height:3px;">
-                                        <div class="progress-bar" style="width:55%"></div>
-                                    </div>
-                                    <p class="mb-0 text-white small-font">Tổng doanh thu hôm nay</p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6 col-xl-4 border-light">
-                                <div class="card-body">
-                                    <h5 class="text-white mb-0">3 <span class="float-right"><i class="zmdi zmdi-assignment"></i></span>
-                                    </h5>
-                                    <div class="progress my-3" style="height:3px;">
-                                        <div class="progress-bar" style="width:55%"></div>
-                                    </div>
-                                    <p class="mb-0 text-white small-font">Yêu cầu</p>
-                                </div>
-                            </div>
-                        </div>
+                            <!-- Nút xem thống kê -->
+                            <button type="submit" class="btn btn-primary">Xem thống kê</button>
+                        </form>
                     </div>
                 </div>
                 <!--End Dashboard Content-->
@@ -79,40 +98,69 @@ if (!isset($_SESSION['user'])) {
                 <div class="overlay toggle-menu"></div>
                 <!--end overlay-->
 
-                <!--Start Charts-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card mt-5">
-                            <div class="card-body">
-                                <h5 class="text-white font-weight-bold">Biểu đồ sản phẩm thuê trong ngày</h5>
-                                <canvas id="rentedProductsChart" height="200"></canvas>
-                            </div>
+                <!-- Hiển thị biểu đồ nếu có dữ liệu -->
+                <?php if (!empty($data)): ?>
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <!-- Canvas chứa biểu đồ -->
+                            <canvas id="thongKeChart" height="200"></canvas>
                         </div>
                     </div>
+                    <script>
+                        // Lấy dữ liệu từ PHP cho biểu đồ
+                        const labels = <?= json_encode(array_column($data, 'Thang')) ?>;
+                        const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
 
-                    <div class="col-md-6">
-                        <div class="card mt-5">
-                            <div class="card-body">
-                                <h5 class="text-white font-weight-bold">Biểu đồ doanh thu 7 ngày gần đây</h5>
-                                <canvas id="revenueChart" height="200"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--End Charts-->
+                        // Khởi tạo biểu đồ với Chart.js
+                        const ctx = document.getElementById('thongKeChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Tổng số lượng sản phẩm',
+                                    data: values,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    x: {
+                                        title: {
+                                            display: true,
+                                            text: 'Tháng'
+                                        }
+                                    },
+                                    y: {
+                                        title: {
+                                            display: true,
+                                            text: 'Số lượng'
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                <?php else: ?>
+                    <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
+                <?php endif; ?>
             </div>
-            <!-- End container-fluid-->
-
+            <!--End Charts-->
         </div>
-        <!--End content-wrapper-->
+        <!-- End container-fluid-->
 
-        <!--Start Back To Top Button-->
-        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-        <!--End Back To Top Button-->
+    </div>
+    <!--End content-wrapper-->
 
-        <!--Start right sidebar-->
-        <?php require_once "../../../layout/right_sidebar.php"; ?>
-        <!--End right sidebar-->
+    <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+
+    <!--Start right sidebar-->
+    <?php require_once "../../../layout/right_sidebar.php"; ?>
+    <!--End right sidebar-->
 
     </div>
     <!--End wrapper-->

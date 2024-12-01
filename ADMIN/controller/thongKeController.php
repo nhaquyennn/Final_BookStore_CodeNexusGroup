@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../model/baocao.php'; // Import model với đường dẫn tuyệt đối
+require_once __DIR__ . '/../model/thongke.php'; // Import model với đường dẫn tuyệt đối
 
-class BaoCaoController
+class ThongKeController
 {
   private $model;
   private $error = null; // Biến lưu lỗi
