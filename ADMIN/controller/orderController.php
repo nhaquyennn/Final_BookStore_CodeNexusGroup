@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../model/order.php'; // Require file Model
+require_once __DIR__ . '/../model/phieumuon.php'; // Require file Model
 
 class OrderController
 {
@@ -17,10 +17,10 @@ class OrderController
 
     if (!empty($result)) {
       // Nếu có dữ liệu, chuyển hướng đến giao diện quản lý cửa hàng
-      header("Location: ../view/order/giaoDienQuanLyCuaHang.php?data=" . urlencode(json_encode($result)));
+      header("Location: ../../view/order/giaoDienQuanLyDonHang.php?data=" . urlencode(json_encode($result)));
     } else {
       // Không có dữ liệu, chuyển hướng với thông báo lỗi
-      header("Location: ../view/order/giaoDienQuanLyCuaHang.php?error=" . urlencode("Không tìm thấy mã phiếu mượn nào phù hợp."));
+      header("Location: ../../view/order/giaoDienQuanLyDonHang.php?error=" . urlencode("Không tìm thấy mã phiếu mượn nào phù hợp."));
     }
     exit();
   }

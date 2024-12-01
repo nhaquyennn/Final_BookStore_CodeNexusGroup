@@ -8,7 +8,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 // Lấy dữ liệu từ GET (nếu có)
-$data = isset($_GET['data']) ? json_decode(urldecode($_GET['data']), true) : null;
+$data = isset($_GET['data']) ? json_decode(urldecode($_GET['data']), true) : [];
 $error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
 ?>
 
@@ -20,55 +20,63 @@ $error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
 </head>
 
 <body class="bg-theme bg-theme9">
-  <!-- Start wrapper-->
+  <!-- Start wrapper -->
   <div id="wrapper">
 
-    <!--Start sidebar-wrapper-->
+    <!-- Start sidebar-wrapper -->
     <?php require_once "../../layout/left_sidebar.php"; ?>
-    <!--End sidebar-wrapper-->
+    <!-- End sidebar-wrapper -->
 
-    <!--Start topbar header-->
+    <!-- Start topbar header -->
     <header class="topbar-nav">
       <?php require_once "../../layout/topbar.php"; ?>
     </header>
-    <!--End topbar header-->
+    <!-- End topbar header -->
 
     <div class="clearfix"></div>
 
-    <!--Start content-wrapper-->
+    <!-- Start content-wrapper -->
     <div class="content-wrapper">
 
-      <!--Start container-fluid-->
+      <!-- Start container-fluid -->
       <div class="container-fluid">
 
-        <!--Start Dashboard Content-->
+        <!-- Start Dashboard Content -->
         <div class="card mt-3">
           <div class="card-body">
-            <h4 class="text-white">Quản lý đơn hàng</h4>
+            <h4 class="text-white">Quản lý phiếu mượn</h4>
 
             <!-- Hiển thị lỗi nếu có -->
             <?php if ($error): ?>
               <div class="alert alert-danger"><?= $error ?></div>
-            <?php elseif ($data): ?>
-              <!-- Hiển thị bảng thông tin đơn hàng -->
+            <?php elseif (!empty($data)): ?>
+              <!-- Hiển thị bảng thông tin phiếu mượn -->
               <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <th>Mã Phiếu Mượn</th>
-                    <th>Tên Người Mượn</th>
-                    <th>Số Lượng</th>
-                    <th>Ngày Mượn</th>
-                    <th>Trạng Thái</th>
+                    <th>Ngày Tạo</th>
+                    <th>Tổng Tiền</th>
+                    <th>Giảm Giá</th>
+                    <th>Phương Thức Thanh Toán</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Tình Trạng</th>
+                    <th>Mã Khách Hàng</th>
+                    <th>Mã Khuyến Mãi</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($data as $row): ?>
                     <tr>
-                      <td><?= htmlspecialchars($row['maPhieuMuon']) ?></td>
-                      <td><?= htmlspecialchars($row['tenNguoiMuon']) ?></td>
-                      <td><?= htmlspecialchars($row['soLuong']) ?></td>
-                      <td><?= htmlspecialchars($row['ngayMuon']) ?></td>
-                      <td><?= htmlspecialchars($row['trangThai']) ?></td>
+                      <td><?= htmlspecialchars($row['MaPhieuMuon']) ?></td>
+                      <td><?= htmlspecialchars($row['NgayTao']) ?></td>
+                      <td><?= htmlspecialchars($row['TongTien']) ?></td>
+                      <td><?= htmlspecialchars($row['GiamGia']) ?></td>
+                      <td><?= htmlspecialchars($row['PhuongThucThanhToan']) ?></td>
+                      <td><?= htmlspecialchars($row['SoDienThoai']) ?></td>
+                      <td><?= htmlspecialchars($row['tinhTrang']) ?></td>
+                      <td><?= htmlspecialchars($row['maKH']) ?></td>
+                      <td><?= htmlspecialchars($row['MaKhuyenMai']) ?></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -79,33 +87,32 @@ $error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
             <?php endif; ?>
           </div>
         </div>
-        <!--End Dashboard Content-->
+        <!-- End Dashboard Content -->
 
-        <!--start overlay-->
+        <!-- Start overlay -->
         <div class="overlay toggle-menu"></div>
-        <!--end overlay-->
-
+        <!-- End overlay -->
 
       </div>
-      <!-- End container-fluid-->
+      <!-- End container-fluid -->
 
     </div>
-    <!--End content-wrapper-->
+    <!-- End content-wrapper -->
 
-    <!--Start Back To Top Button-->
+    <!-- Start Back To Top Button -->
     <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-    <!--End Back To Top Button-->
+    <!-- End Back To Top Button -->
 
-    <!--Start right sidebar-->
+    <!-- Start right sidebar -->
     <?php require_once "../../layout/right_sidebar.php"; ?>
-    <!--End right sidebar-->
+    <!-- End right sidebar -->
 
   </div>
-  <!--End wrapper-->
+  <!-- End wrapper -->
 
-  <!--Start footer-->
+  <!-- Start footer -->
   <?php require_once "../../layout/script.php"; ?>
-  <!--End footer-->
+  <!-- End footer -->
 
 </body>
 

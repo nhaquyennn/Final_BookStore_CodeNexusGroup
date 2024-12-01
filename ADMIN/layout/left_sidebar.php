@@ -15,15 +15,11 @@
 
         <!-- Yêu cầu -->
         <li class="dropdown">
-            <a href="requirements.php">
-                <i class="zmdi"></i>
-                <span class="dropdown-toggle" data-toggle="dropdown">Yêu cầu</span>
-
-                <ul class="dropdown-menu">
-                    <li><a href="#">Yêu cầu xóa khách hàng</a></li>
-                    <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
-                </ul>
-            </a>
+            <a href="requirements.php" class="sidebar-link"><span>Yêu cầu</span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Yêu cầu xóa khách hàng</a></li>
+                <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
+            </ul>
         </li>
 
         <!-- Khuyến mãi -->
@@ -33,7 +29,13 @@
         <li><a href="product.php" class="sidebar-link"><span>Ấn phẩm</span></a></li>
 
         <!-- Đơn hàng -->
-        <li><a href="cart.php" class="sidebar-link"><span>Đơn hàng</span></a></li>
+        <li class="list-group-item">
+            <a href="#" class="sidebar-link" id="statsLinkPublications"><span>Đơn hàng</span></a>
+            <ul id="dateListPublications" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/formTimKiem.php">Tìm kiếm đơn hàng</a></li>
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/duyetDonHang.php">Duyệt đơn hàng</a></li>
+            </ul>
+        </li>
 
         <!-- Danh mục -->
         <li><a href="category.html" class="sidebar-link"><span>Danh mục</span></a></li>
@@ -41,7 +43,6 @@
         <!-- Thống kê ấn phẩm -->
         <li class="list-group-item">
             <a href="#" class="sidebar-link" id="statsLinkPublications"><span>Thống kê ấn phẩm</span></a>
-            <!-- Danh sách ngày tháng năm -->
             <ul id="dateListPublications" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/thongke/thongKeSanPhamTheoNgay.php">Ngày</a></li>
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/thongke/thongKeSanPhamTheoThang.php">Tháng</a></li>
@@ -52,7 +53,6 @@
         <!-- Thống kê doanh thu -->
         <li class="list-group-item">
             <a href="#" class="sidebar-link" id="statsLinkRevenue"><span>Báo cáo doanh thu</span></a>
-            <!-- Danh sách ngày tháng năm -->
             <ul id="dateListRevenue" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a></li>
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/baocao/baoCaoDoanhThuTheoThang.php">Tháng</a></li>
