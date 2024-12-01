@@ -3,12 +3,13 @@ require_once __DIR__ . '/../model/baocao.php'; // Import model với đường d
 
 class BaoCaoController
 {
+  #chưa sửa database
   private $model;
   private $error = null; // Biến lưu lỗi
 
   public function __construct()
   {
-    $this->model = new ThongKeModel();
+    $this->model = new BaoCaoModel();
   }
 
   // Lấy lỗi hiện tại

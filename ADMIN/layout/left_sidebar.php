@@ -51,7 +51,7 @@
 
         <!-- Thống kê doanh thu -->
         <li class="list-group-item">
-            <a href="#" class="sidebar-link" id="statsLinkRevenue"><span>Thống kê doanh thu</span></a>
+            <a href="#" class="sidebar-link" id="statsLinkRevenue"><span>Báo cáo doanh thu</span></a>
             <!-- Danh sách ngày tháng năm -->
             <ul id="dateListRevenue" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a></li>

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../model/thongke.php'; // Import model với đường dẫn tuyệt đối
 
+#chưa test
 class ThongKeController
 {
   private $model;
