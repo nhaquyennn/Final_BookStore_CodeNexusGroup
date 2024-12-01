@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+    <?php require_once "layout/header.php" ?>
+
+</head>
 
 <body class="bg-theme bg-theme2">
     <div class="clearfix"></div>

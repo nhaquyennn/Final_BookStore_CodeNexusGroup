@@ -7,7 +7,7 @@
         </li>
         <li class="nav-item">
             <form class="search-bar">
-                <input type="text" class="form-control" placeholder="Enter keywords">
+                <input type="text" class="form-control" placeholder="Tìm kiếm">
                 <a href="javascript:void();"><i class="icon-magnifier"></i></a>
             </form>
         </li>

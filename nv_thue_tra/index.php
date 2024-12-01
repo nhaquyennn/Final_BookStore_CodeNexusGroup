@@ -1,12 +1,53 @@
-<?php
-//header,nav,...
-include("layout/header.php");
-include("layout/left_sidebar.php");
-include("layout/right_sidebar.php");
-include("layout/script.php");
-include("layout/topbar.php");
-//body
-include("page/taoYCxoa.php");
-include("page/taophieu.php");
-//footer
-include("layout/footer.php");
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <?php require_once "layout/header.php" ?>
+
+</head>
+
+<body class="bg-theme bg-theme2">
+    <div class="clearfix"></div>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- Start wrapper-->
+            <div id="wrapper">
+
+                <!--Start sidebar-wrapper-->
+                <?php require_once "layout/left_sidebar.php" ?>
+                <!--End sidebar-wrapper-->
+
+                <!--Start topbar header-->
+                <header class="topbar-nav">
+                    <?php require_once "layout/topbar.php" ?>
+                </header>
+                <!--End topbar header-->
+
+                <!--Start main content-->
+
+                <!-- CODE Ở ĐÂY -->
+                <div class="row">
+                    <div class="col-9 col-lg-12">
+                        <div class="card">
+                            <div class="rental-voucher">XIN CHÀO NHÂN VIÊN CỬA HÀNG!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End main content-->
+
+        </div>
+        <!-- End wrapper-->
+
+        <!--Start right sidebar-->
+        <?php require_once "layout/right_sidebar.php" ?>
+        <!--End right sidebar-->
+
+        <!--Start footer-->
+        <?php require_once "layout/script.php" ?>
+        <!--End footer-->
+    </div>
+    </div>
+</body>
+
+</html>

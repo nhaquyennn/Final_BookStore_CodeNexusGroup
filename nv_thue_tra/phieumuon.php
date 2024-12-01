@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+    <?php require_once "layout/header.php" ?>
 
 </head>
 
@@ -14,11 +14,14 @@
             <div id="wrapper">
 
                 <!--Start sidebar-wrapper-->
-
+                <?php require_once "layout/left_sidebar.php" ?>
                 <!--End sidebar-wrapper-->
 
                 <!--Start topbar header-->
 
+                <header class="topbar-nav">
+                    <?php require_once "layout/topbar.php" ?>
+                </header>
                 <!--End topbar header-->
 
                 <!--Start main content-->
@@ -26,7 +29,7 @@
                 <!-- CODE Ở ĐÂY -->
                 <div class="PM row">
                     <div class="btn-create-PM col-12">
-                        <a href="page/taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
+                        <a href="taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
                     </div>
                 </div>
                 <div class="row">

@@ -28,14 +28,13 @@
                 <!-- CODE Ở ĐÂY -->
                 <div class="PM row">
                     <div class="btn-create-PM col-12">
-                        <a href="taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
                         <a href="taoPT.php"><button class="btn btn-sm btn-success">Tạo phiếu trả</button></a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-9 col-lg-12">
                         <div class="card">
-                            <div class="card-header">DANH SÁCH PHIẾU</div>
+                            <div class="card-header">DANH SÁCH PHIẾU TRẢ</div>
                             <div class="table-responsive">
                                 <table class="table align-items-center table-flush table-borderless">
                                     <thead>
@@ -53,6 +52,7 @@
                                             <td>12/10/2024</td>
                                             <td>Chờ Duyệt</td>
                                         </tr>
+
                                     </tbody>
                                 </table>
                             </div>
