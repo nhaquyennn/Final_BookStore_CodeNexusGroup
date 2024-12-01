@@ -6,30 +6,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <!-- <div id="preloder">
-        <div class="loader"></div>
-    </div> -->
-    <img src="img/breadcrumb.jpg" alt="">
-    <!-- Breadcrumb Section Begin -->
-    <!-- <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb__text">
-                         <h2>Vegetable’s Package</h2> 
-                        <div class="breadcrumb__option">
-                            <a href="./index.php">Home</a>
-                            <a href="./index.php">Vegetables</a>
-                            <span>Vegetable’s Package</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- Breadcrumb Section End -->
-
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
         <div class="container">
@@ -37,8 +13,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large"
-                                src="img/product/book-5.jpg" alt="">
+                            <img class="product__details__pic__item--large" src="img/product/book-5.jpg" alt="">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
                             <img data-imgbigurl="img/product/details/product-details-2.jpg"
@@ -64,7 +39,12 @@
                             <span>(18 reviews)</span>
                         </div>
                         <div class="product__details__price">$50.00</div>
-                        <p>Có hay không một lâu đài dưới đáy biển? Vào kỳ nghỉ hè, nhóm bạn Nobita tranh cãi nhau rằng nên đi biển hay lên núi. Doremon đưa ra phương án hội tụ đủ cả hai yếu tố trên đó là… xuống đáy biển. Trong lần đi thám hiểm vực Mariana, cả nhóm phát hiện ra xác một con tàu cổ. Hóa ra vùng biển dưới đáy đại dương mênh mông không hề phẳng lặng mà ẩn chứa vô vàn những thế lực hung ác. Chuyến nghỉ hè của Nobita và các bạn bất ngờ biến thành một chuyến phiêu lưu đầy bất trắc…</p>
+                        <p>Có hay không một lâu đài dưới đáy biển? Vào kỳ nghỉ hè, nhóm bạn Nobita tranh cãi nhau rằng
+                            nên đi biển hay lên núi. Doremon đưa ra phương án hội tụ đủ cả hai yếu tố trên đó là… xuống
+                            đáy biển. Trong lần đi thám hiểm vực Mariana, cả nhóm phát hiện ra xác một con tàu cổ. Hóa
+                            ra vùng biển dưới đáy đại dương mênh mông không hề phẳng lặng mà ẩn chứa vô vàn những thế
+                            lực hung ác. Chuyến nghỉ hè của Nobita và các bạn bất ngờ biến thành một chuyến phiêu lưu
+                            đầy bất trắc…</p>
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
@@ -109,21 +89,31 @@
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Thông tin các ấn phẩm</h6>
-                                    <p>Các ấn phẩm này không chỉ là phương tiện giải trí mà còn là nguồn kiến thức và cảm hứng. Chúng phản ánh văn hóa, tư tưởng và tâm tư của con người, đồng thời kết nối độc giả với những trải nghiệm mới.</p>
-                                    <p>Các ấn phẩm này là một phần quan trọng của văn hóa giải trí toàn cầu, mang đến những câu chuyện đa dạng qua hình ảnh và văn bản.</p>
+                                    <p>Các ấn phẩm này không chỉ là phương tiện giải trí mà còn là nguồn kiến thức và
+                                        cảm hứng. Chúng phản ánh văn hóa, tư tưởng và tâm tư của con người, đồng thời
+                                        kết nối độc giả với những trải nghiệm mới.</p>
+                                    <p>Các ấn phẩm này là một phần quan trọng của văn hóa giải trí toàn cầu, mang đến
+                                        những câu chuyện đa dạng qua hình ảnh và văn bản.</p>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Thông tin các ấn phẩm</h6>
-                                    <p>Các ấn phẩm này không chỉ là phương tiện giải trí mà còn là nguồn kiến thức và cảm hứng. Chúng phản ánh văn hóa, tư tưởng và tâm tư của con người, đồng thời kết nối độc giả với những trải nghiệm mới.</p>
-                                    <p>Ấn phẩm là những nguồn tài nguyên quý giá, mang lại kiến thức và giải trí cho mọi người. Chúng không chỉ giúp mở rộng hiểu biết mà còn nuôi dưỡng tâm hồn và trí tưởng tượng. Mỗi quyển sách, mỗi câu chuyện đều chứa đựng những ý nghĩa sâu sắc và bài học cuộc sống.</p>
+                                    <p>Các ấn phẩm này không chỉ là phương tiện giải trí mà còn là nguồn kiến thức và
+                                        cảm hứng. Chúng phản ánh văn hóa, tư tưởng và tâm tư của con người, đồng thời
+                                        kết nối độc giả với những trải nghiệm mới.</p>
+                                    <p>Ấn phẩm là những nguồn tài nguyên quý giá, mang lại kiến thức và giải trí cho mọi
+                                        người. Chúng không chỉ giúp mở rộng hiểu biết mà còn nuôi dưỡng tâm hồn và trí
+                                        tưởng tượng. Mỗi quyển sách, mỗi câu chuyện đều chứa đựng những ý nghĩa sâu sắc
+                                        và bài học cuộc sống.</p>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Thông tin các ấn phẩm</h6>
-                                    <p>Các ấn phẩm này không chỉ là phương tiện giải trí mà còn là nguồn kiến thức và cảm hứng. Chúng phản ánh văn hóa, tư tưởng và tâm tư của con người, đồng thời kết nối độc giả với những trải nghiệm mới.</p>
+                                    <p>Các ấn phẩm này không chỉ là phương tiện giải trí mà còn là nguồn kiến thức và
+                                        cảm hứng. Chúng phản ánh văn hóa, tư tưởng và tâm tư của con người, đồng thời
+                                        kết nối độc giả với những trải nghiệm mới.</p>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +199,7 @@
         </div>
     </section>
     <!-- Related Product Section End -->
-     
+
     <footer>
         <?php require_once 'layout/footer.php' ?>
     </footer>

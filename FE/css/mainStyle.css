@@ -1577,10 +1577,6 @@ Sidebar
   Shop Details
 -----------------------*/
 
-.product-details {
-    padding-top: 80px;
-}
-
 .product__details__pic__item {
     margin-bottom: 20px;
 }
@@ -1795,7 +1791,6 @@ Sidebar
 -----------------------*/
 
 .shoping-cart {
-    padding-top: 80px;
     padding-bottom: 80px;
 }
 

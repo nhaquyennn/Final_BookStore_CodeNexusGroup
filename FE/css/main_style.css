@@ -146,6 +146,10 @@ Helper CSS
 	padding: 13px 30px 12px;
 	background: #E75480;
 	border: none;
+<<<<<<< HEAD
+=======
+	text-align:center;
+>>>>>>> origin/nhanh-cua-tai
 }
 
 /* Preloder */
@@ -180,12 +184,20 @@ Helper CSS
 		border: 4px solid #f44336;
 		border-left-color: transparent;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/nhanh-cua-tai
 	50% {
 		-webkit-transform: rotate(180deg);
 		transform: rotate(180deg);
 		border: 4px solid #673ab7;
 		border-left-color: transparent;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/nhanh-cua-tai
 	100% {
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
@@ -200,11 +212,19 @@ Helper CSS
 		border: 4px solid #f44336;
 		border-left-color: transparent;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/nhanh-cua-tai
 	50% {
 		-webkit-transform: rotate(180deg);
 		border: 4px solid #673ab7;
 		border-left-color: transparent;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/nhanh-cua-tai
 	100% {
 		-webkit-transform: rotate(360deg);
 		border: 4px solid #f44336;
@@ -383,7 +403,12 @@ Header
 
 .header__menu {
 	padding: 24px 0;
+<<<<<<< HEAD
 	position: -webkit-sticky; /* Safari */
+=======
+	position: -webkit-sticky;
+	/* Safari */
+>>>>>>> origin/nhanh-cua-tai
 	position: sticky;
 	top: 0;
 	z-index: 1000;
@@ -429,9 +454,15 @@ Header
 	padding: 5px 15px;
 }
 
+<<<<<<< HEAD
 .header__menu ul li.active a {
 	color: #E75480;
 }
+=======
+/* .header__menu ul li.active a {
+	color: black;
+} */
+>>>>>>> origin/nhanh-cua-tai
 
 .header__menu ul li:hover .header__menu__dropdown {
 	top: 30px;
@@ -1867,11 +1898,19 @@ Sidebar
 .shoping__cart__table table tbody tr td.shoping__cart__item {
 	width: 630px;
 	text-align: left;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/nhanh-cua-tai
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item img {
 	display: inline-block;
 	margin-right: 25px;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/nhanh-cua-tai
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item h5 {
@@ -1879,6 +1918,14 @@ Sidebar
 	display: inline-block;
 }
 
+<<<<<<< HEAD
+=======
+/* .shoping__cart__table table tbody tr td.shoping__cart__item .sp {
+	display: flex;
+	align-items: center;
+} */
+
+>>>>>>> origin/nhanh-cua-tai
 .shoping__cart__table table tbody tr td.shoping__cart__price {
 	font-size: 18px;
 	color: #1c1c1c;
@@ -2867,6 +2914,7 @@ Sidebar
 	.header__menu ul li {
 		margin-right: 45px;
 	}
+<<<<<<< HEAD
 	.hero__search__form {
 		width: 490px;
 	}
@@ -2885,6 +2933,33 @@ Sidebar
 	.product__details__tab .nav-tabs:after {
 		width: 265px;
 	}
+=======
+
+	.hero__search__form {
+		width: 490px;
+	}
+
+	.hero__categories__all {
+		padding: 10px 25px 10px 20px;
+	}
+
+	.hero__categories ul {
+		padding-left: 20px;
+	}
+
+	.latest-product__slider.owl-carousel .owl-nav {
+		right: 0;
+	}
+
+	.product__details__tab .nav-tabs:before {
+		width: 265px;
+	}
+
+	.product__details__tab .nav-tabs:after {
+		width: 265px;
+	}
+
+>>>>>>> origin/nhanh-cua-tai
 	.shoping__discount form input {
 		width: 240px;
 	}
@@ -2892,6 +2967,11 @@ Sidebar
 
 /* Ẩn danh sách danh mục ban đầu */
 .category-list {
+<<<<<<< HEAD
     display: none;
 }
 
+=======
+	display: none;
+}
+>>>>>>> origin/nhanh-cua-tai
