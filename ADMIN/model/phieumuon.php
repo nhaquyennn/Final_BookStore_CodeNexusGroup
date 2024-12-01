@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../database/db_connect.php'; // Require file kết nối database
 
-class OrderModel
+class PhieuMuonModel
 {
   private $conn;
 
@@ -10,13 +10,12 @@ class OrderModel
     $this->conn = $db; // Gán kết nối database cho thuộc tính $conn
   }
 
-  // Hàm tìm kiếm phiếu mượn theo mã chi tiết phiếu mượn
-  public function selectTheoMaChiTietPhieuMuon($idCTPM)
+  // Hàm lấy thông tin phiếu mượn theo mã phiếu mượn
+  public function getPM($idPM)
   {
-    $sql = "SELECT * FROM chitietphieumuon WHERE maPhieuMuon LIKE ?";
+    $sql = "SELECT * FROM phieumuon WHERE MaPhieuMuon = ?";
     $stmt = $this->conn->prepare($sql);
-    $searchTerm = "%$idCTPM%";
-    $stmt->bind_param("s", $searchTerm);
+    $stmt->bind_param("s", $idPM); // Bind tham số mã phiếu mượn
     $stmt->execute();
     $result = $stmt->get_result();
 
