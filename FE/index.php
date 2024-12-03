@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
+<?php include 'controlCustomerUI/controlCategory.php'; ?>
+
 
 <head>
     <?php require_once 'layout/header.php' ?>
@@ -7,12 +9,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-
     <!-- Categories Section Begin -->
     <section class="categories">
         <div class="container">
@@ -60,10 +56,9 @@
                     <div class="featured__controls">
                         <ul>
                             <li class="active" data-filter="*">Tất cả</li>
-                            <li data-filter=".oranges">Sách trinh thám</li>
-                            <li data-filter=".fresh-meat">Truyện tranh</li>
-                            <li data-filter=".vegetables">Sách tiếng Anh</li>
-                            <li data-filter=".fastfood">Tạp chí thời trang</li>
+                            <?php foreach ($categories as $category): ?>
+                                <li><a href="#"><?php echo htmlspecialchars($category); ?></a></li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>

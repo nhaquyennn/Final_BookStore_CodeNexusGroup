@@ -1,9 +1,9 @@
 <?php
 session_start();
-// Kiểm tra nếu session 'user' không tồn tại 
+// Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
 if (!isset($_SESSION['user'])) {
   // Nếu chưa đăng nhập, chuyển hướng về trang login
-  header("Location: user/login.php?error=Vui lòng đăng nhập.");
+  header("Location: ../../user/login.php?error=Vui lòng đăng nhập.");
   exit();
 }
 ?>
@@ -11,25 +11,30 @@ if (!isset($_SESSION['user'])) {
 <html lang="en">
 
 <head>
-  <?php require_once "layout/header.php" ?>
+  <?php require_once "../../layout/header.php"; ?>
 </head>
 
 <body class="bg-theme bg-theme9">
   <!-- Start wrapper-->
   <div id="wrapper">
+
+    <!--Start sidebar-wrapper-->
+    <?php require_once "../../layout/left_sidebar.php"; ?>
+    <!--End sidebar-wrapper-->
+
+    <!--Start topbar header-->
+    <header class="topbar-nav">
+      <?php require_once "../../layout/topbar.php"; ?>
+    </header>
+    <!--End topbar header-->
+
     <div class="clearfix"></div>
+
+    <!--Start content-wrapper-->
     <div class="content-wrapper">
+
+      <!--Start container-fluid-->
       <div class="container-fluid">
-
-        <!--Start sidebar-wrapper-->
-        <?php require_once "layout/left_sidebar.php" ?>
-        <!--End sidebar-wrapper-->
-
-        <!--Start topbar header-->
-        <header class="topbar-nav">
-          <?php require_once "layout/topbar.php" ?>
-        </header>
-        <!--End topbar header-->
 
         <!--Start Dashboard Content-->
         <div class="card mt-3">
@@ -74,27 +79,7 @@ if (!isset($_SESSION['user'])) {
         <div class="overlay toggle-menu"></div>
         <!--end overlay-->
 
-        <!--Start Charts-->
-        <div class="row">
-          <div class="col-md-6">
-            <div class="card mt-5">
-              <div class="card-body">
-                <h5 class="text-white font-weight-bold">Biểu đồ sản phẩm thuê trong ngày</h5>
-                <canvas id="rentedProductsChart" height="200"></canvas>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-md-6">
-            <div class="card mt-5">
-              <div class="card-body">
-                <h5 class="text-white font-weight-bold">Biểu đồ doanh thu 7 ngày gần đây</h5>
-                <canvas id="revenueChart" height="200"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--End Charts-->
       </div>
       <!-- End container-fluid-->
 
@@ -106,14 +91,14 @@ if (!isset($_SESSION['user'])) {
     <!--End Back To Top Button-->
 
     <!--Start right sidebar-->
-    <?php require_once "layout/right_sidebar.php" ?>
+    <?php require_once "../../layout/right_sidebar.php"; ?>
     <!--End right sidebar-->
 
   </div>
   <!--End wrapper-->
 
   <!--Start footer-->
-  <?php require_once "layout/script.php" ?>
+  <?php require_once "../../layout/script.php"; ?>
   <!--End footer-->
 
 </body>
