@@ -14,11 +14,12 @@
         </li>
 
         <!-- Yêu cầu -->
-        <li class="dropdown">
-            <a href="requirements.php" class="sidebar-link"><span>Yêu cầu</span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Yêu cầu xóa khách hàng</a></li>
-                <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
+        <li class="list-group-item">
+            <a href="#" class="sidebar-link" id="request"><span>Yêu cầu</span></a>
+            <!-- Danh sách ngày tháng năm -->
+            <ul id="requestForm" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
+                <li class="list-group-item"><a href="#">Yêu cầu xoá khách hàng</a></li>
+                <li class="list-group-item"><a href="#">Yêu cầu xoá án phẩm</a></li>
             </ul>
         </li>
 
@@ -30,10 +31,11 @@
 
         <!-- Đơn hàng -->
         <li class="list-group-item">
-            <a href="#" class="sidebar-link" id="statsLinkPublications"><span>Đơn hàng</span></a>
-            <ul id="dateListPublications" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
+            <a href="#" class="sidebar-link" id="order"><span>Đơn hàng</span></a>
+            <!-- Danh sách ngày tháng năm -->
+            <ul id="orderForm" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/formTimKiem.php">Tìm kiếm đơn hàng</a></li>
-                <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/duyetDonHang.php">Duyệt đơn hàng</a></li>
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/danhSachDonHang.php">Danh Sách Đơn Hàng</a></li>
             </ul>
         </li>
 
@@ -43,6 +45,7 @@
         <!-- Thống kê ấn phẩm -->
         <li class="list-group-item">
             <a href="#" class="sidebar-link" id="statsLinkPublications"><span>Thống kê ấn phẩm</span></a>
+            <!-- Danh sách ngày tháng năm -->
             <ul id="dateListPublications" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/thongke/thongKeSanPhamTheoNgay.php">Ngày</a></li>
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/thongke/thongKeSanPhamTheoThang.php">Tháng</a></li>
@@ -53,6 +56,7 @@
         <!-- Thống kê doanh thu -->
         <li class="list-group-item">
             <a href="#" class="sidebar-link" id="statsLinkRevenue"><span>Báo cáo doanh thu</span></a>
+            <!-- Danh sách ngày tháng năm -->
             <ul id="dateListRevenue" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a></li>
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/baocao/baoCaoDoanhThuTheoThang.php">Tháng</a></li>
@@ -86,12 +90,26 @@
         link.addEventListener('click', (e) => {
             e.preventDefault(); // Ngăn chặn hành động mặc định
 
+
             // Lấy ID của danh sách cần hiển thị
             let targetId = null;
-            if (link.getAttribute('id') === 'statsLinkPublications') {
-                targetId = 'dateListPublications';
-            } else if (link.getAttribute('id') === 'statsLinkRevenue') {
-                targetId = 'dateListRevenue';
+
+            switch (link.getAttribute('id')) {
+                case 'statsLinkPublications':
+                    targetId = 'dateListPublications';
+                    break;
+                case 'statsLinkRevenue':
+                    targetId = 'dateListRevenue';
+                    break;
+                case 'order':
+                    targetId = 'orderForm';
+                    break;
+                case 'request':
+                    targetId = 'requestForm';
+                    break;
+                default:
+                    targetId = null; // Nếu không khớp với bất kỳ trường hợp nào
+                    break;
             }
 
             // Nếu không có danh sách con liên quan, bỏ qua
