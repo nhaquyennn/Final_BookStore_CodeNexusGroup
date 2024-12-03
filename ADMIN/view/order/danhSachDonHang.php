@@ -37,41 +37,46 @@ if (!isset($_SESSION['user'])) {
       <div class="container-fluid">
 
         <!--Start Dashboard Content-->
-        <div class="card mt-3">
-          <div class="card-content">
-            <div class="row row-group m-0">
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">22 <span class="float-right"><i class="fa fa-shopping-cart"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Tổng đơn hàng hôm nay</p>
-                </div>
-              </div>
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">100.000.000 <span class="float-right"><i class="fa fa-usd"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Tổng doanh thu hôm nay</p>
-                </div>
-              </div>
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">3 <span class="float-right"><i class="zmdi zmdi-assignment"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Yêu cầu</p>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="container mt-4">
+          <h2>Danh sách đơn hàng</h2>
+
+          <!-- Bảng danh sách đơn hàng -->
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Mã đơn hàng</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt hàng</th>
+                <th>Trạng thái</th>
+                <th>Tổng giá trị</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>DH001</td>
+                <td>Nguyễn Văn A</td>
+                <td>01/12/2024</td>
+                <td><span class="badge bg-warning">Chưa duyệt</span></td>
+                <td>1,500,000 VND</td>
+                <td>
+                  <button class="btn btn-success btn-sm">Duyệt</button>
+                  <a href="formTuChoi.php" class="btn btn-danger btn-sm">Từ chối</a>
+                </td>
+              </tr>
+              <tr>
+                <td>DH002</td>
+                <td>Trần Thị B</td>
+                <td>01/12/2024</td>
+                <td><span class="badge bg-success">Đã duyệt</span></td>
+                <td>3,200,000 VND</td>
+                <td>
+                  <button class="btn btn-secondary btn-sm" disabled>Duyệt</button>
+                  <button class="btn btn-secondary btn-sm" disabled>Từ chối</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <!--End Dashboard Content-->
 

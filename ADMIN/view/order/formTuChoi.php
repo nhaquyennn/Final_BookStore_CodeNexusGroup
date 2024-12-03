@@ -31,58 +31,16 @@ if (!isset($_SESSION['user'])) {
     <div class="clearfix"></div>
 
     <!--Start content-wrapper-->
-    <div class="content-wrapper">
-
-      <!--Start container-fluid-->
-      <div class="container-fluid">
-
-        <!--Start Dashboard Content-->
-        <div class="card mt-3">
-          <div class="card-content">
-            <div class="row row-group m-0">
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">22 <span class="float-right"><i class="fa fa-shopping-cart"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Tổng đơn hàng hôm nay</p>
-                </div>
-              </div>
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">100.000.000 <span class="float-right"><i class="fa fa-usd"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Tổng doanh thu hôm nay</p>
-                </div>
-              </div>
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">3 <span class="float-right"><i class="zmdi zmdi-assignment"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Yêu cầu</p>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="content-wrapper d-flex justify-content-center align-items-center vh-100">
+      <!--Card Content-->
+      <div class="custom-card text-center">
+        <h4 class="mb-4">Bạn có chắc chắn muốn từ chối đơn hàng?</h4>
+        <div class="d-flex justify-content-center">
+          <a href="danhSachDonHang.php" class="btn btn-danger me-3 px-4">Từ chối</a>
+          <button class="btn btn-secondary px-4">Hủy</button>
         </div>
-        <!--End Dashboard Content-->
-
-        <!--start overlay-->
-        <div class="overlay toggle-menu"></div>
-        <!--end overlay-->
-
-
       </div>
-      <!-- End container-fluid-->
-
+      <!--End Card Content-->
     </div>
     <!--End content-wrapper-->
 
