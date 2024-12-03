@@ -41,7 +41,7 @@ if ($result_publishers && $result_publishers->num_rows > 0) {
 }
 
 //Lấy danh sách năm xuất bản
-$sql_years = "SELECT DISTINCT YEAR(ngayXB) AS NamXB FROM anpham";
+$sql_years = "SELECT DISTINCT YEAR(ngayXB) AS NamXB FROM dauap";
 $result_years = $conn->query($sql_years);
 
 $years = [];
@@ -66,7 +66,7 @@ if ($result_total_dauap && $result_total_dauap->num_rows > 0) {
 }
 
 // Truy vấn lấy dữ liệu từ các bảng, chỉ lấy các sản phẩm có tinhTrang là "Mới"
-$sql = "SELECT a.TenAnPham, a.Giathue, a.ngayXB, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, dm.TenDanhMuc
+$sql = "SELECT a.TenAnPham, a.Giathue, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
         FROM anpham a
         INNER JOIN dauap d ON a.madauAP = d.madauAP
         INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc
