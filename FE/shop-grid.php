@@ -73,27 +73,29 @@ include 'controlCustomerUI/controlShopGrid.php';
                             <div class="latest-product__text">
                                 <h4>Sản phẩm mới</h4>
                                 <div class="latest-product__slider owl-carousel">
-                                    <div class="latest-prdouct__slider__item">
-                                        <a href="#" class="latest-product__item">
-                                            <?php if (!empty($products)): ?>
-                                                <?php foreach ($products as $product): ?>
+                                    <?php if (!empty($products)): ?>
+                                        <?php
+                                        $chunks = array_chunk($products, 3); // Chia sản phẩm thành các nhóm 3 sản phẩm
+                                        foreach ($chunks as $chunk): ?>
+                                            <div class="latest-product__slider__item">
+                                                <?php foreach ($chunk as $product): ?>
                                                     <a href="#" class="latest-product__item">
                                                         <div class="latest-product__item__pic">
-                                                            <img src="img/latest-product/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
+                                                            <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
                                                                 alt="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
                                                         </div>
                                                         <div class="latest-product__item__text">
                                                             <h6><?php echo htmlspecialchars($product['TenAnPham']); ?></h6>
-                                                            <span><?php echo number_format($product['Gia'], 0, ',', '.'); ?>
+                                                            <span><?php echo number_format($product['Giathue'], 0, ',', '.'); ?>
                                                                 VND</span>
                                                         </div>
                                                     </a>
                                                 <?php endforeach; ?>
-                                            <?php else: ?>
-                                                <p>Không có sản phẩm mới để hiển thị.</p>
-                                            <?php endif; ?>
-                                        </a>
-                                    </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <p>Không có sản phẩm mới để hiển thị.</p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

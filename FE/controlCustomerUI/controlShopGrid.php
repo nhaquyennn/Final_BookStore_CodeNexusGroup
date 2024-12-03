@@ -1,14 +1,14 @@
 <?php
 // Truy vấn lấy dữ liệu từ các bảng và thêm trường hinhAnh từ bảng dauap
-$sql = "SELECT a.TenAnPham, a.Giathue, a.ngayXB, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, dm.TenDanhMuc
+$sql = "SELECT a.TenAnPham, a.Giathue, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
         FROM anpham a
         INNER JOIN dauap d ON a.madauAP = d.madauAP
         INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc";
 
 $result = $conn->query($sql);
 
-$products = []; // Mảng lưu dữ liệu sản phẩm
-$product_names = []; // Mảng dùng để kiểm tra tên sản phẩm đã xuất hiện chưa
+$products = [];
+$product_names = [];
 
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {

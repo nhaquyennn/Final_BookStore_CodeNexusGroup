@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 01, 2024 lúc 05:55 PM
+-- Thời gian đã tạo: Th12 03, 2024 lúc 07:20 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -21,6 +21,23 @@ SET time_zone = "+00:00";
 -- Cơ sở dữ liệu: `final_nexus`
 --
 
+DELIMITER $$
+--
+-- Thủ tục
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateGiaThue` ()   BEGIN
+    -- Cập nhật giá thuê cho các tình trạng khác
+    UPDATE anpham
+    SET giaThue = giaThue * 0.9
+    WHERE tinhTrang = 'Tốt';
+
+    UPDATE anpham
+    SET giaThue = giaThue * 0.7
+    WHERE tinhTrang = 'Hư hỏng nhẹ';
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -30,9 +47,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `anpham` (
   `maAnPham` int(10) NOT NULL,
   `TenAnPham` varchar(300) NOT NULL,
-  `Gia` float NOT NULL,
-  `ngayXB` date NOT NULL,
+  `Giathue` float NOT NULL,
   `tinhTrang` varchar(255) DEFAULT NULL,
+  `soLuongChoThue` int(255) NOT NULL,
+  `soLuongTonKho` int(255) NOT NULL,
   `madauAP` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,27 +58,32 @@ CREATE TABLE `anpham` (
 -- Đang đổ dữ liệu cho bảng `anpham`
 --
 
-INSERT INTO `anpham` (`maAnPham`, `TenAnPham`, `Gia`, `ngayXB`, `tinhTrang`, `madauAP`) VALUES
-(1, 'Bên Rìa Thế Giới', 75000, '2021-10-10', 'Mới', 1),
-(2, 'Bên Rìa Thế Giới', 85000, '2021-06-15', 'Đang thuê', 1),
-(3, 'Chuyện Con Mèo Dạy Hải Âu Bay', 62000, '2020-07-20', 'Còn', 2),
-(4, 'Chuyện Con Mèo Dạy Hải Âu Bay', 58000, '2020-08-25', 'Đang thuê', 2),
-(5, 'Lược Sử Thời Gian', 160000, '2019-09-30', 'Mới', 3),
-(6, 'Lược Sử Thời Gian', 170000, '2019-10-05', 'Mới', 3),
-(7, 'Sapiens: Lược Sử Loài Người', 210000, '2018-11-11', 'Còn', 4),
-(8, 'Sapiens: Lược Sử Loài Người', 200000, '2018-12-12', 'Còn', 4),
-(9, 'Harry Potter và Hòn Đá Phù Thủy', 125000, '2021-03-01', 'Còn', 5),
-(10, 'Harry Potter và Hòn Đá Phù Thủy', 115000, '2021-04-01', 'Đang thuê', 5),
-(11, 'Mắt Biếc', 70000, '2021-01-15', 'Mới', 6),
-(12, 'Mắt Biếc', 80000, '2021-02-20', 'Mới', 6),
-(13, 'Thế Giới Không Có Nước', 90000, '2019-05-25', 'Còn', 7),
-(14, 'Thế Giới Không Có Nước', 85000, '2019-06-30', 'Đang thuê', 7),
-(15, 'Những Điều Kỳ Diệu Của Địa Lý', 120000, '2020-09-15', 'Mới', 8),
-(16, 'Những Điều Kỳ Diệu Của Địa Lý', 115000, '2020-10-20', 'Mới', 8),
-(17, 'Người Xưa Và Nghệ Thuật', 135000, '2021-02-28', 'Mới', 9),
-(18, 'Người Xưa Và Nghệ Thuật', 125000, '2021-03-15', 'Còn', 9),
-(19, '1001 Đêm Nghệ Thuật', 145000, '2021-04-10', 'Còn', 10),
-(20, '1001 Đêm Nghệ Thuật', 150000, '2021-05-05', 'Đang thuê', 10);
+INSERT INTO `anpham` (`maAnPham`, `TenAnPham`, `Giathue`, `tinhTrang`, `soLuongChoThue`, `soLuongTonKho`, `madauAP`) VALUES
+(1, '10 Vạn Câu Hỏi Vì Sao', 75000, 'Mới', 10, 20, 11),
+(2, 'Chuyện Bên Rìa Thế Giới', 28350, 'Tốt', 5, 95, 1),
+(3, 'Chuyện Con Mèo Dạy Hải Âu Bay', 135000, 'Tốt', 20, 60, 2),
+(4, 'Chuyện Con Mèo Dạy Hải Âu Bay', 105000, 'Hư hỏng nhẹ', 0, 60, 2),
+(5, 'Lược Sử Thời Gian', 500000, 'Mới', 30, 90, 3),
+(6, 'Lược Sử Thời Gian', 450000, 'Tốt', 0, 90, 3),
+(7, 'Sapiens: Lược Sử Loài Người', 250000, 'Mới', 20, 180, 4),
+(8, 'Sapiens: Lược Sử Loài Người', 225000, 'Tốt', 0, 180, 4),
+(9, 'Harry Potter và Hòn Đá Phù Thủy', 91125, 'Tốt', 0, 100, 5),
+(10, 'Harry Potter và Hòn Đá Phù Thủy', 70875, 'Hư hỏng nhẹ', 10, 100, 5),
+(11, 'Mắt Biếc', 17150, 'Hư hỏng nhẹ', 0, 100, 12),
+(12, 'Mắt Biếc', 24500, 'Mới', 0, 100, 12),
+(13, 'Thế Giới Không Có Người Xấu', 135000, 'Tốt', 0, 30, 7),
+(14, 'Thế Giới Không Có Người Xấu', 105000, 'Hư hỏng nhẹ', 0, 30, 7),
+(15, 'Căn Phòng Của Những Điều Kỳ Diệu', 120000, 'Mới', 0, 89, 8),
+(16, 'Căn Phòng Của Những Điều Kỳ Diệu', 120000, 'Mới', 1, 89, 8),
+(17, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 135000, 'Mới', 0, 60, 9),
+(18, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 121500, 'Tốt', 20, 60, 9),
+(19, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 200000, 'Mới', 0, 70, 10),
+(20, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 140000, 'Hư hỏng nhẹ', 0, 70, 10),
+(21, 'Chuyện Bên Rìa Thế Giới', 31500, 'Mới', 0, 95, 1),
+(22, 'Đội Quân Doraemon - Đại Chiến Thuật Côn Trùng', 15000, 'Mới', 0, 140, 6),
+(23, 'Tạp Chí Bóng đá Plus - Tháng 12/2024', 10000, 'Mới', 0, 30, 13),
+(24, 'Tạp Chí Bóng Đá Plus - Tháng 11/2024', 10000, 'Mới', 0, 30, 15),
+(25, 'Đẹp Magazine - Tháng 12/2024', 10000, 'Mới', 2, 28, 14);
 
 -- --------------------------------------------------------
 
@@ -89,19 +112,22 @@ CREATE TABLE `chitietpm` (
 CREATE TABLE `danhmucap` (
   `MaDanhMuc` int(10) NOT NULL,
   `TenDanhMuc` varchar(255) DEFAULT NULL,
-  `MoTa` varchar(255) DEFAULT NULL
+  `MoTa` varchar(255) DEFAULT NULL,
+  `hinhAnh` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `danhmucap`
 --
 
-INSERT INTO `danhmucap` (`MaDanhMuc`, `TenDanhMuc`, `MoTa`) VALUES
-(1, 'Tiểu Thuyết', 'Mang đến những câu chuyện hấp dẫn và sâu sắc về cuộc sống, tình yêu, và nhân văn.'),
-(2, 'Khoa Học', 'Cung cấp kiến thức đa dạng từ tự nhiên, xã hội đến công nghệ,'),
-(3, 'Thiếu Nhi', 'Với các câu chuyện thú vị và giáo dục, giúp phát triển trí tưởng tượng và kỹ năng đọc cho trẻ nhỏ.'),
-(4, 'Lịch Sử', 'Khám phá các sự kiện quan trọng, nhân vật lịch sử và bối cảnh văn hóa từ các thời kỳ khác nhau trên thế giới'),
-(5, 'Nghệ Thuật', 'Giới thiệu về các hình thức nghệ thuật khác nhau như hội họa, điêu khắc, âm nhạc, và văn học, cùng các nghệ sĩ vĩ đại qua các thời kỳ.');
+INSERT INTO `danhmucap` (`MaDanhMuc`, `TenDanhMuc`, `MoTa`, `hinhAnh`) VALUES
+(1, 'Tiểu Thuyết', 'Mang đến những câu chuyện hấp dẫn và sâu sắc về cuộc sống, tình yêu, và nhân văn.', ''),
+(2, 'Khoa Học', 'Cung cấp kiến thức đa dạng từ tự nhiên, xã hội đến công nghệ,', ''),
+(3, 'Thiếu Nhi', 'Với các câu chuyện thú vị và giáo dục, giúp phát triển trí tưởng tượng và kỹ năng đọc cho trẻ nhỏ.', ''),
+(4, 'Lịch Sử', 'Khám phá các sự kiện quan trọng, nhân vật lịch sử và bối cảnh văn hóa từ các thời kỳ khác nhau trên thế giới', ''),
+(5, 'Nghệ Thuật', 'Giới thiệu về các hình thức nghệ thuật khác nhau như hội họa, điêu khắc, âm nhạc, và văn học, cùng các nghệ sĩ vĩ đại qua các thời kỳ.', ''),
+(6, 'Tạp Chí Thể Thao', 'Chuyên cung cấp tin tức, phân tích, phỏng vấn và hình ảnh nổi bật về các sự kiện, vận động viên, và môn thể thao, truyền cảm hứng sống khỏe và năng động.', ''),
+(7, 'Tạp Chí Thời Trang', 'Chuyên về xu hướng thời trang, phong cách sống, và làm đẹp. ', '');
 
 -- --------------------------------------------------------
 
@@ -111,30 +137,55 @@ INSERT INTO `danhmucap` (`MaDanhMuc`, `TenDanhMuc`, `MoTa`) VALUES
 
 CREATE TABLE `dauap` (
   `madauAP` int(10) NOT NULL,
-  `TenAnPham` varchar(255) NOT NULL,
+  `TenDauAnPham` varchar(255) NOT NULL,
   `Tacgia` varchar(255) NOT NULL,
   `NXB` varchar(200) NOT NULL,
   `Tongsoluong` int(10) NOT NULL,
   `VitrixepGia` varchar(255) DEFAULT NULL,
   `MaDanhMuc` int(10) NOT NULL,
-  `hinhAnh` varchar(300) NOT NULL
+  `hinhAnh` varchar(300) NOT NULL,
+  `moTa` varchar(255) NOT NULL,
+  `ngayXB` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `dauap`
 --
 
-INSERT INTO `dauap` (`madauAP`, `TenAnPham`, `Tacgia`, `NXB`, `Tongsoluong`, `VitrixepGia`, `MaDanhMuc`, `hinhAnh`) VALUES
-(1, 'Bên Rìa Thế Giới', 'Nguyễn Nhật Ánh', 'NXB Kim Đồng', 100, '70000', 1, ''),
-(2, 'Chuyện Con Mèo Dạy Hải Âu Bay', 'Luis Sepúlveda', 'NXB Trẻ', 80, '60000', 1, ''),
-(3, 'Lược Sử Thời Gian', 'Stephen Hawking', 'NXB Tổng Hợp', 120, '150000', 2, ''),
-(4, 'Sapiens: Lược Sử Loài Người', 'Yuval Noah Harari', 'NXB Dân Trí', 200, '200000', 2, ''),
-(5, 'Harry Potter và Hòn Đá Phù Thủy', 'J.K. Rowling', 'NXB Kim Đồng', 110, '120000', 3, ''),
-(6, 'Mắt Biếc', 'Nguyễn Nhật Ánh', 'NXB Kim Đồng', 140, '65000', 3, ''),
-(7, 'Thế Giới Không Có Nước', 'Trần Đình Nguyên', 'NXB Tổng Hợp', 110, '85000', 4, ''),
-(8, 'Những Điều Kỳ Diệu Của Địa Lý', 'David Attenborough', 'NXB Kim Đồng', 90, '110000', 4, ''),
-(9, 'Người Xưa Và Nghệ Thuật', 'Various Authors', 'NXB Mỹ Thuật', 80, '130000', 5, ''),
-(10, '1001 Đêm Nghệ Thuật', 'Various Authors', 'NXB Văn Hóa Thông Tin', 70, '140000', 5, '');
+INSERT INTO `dauap` (`madauAP`, `TenDauAnPham`, `Tacgia`, `NXB`, `Tongsoluong`, `VitrixepGia`, `MaDanhMuc`, `hinhAnh`, `moTa`, `ngayXB`) VALUES
+(1, 'Chuyện Bên Rìa Thế Giới', 'Nguyễn Nhật Ánh', 'NXB Kim Đồng', 100, '70000', 1, 'chuyen-ben-ria-the-gioi.jpg', 'Một tác phẩm khám phá những câu chuyện kỳ bí và lạ lùng ở những vùng đất xa xôi, biên giới của thế giới.', '2024-11-08'),
+(2, 'Chuyện Con Mèo Dạy Hải Âu Bay', 'Luis Sepúlveda', 'NXB Trẻ', 80, '60000', 1, 'chuyen-con-meo-day-hai-au-bay.jpg', 'Câu chuyện về sự kết nối kỳ diệu giữa một con mèo và một con hải âu, khơi dậy ước mơ tự do bay lượn.', '2020-07-20'),
+(3, 'Lược Sử Thời Gian', 'Stephen Hawking', 'NXB Tổng Hợp', 120, '150000', 2, 'luoc-su-thoi-gian.jpg', 'Một cuộc hành trình qua các bước ngoặt lịch sử của vũ trụ, từ những khám phá vật lý cơ bản đến những lý thuyết vũ trụ tiên tiến.', '2018-09-04'),
+(4, 'Sapiens: Lược Sử Loài Người', 'Yuval Noah Harari', 'NXB Dân Trí', 200, '200000', 2, 'luoc-su-loai-nguoi.jpg', 'Một cái nhìn tổng quan về sự tiến hóa và lịch sử của loài người từ thời kỳ tiền sử đến ngày nay.', '2018-11-11'),
+(5, 'Harry Potter và Hòn Đá Phù Thủy', 'J.K. Rowling', 'NXB Kim Đồng', 110, '120000', 3, 'harry-potter-hon-da-phu-thuy.jpg', 'Cuốn sách đầu tiên trong loạt truyện nổi tiếng về cậu bé phù thủy Harry Potter, bắt đầu hành trình kỳ diệu tại trường học phép thuật.', '2021-03-01'),
+(6, 'Đội Quân Doraemon - Đại Chiến Thuật Côn Trùng', 'Fujiko F Fujio', 'NXB Kim Đồng', 140, '65000', 3, 'dai-chien-thuat-con-trung.webp', 'Một cuộc phiêu lưu thú vị với đội quân Doraemon đối đầu với những thử thách đầy cam go.', '2022-01-05'),
+(7, 'Thế Giới Không Có Người Xấu', 'Whon Jaehun', 'NXB Dân Trí\n', 30, '85000', 1, 'the-gioi-khong-co-nguoi-xau.jpg', 'Tác phẩm phân tích và đi sâu vào sự hiểu biết về bản chất con người và những yếu tố tạo nên sự thiện và ác.', '2019-05-25'),
+(8, 'Căn Phòng Của Những Điều Kỳ Diệu', 'Julien Sandrel', 'NXB Kim Đồng', 90, '110000', 4, 'can-phong-cua-nhung-dieu-ky-dieu.jpg', 'Câu chuyện hấp dẫn về những điều kỳ diệu xảy ra trong một căn phòng chứa đựng vô vàn bí ẩn.', '2020-09-15'),
+(9, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 'Anna Moszynska', 'NXB Thế Giới', 80, '13000', 5, 'the-gioi-nghe-thuat.jpg', 'Khám phá thế giới nghệ thuật trừu tượng, nơi cảm xúc và ý tưởng được thể hiện qua những hình ảnh và màu sắc không thực.', '2021-02-28'),
+(10, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 'Dana Arnold', 'NXB Hồng Đức', 70, '14000', 5, 'dan-luan-ls.webp', 'Một tác phẩm khám phá sự phát triển của nghệ thuật qua các thời kỳ, với các cuộc tranh luận về những giá trị nghệ thuật.', '2021-04-10'),
+(11, '10 vạn câu hỏi vì sao', 'Phan Anh Lệ', 'NXB Văn Học', 30, '10000', 2, '10-van-cau-hoi-vi-sao.webp', 'Một bộ sách giúp trẻ em tìm hiểu về thế giới xung quanh qua những câu hỏi và câu trả lời khoa học thú vị.', '2021-10-10'),
+(12, 'Mắt Biếc', 'Nguyễn Nhật Ánh', 'NXB Trẻ', 100, '60000', 1, 'mat-biec.jpg', 'Một câu chuyện đầy cảm xúc về tình yêu và sự hy sinh, mang đậm chất lãng mạn và nhân văn.', '2021-01-15'),
+(13, 'Bóng đá Plus - Tháng 12/2024', 'Nguyễn Minh Anh', 'NXB Thể Thao', 30, '1000', 6, 'tap-chi-the-thao-2.jpg', 'Tạp chí chuyên về bóng đá, cập nhật các sự kiện và phân tích trong thế giới bóng đá vào tháng 12 năm 2024.', '2024-12-01'),
+(14, 'Đẹp Magazine - Tháng 12/2024', 'Le Media', 'Le Media', 30, '1000', 7, 'tap-chi-thoi-trang.jpg', 'Tạp chí thời trang nổi bật với các xu hướng mới nhất trong ngành làm đẹp, thời trang, và phong cách sống.', '2024-12-01'),
+(15, 'Tạp Chí Bóng Đá Plus - Tháng 11/2024', ' Nguyễn Minh Anh', 'NXB Thể Thao', 30, '1000', 6, 'tap-chi-the-thao-1.jpg', 'Phiên bản đặc biệt của tạp chí Bóng Đá Plus, tập trung vào các sự kiện và phân tích trong tháng 11 năm 2024.', '2024-11-01');
+
+--
+-- Bẫy `dauap`
+--
+DELIMITER $$
+CREATE TRIGGER `update_soLuongTonKho` AFTER UPDATE ON `dauap` FOR EACH ROW BEGIN
+    -- Cập nhật số lượng tồn kho cho từng sản phẩm theo mã đầu ấn phẩm
+    UPDATE anpham AS a
+    JOIN dauap AS d ON a.madauAP = d.madauAP  -- Liên kết bảng anpham và dauap theo mã đầu ấn phẩm
+    SET a.soLuongTonKho = d.tongSoLuong - (
+        SELECT SUM(a.soLuongChoThue)  -- Tổng số lượng đã cho thuê
+        FROM anpham AS a
+        WHERE a.madauAP = d.madauAP
+    )
+    WHERE a.madauAP = NEW.madauAP;  -- Điều kiện cập nhật theo maAnPham của bản ghi vừa thay đổi
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -220,7 +271,7 @@ CREATE TABLE `nguoidung` (
 INSERT INTO `nguoidung` (`maNguoiDung`, `tenNguoiDung`, `gioiTinh`, `email`, `SDT`, `diaChi`) VALUES
 (1, 'Nguyễn Bình An', 'Nữ', 'annguyen@example.com', 786594356, '789 Đường Nguyễn Huệ, Q.1, TP.HCM'),
 (2, 'Trần Ngọc Mai', 'Nữ', 'maitran@example.com', 987654321, '321 Đường Lê Lợi, Q.5, TP.HCM'),
-(3, 'Nguyễn Thị Nở', 'Nữ', 'hungnguyen2u@gmail.com', 223699874, '123 Phố Bùi Viện, Quận 1, TPHCM'),
+(3, 'Nguyễn Thị Tèo', 'Nữ', 'hungnguyen2u@gmail.com', 223699874, '123 Phố Bùi Viện, Quận 1, TPHCM'),
 (4, 'Quách Đạt Phúc', 'Nam', 'unidsalt@gmail.com', 89885759, '125 Phó Cơ Điều, Quận 5, TPHCM'),
 (5, 'Phúc Mỹ', 'Nam', 'phucmy@gmail.com', 11256698, '555 WTF, Quận Gò Vấp');
 
@@ -435,12 +486,6 @@ ALTER TABLE `yeucau`
 --
 
 --
--- AUTO_INCREMENT cho bảng `anpham`
---
-ALTER TABLE `anpham`
-  MODIFY `maAnPham` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
 -- AUTO_INCREMENT cho bảng `chitietpm`
 --
 ALTER TABLE `chitietpm`
@@ -450,13 +495,13 @@ ALTER TABLE `chitietpm`
 -- AUTO_INCREMENT cho bảng `danhmucap`
 --
 ALTER TABLE `danhmucap`
-  MODIFY `MaDanhMuc` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `MaDanhMuc` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `dauap`
 --
 ALTER TABLE `dauap`
-  MODIFY `madauAP` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `madauAP` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT cho bảng `hoadonnhapap`
@@ -520,7 +565,7 @@ ALTER TABLE `yeucau`
 -- Các ràng buộc cho bảng `anpham`
 --
 ALTER TABLE `anpham`
-  ADD CONSTRAINT `anpham_ibfk_3` FOREIGN KEY (`madauAP`) REFERENCES `dauap` (`madauAP`);
+  ADD CONSTRAINT `anpham_ibfk_1` FOREIGN KEY (`madauAP`) REFERENCES `dauap` (`madauAP`);
 
 --
 -- Các ràng buộc cho bảng `chitietpm`
