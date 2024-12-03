@@ -2,6 +2,6 @@
   "editor.formatOnSave": true,
 
   "[php]": {
-    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
   }
 }

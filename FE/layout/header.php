@@ -1,3 +1,5 @@
+<?php session_start() ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
@@ -36,12 +38,21 @@
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <div class="header__top__right">
-                        <div class="header__top__right__social">
-                            <a href="#"><i class="fa fa-user"></i> Đăng ký</a>
-                        </div>
-                        <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Đăng nhập</a>
-                        </div>
+                        <?php if (isset($_SESSION['tenKH'])): ?>
+                            <div class="header__top__right__social">
+                                <p>Xin chào, <?php echo htmlspecialchars($_SESSION['tenKH']); ?></p>
+                            </div>
+                            <div class="header__top__right__auth">
+                                <a href="user/logout.php"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                            </div>
+                        <?php else: ?>
+                            <div class="header__top__right__social">
+                                <a href="#"><i class="fa fa-user"></i> Đăng ký</a>
+                            </div>
+                            <div class="header__top__right__auth">
+                                <a href="user/login.php"><i class="fa fa-user"></i> Đăng nhập</a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

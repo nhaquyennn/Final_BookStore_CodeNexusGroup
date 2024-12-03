@@ -56,13 +56,17 @@ $error = $controller->getError();
                                 <!-- Ngày bắt đầu -->
                                 <div class="form-group col-md-4">
                                     <label for="ngayBatDau" class="text-white">Ngày bắt đầu:</label>
-                                    <input type="date" name="ngayBatDau" id="ngayBatDau" class="form-control" required min="2021-01-01" max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayBatDau'] ?? '') ?>">
+                                    <input type="date" name="ngayBatDau" id="ngayBatDau" class="form-control" required
+                                        min="2021-01-01" max="2024-12-31"
+                                        value="<?= htmlspecialchars($_POST['ngayBatDau'] ?? '') ?>">
                                 </div>
 
                                 <!-- Ngày kết thúc -->
                                 <div class="form-group col-md-4">
                                     <label for="ngayKetThuc" class="text-white">Ngày kết thúc:</label>
-                                    <input type="date" name="ngayKetThuc" id="ngayKetThuc" class="form-control" required min="2021-01-01" max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayKetThuc'] ?? '') ?>">
+                                    <input type="date" name="ngayKetThuc" id="ngayKetThuc" class="form-control" required
+                                        min="2021-01-01" max="2024-12-31"
+                                        value="<?= htmlspecialchars($_POST['ngayKetThuc'] ?? '') ?>">
                                 </div>
                             </div>
                             <!-- Nút xem thống kê -->
@@ -108,7 +112,7 @@ $error = $controller->getError();
                                 plugins: {
                                     tooltip: {
                                         callbacks: {
-                                            label: function(context) {
+                                            label: function (context) {
                                                 const index = context.dataIndex;
                                                 return 'Sản phẩm bán chạy: ' + products[index];
                                             }

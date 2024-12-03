@@ -15,8 +15,7 @@ if (empty($email) || empty($password)) {
 $sql = "SELECT * FROM taikhoan WHERE email = ?";
 $stmt = $conn->prepare($sql);
 
-// Thay 'var: $email' bằng biến $email
-$stmt->bind_param('s', $email);  // Liên kết tham số
+$stmt->bind_param('s', $email);
 $stmt->execute();
 $result = $stmt->get_result();
 
