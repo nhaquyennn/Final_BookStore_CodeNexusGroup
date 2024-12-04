@@ -82,9 +82,9 @@
                 </nav>
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <form action="#">
-                            <input type="text" placeholder="Bạn cần gì ?">
-                            <button type="submit" class="site-btn">TÌM KIẾM</button>
+                        <form action="controlCustomerUI/controlSearch.php" method="GET">
+                            <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." required>
+                            <button type="submit" name="search" class="site-btn">Tìm kiếm</button>
                         </form>
                     </div>
                 </div>

@@ -1,6 +1,9 @@
 <?php
 include 'controlCustomerUI/controlCategory.php';
 include 'controlCustomerUI/controlShopGrid.php';
+
+// Lấy dữ liệu từ session
+$products_search = isset($_SESSION['products_search']) ? $_SESSION['products_search'] : [];
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -20,7 +23,7 @@ include 'controlCustomerUI/controlShopGrid.php';
                             <h4>DANH MỤC</h4>
                             <ul>
                                 <li class="active" data-filter="*">Tất cả</li>
-                                <?php foreach ($categories as $category): ?>
+                                <?php foreach ($categories_name_only as $category): ?>
                                     <li><a href="#"><?php echo htmlspecialchars($category); ?></a></li>
                                 <?php endforeach; ?>
                             </ul>
@@ -73,9 +76,9 @@ include 'controlCustomerUI/controlShopGrid.php';
                             <div class="latest-product__text">
                                 <h4>Sản phẩm mới</h4>
                                 <div class="latest-product__slider owl-carousel">
-                                    <?php if (!empty($products)): ?>
+                                    <?php if (!empty($products_new)): ?>
                                         <?php
-                                        $chunks = array_chunk($products, 3); // Chia sản phẩm thành các nhóm 3 sản phẩm
+                                        $chunks = array_chunk($products_new, 3); // Chia sản phẩm thành các nhóm 3 sản phẩm
                                         foreach ($chunks as $chunk): ?>
                                             <div class="latest-product__slider__item">
                                                 <?php foreach ($chunk as $product): ?>
@@ -147,9 +150,10 @@ include 'controlCustomerUI/controlShopGrid.php';
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>Không có sản phẩm nào để hiển thị.</p>
+                            <p>Không có sản phẩm nào khớp với từ khóa tìm kiếm hoặc để hiển thị.</p>
                         <?php endif; ?>
                     </div>
+
                 </div>
             </div>
         </div>

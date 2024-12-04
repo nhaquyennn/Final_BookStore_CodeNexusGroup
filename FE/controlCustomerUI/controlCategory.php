@@ -1,14 +1,23 @@
 <?php
 require_once __DIR__ . '/../database/db_connect.php';
 
-// Lấy danh sách tên danh mục
-$sql_categories = "SELECT TenDanhMuc FROM danhmucap";
+// Lấy danh sách tên danh mục và hình ảnh
+$sql_categories = "SELECT DISTINCT TenDanhMuc, image FROM danhmucap;";
 $result_categories = $conn->query($sql_categories);
 
-$categories = [];
+$categories_name_only = []; // Mảng chỉ chứa tên danh mục
+$categories_with_image = []; // Mảng chứa tên và hình ảnh
+
 if ($result_categories && $result_categories->num_rows > 0) {
     while ($row = $result_categories->fetch_assoc()) {
-        $categories[] = $row['TenDanhMuc'];
+        // Lưu tên danh mục vào mảng chỉ chứa tên
+        $categories_name_only[] = $row['TenDanhMuc'];
+
+        // Lưu tên và hình ảnh vào mảng chứa tên và hình ảnh
+        $categories_with_image[] = [
+            'TenDanhMuc' => $row['TenDanhMuc'],
+            'image' => $row['image']
+        ];
     }
 } else {
     echo "Không thể lấy danh mục hoặc không có dữ liệu.";
@@ -66,29 +75,79 @@ if ($result_total_dauap && $result_total_dauap->num_rows > 0) {
 }
 
 // Truy vấn lấy dữ liệu từ các bảng, chỉ lấy các sản phẩm có tinhTrang là "Mới"
-$sql = "SELECT a.TenAnPham, a.Giathue, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
+$sql_new = "SELECT a.TenAnPham, a.Giathue, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
         FROM anpham a
         INNER JOIN dauap d ON a.madauAP = d.madauAP
         INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc
         WHERE a.tinhTrang = 'Mới'";  // Điều kiện lọc sản phẩm có tinhTrang là "Mới"
 
-$result = $conn->query($sql);
+$result_new = $conn->query($sql_new);
 
-$products = []; // Mảng lưu dữ liệu sản phẩm
-$product_names = []; // Mảng dùng để kiểm tra tên sản phẩm đã xuất hiện chưa
+$products_new = []; // Mảng lưu dữ liệu sản phẩm
+$product_names_new = []; // Mảng dùng để kiểm tra tên sản phẩm đã xuất hiện chưa
 
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+if ($result_new && $result_new->num_rows > 0) {
+    while ($row = $result_new->fetch_assoc()) {
         // Kiểm tra nếu sản phẩm chưa được thêm vào mảng $product_names
-        if (!in_array($row['TenAnPham'], $product_names)) {
+        if (!in_array($row['TenAnPham'], $product_names_new)) {
             // Thêm tên sản phẩm vào mảng kiểm tra
-            $product_names[] = $row['TenAnPham'];
+            $product_names_new[] = $row['TenAnPham'];
             // Thêm sản phẩm vào mảng $products
-            $products[] = $row;
+            $products_new[] = $row;
         }
     }
 } else {
-    $products = []; // Không có dữ liệu
+    $products_new = []; // Không có dữ liệu
 }
 
-?>
+// Truy vấn để lấy những ấn phẩm có số lượng cho thuê lớn
+$sql_high_rental_count = "SELECT a.soLuongChoThue, a.TenAnPham, a.Giathue, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
+        FROM anpham a
+        INNER JOIN dauap d ON a.madauAP = d.madauAP
+        INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc 
+        WHERE a.soLuongChoThue > 0 
+        ORDER BY a.soLuongChoThue DESC";
+$result_high_rental_count = $conn->query($sql_high_rental_count);
+
+
+$products_high_rental_count = []; // Mảng lưu dữ liệu sản phẩm
+$product_name_high_rental_count = []; // Mảng dùng để kiểm tra tên sản phẩm đã xuất hiện chưa
+
+if ($result_high_rental_count && $result_high_rental_count->num_rows > 0) {
+    while ($row = $result_high_rental_count->fetch_assoc()) {
+        if (!in_array($row['TenAnPham'], $product_name_high_rental_count)) {
+            $product_name_high_rental_count[] = $row['TenAnPham'];
+            $products_high_rental_count[] = $row;
+        }
+    }
+} else {
+    $products_high_rental_count = []; // Không có dữ liệu
+}
+
+// Truy vấn lấy dữ liệu từ các bảng và thêm trường hinhAnh từ bảng dauap
+$sql_popular = "SELECT a.TenAnPham, a.Giathue, a.maAnPham, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc, a.soLuongTonKho
+        FROM anpham a
+        INNER JOIN dauap d ON a.madauAP = d.madauAP
+        INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc
+        WHERE a.soLuongTonKho >= 100";
+
+$result_popular = $conn->query($sql_popular);
+
+$product_popular = [];
+$checkedProducts = [];
+
+if ($result_popular && $result_popular->num_rows > 0) {
+    while ($productData = $result_popular->fetch_assoc()) {
+        // Kiểm tra nếu sản phẩm chưa được thêm vào mảng $checkedProducts
+        if (!in_array($productData['TenAnPham'], $checkedProducts)) {
+            // Thêm tên sản phẩm vào mảng kiểm tra
+            $checkedProducts[] = $productData['TenAnPham'];
+            // Thêm sản phẩm vào mảng $productList
+            $product_popular[] = $productData;
+        }
+    }
+} else {
+    $product_popular = []; // Không có dữ liệu
+}
+
+

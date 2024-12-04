@@ -10,7 +10,7 @@
                     </div>
                     <div class="active">
                         <ul>
-                            <?php foreach ($categories as $category): ?>
+                            <?php foreach ($categories_name_only as $category): ?>
                                 <li><a href="#"><?php echo htmlspecialchars($category); ?></a></li>
                             <?php endforeach; ?>
                         </ul>
