@@ -13,3 +13,6 @@
 2. Trong database nên để mail người dùng là mail thật của cá nhân để nhận được mail, lưu ý nên tạo mới người dùng chứ đừng đổi email của những người dùng đã tồn tại trong database.
 3. Khi tạo mới tài khoản trong database thì mật khẩu vào những trang web mã hóa md5 và mã hóa, sau đó copy mật khẩu đã mã hóa insert vào cột mật khẩu.
 4. Hiện tại chưa hoàn thành chức năng đăng ký nên phiền mọi người thêm người dùng trực tiếp vào database.
+
+#LƯU Ý ĐĂNG KÝ KHÁCH HÀNG
+Hiện chưa thực hiện chức năng xác thực email nhưng có thể thực hiện đăng ký thông thường, nên dùng email thật của cá nhân để sau này có thể nhận được mail quên mật khẩu hoặc mail xác thực.
