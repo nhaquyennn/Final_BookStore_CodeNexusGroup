@@ -7,19 +7,23 @@ if (!isset($_SESSION['user'])) {
   exit();
 }
 
-require_once "../../controller/OrderController.php";
-require_once "../../database/db_connect.php";
+// include file controller
+require_once __DIR__ . '/../../controller/phieuMuonController.php';
+require_once __DIR__ . '/../../database/db_connect.php';
 
-// Xử lý yêu cầu POST từ form
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['idPM'])) {
-  $controller = new OrderController($GLOBALS['conn']);
-  $controller->searchDH($_POST['idPM']);
+// Khởi tạo Controller và xử lý yêu cầu
+$controller = new PhieuMuonController($conn);
+if (isset($_GET['action']) && $_GET['action'] === 'searchPM') {
+  $controller->searchPM();
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tìm kiếm Phiếu Mượn</title>
   <?php require_once "../../layout/header.php"; ?>
 </head>
 
@@ -41,59 +45,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['idPM'])) {
 
     <!--Start content-wrapper-->
     <div class="content-wrapper">
-
-      <!--Start container-fluid-->
       <div class="container-fluid">
-
-        <!-- Form nhập liệu -->
-        <div class="card mt-3">
+        <!-- Card Tìm Kiếm -->
+        <div class="card mt-4 shadow border-0">
+          <div class="card-header bg-light text-dark text-center">
+            <h4 class="fw-semibold">Tìm kiếm Phiếu Mượn</h4>
+          </div>
           <div class="card-body">
-            <h4 class="text-white">Tìm kiếm phiếu mượn</h4>
-            <!-- Form tìm kiếm -->
-            <form method="POST" action="">
-              <div class="form-group">
-                <label for="idPM" class="text-white">Nhập mã phiếu mượn:</label>
-                <input type="text" id="idPM" name="idPM" class="form-control"
-                  placeholder="Nhập mã phiếu mượn..." required>
+            <form action="../../controller/phieuMuonController.php?action=searchPM" method="POST">
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <div class="input-group">
+                    <input type="text" name="idPM" class="form-control form-control-lg shadow-sm"
+                      placeholder="Nhập mã phiếu mượn" required>
+                    <button class="btn btn-primary btn-lg px-4 shadow-sm" type="submit">
+                      <i class="fas fa-magnifying-glass me-2"></i>Tìm kiếm
+                    </button>
+                  </div>
+                </div>
               </div>
-              <button type="submit" class="btn btn-primary mt-3">Tìm Kiếm</button>
             </form>
+
+            <!-- Hiển thị thông báo lỗi -->
+            <?php if (isset($_GET['error'])): ?>
+              <div class="alert alert-danger mt-4 text-center shadow-sm">
+                <?php echo htmlspecialchars($_GET['error']); ?>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
-        <!--End Form kiểm tra cú pháp-->
-
-        <!--Start Kết quả kiểm tra-->
-        <?php if (!empty($result)): ?>
-          <div class="card mt-3">
-            <div class="card-body">
-              <h4 class="text-white">Kết quả kiểm tra cú pháp</h4>
-              <p class="text-success"><?= htmlspecialchars($result) ?></p>
-            </div>
-          </div>
-        <?php endif; ?>
-        <!--End Kết quả kiểm tra-->
-
       </div>
-      <!-- End container-fluid-->
-
     </div>
+
+
     <!--End content-wrapper-->
 
     <!--Start Back To Top Button-->
-    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <a href="javascript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
     <!--End Back To Top Button-->
 
-    <!--Start right sidebar-->
-    <?php require_once "../../layout/right_sidebar.php"; ?>
-    <!--End right sidebar-->
+    <!--Start footer-->
+    <?php require_once "../../layout/script.php"; ?>
+    <!--End footer-->
 
   </div>
   <!--End wrapper-->
-
-  <!--Start footer-->
-  <?php require_once "../../layout/script.php"; ?>
-  <!--End footer-->
-
 </body>
 
 </html>

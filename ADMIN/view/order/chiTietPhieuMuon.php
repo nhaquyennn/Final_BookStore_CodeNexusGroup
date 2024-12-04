@@ -6,6 +6,13 @@ if (!isset($_SESSION['user'])) {
   header("Location: ../../user/login.php?error=Vui lòng đăng nhập.");
   exit();
 }
+
+if (isset($_GET['data'])) {
+  $phieuMuonDetails = json_decode($_GET['data'], true); // Giải mã JSON thành mảng PHP
+} else {
+  header("Location: formTimKiem.php?error=Không tìm thấy dữ liệu phiếu mượn.");
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,39 +44,52 @@ if (!isset($_SESSION['user'])) {
       <div class="container-fluid">
 
         <!--Start Dashboard Content-->
-        <div class="card mt-3">
-          <div class="card-content">
-            <div class="row row-group m-0">
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">22 <span class="float-right"><i class="fa fa-shopping-cart"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Tổng đơn hàng hôm nay</p>
-                </div>
+        <div class="card">
+          <div class="card-header bg-primary text-white text-center">
+            <h4>Chi Tiết Phiếu Mượn</h4>
+          </div>
+          <div class="card-body">
+            <?php if ($phieuMuonDetails): ?>
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <th>Mã phiếu mượn:</th>
+                    <td><?php echo htmlspecialchars($phieuMuonDetails['MaPhieuMuon']); ?></td>
+                  </tr>
+                  <tr>
+                    <th>Ngày tạo:</th>
+                    <td><?php echo htmlspecialchars($phieuMuonDetails['NgayTao']); ?></td>
+                  </tr>
+                  <tr>
+                    <th>Tổng tiền:</th>
+                    <td><?php echo number_format($phieuMuonDetails['TongTien'], 0, ',', '.'); ?> VND</td>
+                  </tr>
+                  <tr>
+                    <th>Giảm giá:</th>
+                    <td><?php echo number_format($phieuMuonDetails['GiamGia'], 0, ',', '.'); ?> VND</td>
+                  </tr>
+                  <tr>
+                    <th>Phương thức thanh toán:</th>
+                    <td><?php echo htmlspecialchars($phieuMuonDetails['PhuongThucThanhToan']); ?></td>
+                  </tr>
+                  <tr>
+                    <th>Tình trạng:</th>
+                    <td>
+                      <span class="badge 
+                                        <?php echo ($phieuMuonDetails['tinhTrang'] === 'Đã duyệt') ? 'bg-success' : 'bg-warning'; ?>">
+                        <?php echo htmlspecialchars($phieuMuonDetails['tinhTrang']); ?>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            <?php else: ?>
+              <div class="alert alert-danger text-center">
+                Không có chi tiết phiếu mượn để hiển thị.
               </div>
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">100.000.000 <span class="float-right"><i class="fa fa-usd"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Tổng doanh thu hôm nay</p>
-                </div>
-              </div>
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">3 <span class="float-right"><i class="zmdi zmdi-assignment"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Yêu cầu</p>
-                </div>
-              </div>
+            <?php endif; ?>
+            <div class="mt-4 text-center">
+              <a href="formTimKiem.php" class="btn btn-secondary">Quay lại Tìm kiếm</a>
             </div>
           </div>
         </div>
