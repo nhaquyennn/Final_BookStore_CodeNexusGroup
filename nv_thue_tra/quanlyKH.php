@@ -2,29 +2,29 @@
 <html lang="en">
 
 <head>
-    <?php require_once "layout/header.php" ?>
+    <?php
+    require_once "layout/header.php";
+    require_once "db_connect.php";
+    ?>
 </head>
 
 <body class="bg-theme bg-theme2">
-    <!-- <div class="clearfix"></div> -->
     <div class="content-wrapper">
         <div class="container-fluid">
             <!-- Start wrapper-->
             <div id="wrapper">
 
                 <!--Start sidebar-wrapper-->
-                <?php require_once "layout/left_sidebar.php" ?>
+                <?php require_once "layout/left_sidebar.php"; ?>
                 <!--End sidebar-wrapper-->
 
                 <!--Start topbar header-->
                 <header class="topbar-nav">
-                    <?php require_once "layout/topbar.php" ?>
+                    <?php require_once "layout/topbar.php"; ?>
                 </header>
                 <!--End topbar header-->
 
                 <!--Start main content-->
-
-                <!-- CODE Ở ĐÂY -->
                 <div class="PM row">
                     <div class="btn-create-PM col-12">
                         <h3 class="text-center text-white">QUẢN LÝ KHÁCH HÀNG</h3>
@@ -39,7 +39,6 @@
                                 <table class="table align-items-center table-flush table-borderless">
                                     <thead>
                                         <tr>
-                                            <th>Tài khoản</th>
                                             <th>Mã khách hàng</th>
                                             <th>Tên khách hàng</th>
                                             <th>Địa chỉ</th>
@@ -47,31 +46,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>user1</td>
-                                            <td>KH001</td>
-                                            <td>Nguyễn Văn A</td>
-                                            <td>123 Đường ABC, Quận 1</td>
-                                            <td>
-                                                <button class="btn btn-warning btn-sm"><i class='fa fa-pencil ' aria-hidden='true'></i></button>
-                                                <button class="btn btn-danger btn-sm">
-                                                    <a href="taoYCxoa.php"><i class='fa fa-trash-o' aria-hidden='true'></i></a>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>user2</td>
-                                            <td>KH002</td>
-                                            <td>Trần Thị B</td>
-                                            <td>456 Đường XYZ, Quận 2</td>
-                                            <td>
-                                                <button class="btn btn-warning btn-sm"><i class='fa fa-pencil ' aria-hidden='true'></i></button>
-                                                <button class="btn btn-danger btn-sm">
-                                                    <a href="taoYCxoa.php"><i class='fa fa-trash-o' aria-hidden='true'></i></a>
-                                                </button>
-                                            </td>
+                                        <?php
+                                        try {
+                                            $query = "SELECT maKH, tenKH, diaChi FROM khachhang";
+                                            $result = $conn->query($query);
 
-                                        </tr>
+                                            if ($result && $result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo "<tr>
+                                                        <td>{$row['maKH']}</td>
+                                                        <td>{$row['tenKH']}</td>
+                                                        <td>{$row['diaChi']}</td>
+                                                        <td> 
+                                                            <a href='taoYCxoa.php?id={$row['maKH']}&name={$row['tenKH']}' class='btn btn-danger btn-sm text-white'><i class='fa fa-trash-o' aria-hidden='true'></i></a>
+                                                        </td>
+                                                    </tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='4'>Không có khách hàng nào</td></tr>";
+                                            }
+                                        } catch (Exception $e) {
+                                            echo "<tr><td colspan='4'>Lỗi: " . $e->getMessage() . "</td></tr>";
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -84,11 +81,9 @@
             <!-- End wrapper-->
 
             <!--Start right sidebar-->
-
             <!--End right sidebar-->
 
             <!--Start footer-->
-
             <!--End footer-->
         </div>
     </div>

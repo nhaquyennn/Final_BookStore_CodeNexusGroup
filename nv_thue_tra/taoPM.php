@@ -32,52 +32,22 @@
                         <form class="form-createPM col-12">
                             <table>
                                 <tr>
-                                    <td>Tên nhân viên:</td>
+                                    <td>Mã khách hàng</td>
                                     <td><input type="text"></td>
                                 </tr>
                                 <tr>
-                                    <td>Mã khách hàng:</td>
+                                    <td>Tên khách hàng</td>
                                     <td><input type="text"></td>
-                                    <td style="padding-left:12px">Tên khách hàng:</td>
-                                    <td><input type="text"></td>
-                                    <td style="padding-left:12px">Số điện thoại:</td>
+                                    <td style="padding-left:12px">Số điện thoại</td>
                                     <td><input type="tel" id="phone" name="phone"></td>
                                 </tr>
                                 <tr>
-                                    <td>Ngày mượn:</td>
+                                    <td>Ngày mượn</td>
                                     <td><input type="datetime-local" id="ngaymuon" name="ngaymuon"></td>
-                                    <td style="padding-left:12px">Ngày trả:</td>
+                                    <td style="padding-left:12px">Ngày trả</td>
                                     <td><input type="datetime-local" id="ngaytra" name="ngaytra"></td>
                                 </tr>
                                 <table class="table align-items-center table-flush table-borderless">
-
-                                    <!-- <div class="btn-add-AP col-12">
-                                        <button type="button" class="btn btn-sm btn-success" style="font-size:15px;"
-                                            data-toggle="modal" data-target="#myModal">Ấn phẩm</button> -->
-                                    <!-- Modal -->
-                                    <!-- <div class="modal fade" id="myModal" role="dialog">
-                                            <div class="modal-dialog"> -->
-
-                                    <!-- Modal content-->
-                                    <!-- <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close"
-                                                            data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Modal Header</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Some text in the modal.</p>
-                                                        àughgfuihafuye
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default"
-                                                            data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div> -->
                                     <div class="table-detail">
                                         <table class="detail">
                                             <thead>
