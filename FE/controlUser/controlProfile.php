@@ -11,12 +11,11 @@ if (!isset($_SESSION['user'])) {
 $email = $_SESSION['user']; // Lấy email từ session
 $user = null; // Khởi tạo biến chứa thông tin người dùng
 
-// Truy vấn thông tin người dùng
-$sql = "SELECT nguoidung.tenNguoiDung, nguoidung.diaChi, nhanvien.chucVu, nhanvien.maNhanVien, taikhoan.email, taikhoan.matkhau 
-        FROM nguoidung 
-        INNER JOIN nhanvien ON nguoidung.maNguoiDung = nhanvien.maNguoiDung 
-        INNER JOIN taikhoan ON nguoidung.maNguoiDung = taikhoan.maNguoiDung 
-        WHERE taikhoan.email = ?";
+$sql = "SELECT khachhang.tenKH, khachhang.maKH, khachhang.diaChi, nguoidung.email, nguoidung.gioiTinh 
+        FROM khachhang 
+        INNER JOIN nguoidung ON khachhang.maNguoiDung = nguoidung.maNguoiDung 
+        WHERE nguoidung.email = ?";
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('s', $email);
 $stmt->execute();

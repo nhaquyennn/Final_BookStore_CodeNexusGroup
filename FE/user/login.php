@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>Login Admin</title>
+  <title>Login</title>
   <!--favicon-->
   <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon" />
   <!-- Bootstrap core CSS-->
@@ -66,7 +66,7 @@
       </div>
       <div class="card-footer text-center py-3">
         <p class="text-warning mb-0">
-          Không có tài khoản? <a href="register.html"> Đăng ký tại đây</a>
+          Không có tài khoản? <a href="signUp.php"> Đăng ký tại đây</a>
         </p>
       </div>
     </div>

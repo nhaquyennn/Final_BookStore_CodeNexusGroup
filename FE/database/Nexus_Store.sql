@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 03, 2024 lúc 07:20 PM
+-- Thời gian đã tạo: Th12 04, 2024 lúc 10:33 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -60,7 +60,7 @@ CREATE TABLE `anpham` (
 
 INSERT INTO `anpham` (`maAnPham`, `TenAnPham`, `Giathue`, `tinhTrang`, `soLuongChoThue`, `soLuongTonKho`, `madauAP`) VALUES
 (1, '10 Vạn Câu Hỏi Vì Sao', 75000, 'Mới', 10, 20, 11),
-(2, 'Chuyện Bên Rìa Thế Giới', 28350, 'Tốt', 5, 95, 1),
+(2, 'Chuyện Bên Rìa Thế Giới', 28350, 'Tốt', 5, 85, 1),
 (3, 'Chuyện Con Mèo Dạy Hải Âu Bay', 135000, 'Tốt', 20, 60, 2),
 (4, 'Chuyện Con Mèo Dạy Hải Âu Bay', 105000, 'Hư hỏng nhẹ', 0, 60, 2),
 (5, 'Lược Sử Thời Gian', 500000, 'Mới', 30, 90, 3),
@@ -73,13 +73,13 @@ INSERT INTO `anpham` (`maAnPham`, `TenAnPham`, `Giathue`, `tinhTrang`, `soLuongC
 (12, 'Mắt Biếc', 24500, 'Mới', 0, 100, 12),
 (13, 'Thế Giới Không Có Người Xấu', 135000, 'Tốt', 0, 30, 7),
 (14, 'Thế Giới Không Có Người Xấu', 105000, 'Hư hỏng nhẹ', 0, 30, 7),
-(15, 'Căn Phòng Của Những Điều Kỳ Diệu', 120000, 'Mới', 0, 89, 8),
-(16, 'Căn Phòng Của Những Điều Kỳ Diệu', 120000, 'Mới', 1, 89, 8),
+(15, 'Căn Phòng Của Những Điều Kỳ Diệu', 120000, 'Mới', 0, 27, 8),
+(16, 'Căn Phòng Của Những Điều Kỳ Diệu', 120000, 'Mới', 23, 27, 8),
 (17, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 135000, 'Mới', 0, 60, 9),
 (18, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 121500, 'Tốt', 20, 60, 9),
 (19, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 200000, 'Mới', 0, 70, 10),
 (20, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 140000, 'Hư hỏng nhẹ', 0, 70, 10),
-(21, 'Chuyện Bên Rìa Thế Giới', 31500, 'Mới', 0, 95, 1),
+(21, 'Chuyện Bên Rìa Thế Giới', 31500, 'Mới', 0, 85, 1),
 (22, 'Đội Quân Doraemon - Đại Chiến Thuật Côn Trùng', 15000, 'Mới', 0, 140, 6),
 (23, 'Tạp Chí Bóng đá Plus - Tháng 12/2024', 10000, 'Mới', 0, 30, 13),
 (24, 'Tạp Chí Bóng Đá Plus - Tháng 11/2024', 10000, 'Mới', 0, 30, 15),
@@ -113,21 +113,21 @@ CREATE TABLE `danhmucap` (
   `MaDanhMuc` int(10) NOT NULL,
   `TenDanhMuc` varchar(255) DEFAULT NULL,
   `MoTa` varchar(255) DEFAULT NULL,
-  `hinhAnh` varchar(255) NOT NULL
+  `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `danhmucap`
 --
 
-INSERT INTO `danhmucap` (`MaDanhMuc`, `TenDanhMuc`, `MoTa`, `hinhAnh`) VALUES
-(1, 'Tiểu Thuyết', 'Mang đến những câu chuyện hấp dẫn và sâu sắc về cuộc sống, tình yêu, và nhân văn.', ''),
-(2, 'Khoa Học', 'Cung cấp kiến thức đa dạng từ tự nhiên, xã hội đến công nghệ,', ''),
-(3, 'Thiếu Nhi', 'Với các câu chuyện thú vị và giáo dục, giúp phát triển trí tưởng tượng và kỹ năng đọc cho trẻ nhỏ.', ''),
-(4, 'Lịch Sử', 'Khám phá các sự kiện quan trọng, nhân vật lịch sử và bối cảnh văn hóa từ các thời kỳ khác nhau trên thế giới', ''),
-(5, 'Nghệ Thuật', 'Giới thiệu về các hình thức nghệ thuật khác nhau như hội họa, điêu khắc, âm nhạc, và văn học, cùng các nghệ sĩ vĩ đại qua các thời kỳ.', ''),
-(6, 'Tạp Chí Thể Thao', 'Chuyên cung cấp tin tức, phân tích, phỏng vấn và hình ảnh nổi bật về các sự kiện, vận động viên, và môn thể thao, truyền cảm hứng sống khỏe và năng động.', ''),
-(7, 'Tạp Chí Thời Trang', 'Chuyên về xu hướng thời trang, phong cách sống, và làm đẹp. ', '');
+INSERT INTO `danhmucap` (`MaDanhMuc`, `TenDanhMuc`, `MoTa`, `image`) VALUES
+(1, 'Tiểu Thuyết', 'Mang đến những câu chuyện hấp dẫn và sâu sắc về cuộc sống, tình yêu, và nhân văn.', 'mat-biec.jpg'),
+(2, 'Khoa Học', 'Cung cấp kiến thức đa dạng từ tự nhiên, xã hội đến công nghệ,', 'luoc-su-thoi-gian.jpg'),
+(3, 'Thiếu Nhi', 'Với các câu chuyện thú vị và giáo dục, giúp phát triển trí tưởng tượng và kỹ năng đọc cho trẻ nhỏ.', 'dai-chien-thuat-con-trung.webp'),
+(4, 'Lịch Sử', 'Khám phá các sự kiện quan trọng, nhân vật lịch sử và bối cảnh văn hóa từ các thời kỳ khác nhau trên thế giới', 'dan-luan-ls.webp'),
+(5, 'Nghệ Thuật', 'Giới thiệu về các hình thức nghệ thuật khác nhau như hội họa, điêu khắc, âm nhạc, và văn học, cùng các nghệ sĩ vĩ đại qua các thời kỳ.', 'the-gioi-nghe-thuat.jpg'),
+(6, 'Tạp Chí Thể Thao', 'Chuyên cung cấp tin tức, phân tích, phỏng vấn và hình ảnh nổi bật về các sự kiện, vận động viên, và môn thể thao, truyền cảm hứng sống khỏe và năng động.', 'tap-chi-the-thao-2.jpg'),
+(7, 'Tạp Chí Thời Trang', 'Chuyên về xu hướng thời trang, phong cách sống, và làm đẹp. ', 'tap-chi-thoi-trang.jpg');
 
 -- --------------------------------------------------------
 
@@ -153,14 +153,14 @@ CREATE TABLE `dauap` (
 --
 
 INSERT INTO `dauap` (`madauAP`, `TenDauAnPham`, `Tacgia`, `NXB`, `Tongsoluong`, `VitrixepGia`, `MaDanhMuc`, `hinhAnh`, `moTa`, `ngayXB`) VALUES
-(1, 'Chuyện Bên Rìa Thế Giới', 'Nguyễn Nhật Ánh', 'NXB Kim Đồng', 100, '70000', 1, 'chuyen-ben-ria-the-gioi.jpg', 'Một tác phẩm khám phá những câu chuyện kỳ bí và lạ lùng ở những vùng đất xa xôi, biên giới của thế giới.', '2024-11-08'),
+(1, 'Chuyện Bên Rìa Thế Giới', 'Nguyễn Nhật Ánh', 'NXB Kim Đồng', 90, '70000', 1, 'chuyen-ben-ria-the-gioi.jpg', 'Một tác phẩm khám phá những câu chuyện kỳ bí và lạ lùng ở những vùng đất xa xôi, biên giới của thế giới.', '2024-11-08'),
 (2, 'Chuyện Con Mèo Dạy Hải Âu Bay', 'Luis Sepúlveda', 'NXB Trẻ', 80, '60000', 1, 'chuyen-con-meo-day-hai-au-bay.jpg', 'Câu chuyện về sự kết nối kỳ diệu giữa một con mèo và một con hải âu, khơi dậy ước mơ tự do bay lượn.', '2020-07-20'),
 (3, 'Lược Sử Thời Gian', 'Stephen Hawking', 'NXB Tổng Hợp', 120, '150000', 2, 'luoc-su-thoi-gian.jpg', 'Một cuộc hành trình qua các bước ngoặt lịch sử của vũ trụ, từ những khám phá vật lý cơ bản đến những lý thuyết vũ trụ tiên tiến.', '2018-09-04'),
 (4, 'Sapiens: Lược Sử Loài Người', 'Yuval Noah Harari', 'NXB Dân Trí', 200, '200000', 2, 'luoc-su-loai-nguoi.jpg', 'Một cái nhìn tổng quan về sự tiến hóa và lịch sử của loài người từ thời kỳ tiền sử đến ngày nay.', '2018-11-11'),
 (5, 'Harry Potter và Hòn Đá Phù Thủy', 'J.K. Rowling', 'NXB Kim Đồng', 110, '120000', 3, 'harry-potter-hon-da-phu-thuy.jpg', 'Cuốn sách đầu tiên trong loạt truyện nổi tiếng về cậu bé phù thủy Harry Potter, bắt đầu hành trình kỳ diệu tại trường học phép thuật.', '2021-03-01'),
 (6, 'Đội Quân Doraemon - Đại Chiến Thuật Côn Trùng', 'Fujiko F Fujio', 'NXB Kim Đồng', 140, '65000', 3, 'dai-chien-thuat-con-trung.webp', 'Một cuộc phiêu lưu thú vị với đội quân Doraemon đối đầu với những thử thách đầy cam go.', '2022-01-05'),
 (7, 'Thế Giới Không Có Người Xấu', 'Whon Jaehun', 'NXB Dân Trí\n', 30, '85000', 1, 'the-gioi-khong-co-nguoi-xau.jpg', 'Tác phẩm phân tích và đi sâu vào sự hiểu biết về bản chất con người và những yếu tố tạo nên sự thiện và ác.', '2019-05-25'),
-(8, 'Căn Phòng Của Những Điều Kỳ Diệu', 'Julien Sandrel', 'NXB Kim Đồng', 90, '110000', 4, 'can-phong-cua-nhung-dieu-ky-dieu.jpg', 'Câu chuyện hấp dẫn về những điều kỳ diệu xảy ra trong một căn phòng chứa đựng vô vàn bí ẩn.', '2020-09-15'),
+(8, 'Căn Phòng Của Những Điều Kỳ Diệu', 'Julien Sandrel', 'NXB Kim Đồng', 50, '110000', 4, 'can-phong-cua-nhung-dieu-ky-dieu.jpg', 'Câu chuyện hấp dẫn về những điều kỳ diệu xảy ra trong một căn phòng chứa đựng vô vàn bí ẩn.', '2020-09-15'),
 (9, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 'Anna Moszynska', 'NXB Thế Giới', 80, '13000', 5, 'the-gioi-nghe-thuat.jpg', 'Khám phá thế giới nghệ thuật trừu tượng, nơi cảm xúc và ý tưởng được thể hiện qua những hình ảnh và màu sắc không thực.', '2021-02-28'),
 (10, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 'Dana Arnold', 'NXB Hồng Đức', 70, '14000', 5, 'dan-luan-ls.webp', 'Một tác phẩm khám phá sự phát triển của nghệ thuật qua các thời kỳ, với các cuộc tranh luận về những giá trị nghệ thuật.', '2021-04-10'),
 (11, '10 vạn câu hỏi vì sao', 'Phan Anh Lệ', 'NXB Văn Học', 30, '10000', 2, '10-van-cau-hoi-vi-sao.webp', 'Một bộ sách giúp trẻ em tìm hiểu về thế giới xung quanh qua những câu hỏi và câu trả lời khoa học thú vị.', '2021-10-10'),
@@ -211,7 +211,7 @@ CREATE TABLE `hoadonnhapap` (
 CREATE TABLE `khachhang` (
   `maKH` int(100) NOT NULL,
   `tenKH` text NOT NULL,
-  `diaChi` varchar(200) NOT NULL,
+  `diaChi` varchar(200) DEFAULT 'Trống',
   `maNguoiDung` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -221,7 +221,8 @@ CREATE TABLE `khachhang` (
 
 INSERT INTO `khachhang` (`maKH`, `tenKH`, `diaChi`, `maNguoiDung`) VALUES
 (1, 'Quách Đạt Phúc', '125 Phó Cơ Điều, Quận 5, TPHCM', 4),
-(2, 'Phúc Mỹ', '555 WTF, Quận Gò Vấp', 5);
+(2, 'Phúc Mỹ', '555 WTF, Quận Gò Vấp', 5),
+(4, 'Nguyễn Văn B', '', 11);
 
 -- --------------------------------------------------------
 
@@ -260,20 +261,20 @@ CREATE TABLE `nguoidung` (
   `tenNguoiDung` text NOT NULL,
   `gioiTinh` enum('Nam','Nữ','Không xác định') NOT NULL DEFAULT 'Không xác định',
   `email` varchar(100) NOT NULL,
-  `SDT` int(10) NOT NULL,
-  `diaChi` text NOT NULL
+  `SDT` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `nguoidung`
 --
 
-INSERT INTO `nguoidung` (`maNguoiDung`, `tenNguoiDung`, `gioiTinh`, `email`, `SDT`, `diaChi`) VALUES
-(1, 'Nguyễn Bình An', 'Nữ', 'annguyen@example.com', 786594356, '789 Đường Nguyễn Huệ, Q.1, TP.HCM'),
-(2, 'Trần Ngọc Mai', 'Nữ', 'maitran@example.com', 987654321, '321 Đường Lê Lợi, Q.5, TP.HCM'),
-(3, 'Nguyễn Thị Tèo', 'Nữ', 'hungnguyen2u@gmail.com', 223699874, '123 Phố Bùi Viện, Quận 1, TPHCM'),
-(4, 'Quách Đạt Phúc', 'Nam', 'unidsalt@gmail.com', 89885759, '125 Phó Cơ Điều, Quận 5, TPHCM'),
-(5, 'Phúc Mỹ', 'Nam', 'phucmy@gmail.com', 11256698, '555 WTF, Quận Gò Vấp');
+INSERT INTO `nguoidung` (`maNguoiDung`, `tenNguoiDung`, `gioiTinh`, `email`, `SDT`) VALUES
+(1, 'Nguyễn Bình An', 'Nữ', 'annguyen@example.com', 786594356),
+(2, 'Trần Ngọc Mai', 'Nữ', 'maitran@example.com', 987654321),
+(3, 'Nguyễn Thị Tèo', 'Nữ', 'hungnguyen2u@gmail.com', 223699874),
+(4, 'Quách Đạt Phúc', 'Nam', 'unidsalt@gmail.com', 89885759),
+(5, 'Phúc Mỹ', 'Nam', 'phucmy@gmail.com', 11256698),
+(11, 'Nguyễn Văn B', 'Không xác định', 'nguyenvanb@example.com', 0);
 
 -- --------------------------------------------------------
 
@@ -284,7 +285,6 @@ INSERT INTO `nguoidung` (`maNguoiDung`, `tenNguoiDung`, `gioiTinh`, `email`, `SD
 CREATE TABLE `nhanvien` (
   `maNhanVien` int(100) NOT NULL,
   `tenNhanVien` text NOT NULL,
-  `diaChi` varchar(200) NOT NULL,
   `chucVu` text NOT NULL,
   `maNguoiDung` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -293,10 +293,10 @@ CREATE TABLE `nhanvien` (
 -- Đang đổ dữ liệu cho bảng `nhanvien`
 --
 
-INSERT INTO `nhanvien` (`maNhanVien`, `tenNhanVien`, `diaChi`, `chucVu`, `maNguoiDung`) VALUES
-(1, 'Nguyễn Bình An', '', 'Nhân viên kho', 1),
-(2, 'Trần Ngọc Mai', '', 'Nhân viên kho', 2),
-(3, 'Nguyễn Thị Nở', '123 Phố Bùi Viện, Quận 1, TPHCM', 'Quản lý', 3);
+INSERT INTO `nhanvien` (`maNhanVien`, `tenNhanVien`, `chucVu`, `maNguoiDung`) VALUES
+(1, 'Nguyễn Bình An', 'Nhân viên kho', 1),
+(2, 'Trần Ngọc Mai', 'Nhân viên kho', 2),
+(3, 'Nguyễn Thị Nở', 'Quản lý', 3);
 
 -- --------------------------------------------------------
 
@@ -359,7 +359,8 @@ INSERT INTO `taikhoan` (`maTK`, `email`, `matkhau`, `vaitro`, `maNguoiDung`) VAL
 (2, 'maitran@example.com', 'e10adc3949ba59abbe56e057f20f883e', 'nhanvienkho', 2),
 (3, 'hungnguyen2u@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin', 3),
 (4, 'unidsalt@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'khachhang', 4),
-(5, 'phucmy@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'khachhang', 5);
+(5, 'phucmy@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'khachhang', 5),
+(11, 'nguyenvanb@example.com', 'e10adc3949ba59abbe56e057f20f883e', 'khachhang', 11);
 
 -- --------------------------------------------------------
 
@@ -513,7 +514,7 @@ ALTER TABLE `hoadonnhapap`
 -- AUTO_INCREMENT cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `maKH` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `maKH` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `khuyenmai`
@@ -525,7 +526,7 @@ ALTER TABLE `khuyenmai`
 -- AUTO_INCREMENT cho bảng `nguoidung`
 --
 ALTER TABLE `nguoidung`
-  MODIFY `maNguoiDung` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `maNguoiDung` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `nhanvien`
@@ -549,7 +550,7 @@ ALTER TABLE `phieutra`
 -- AUTO_INCREMENT cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
-  MODIFY `maTK` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `maTK` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `yeucau`

@@ -25,7 +25,7 @@
                             style="color: white; background-color: rgba(56, 49, 56, 0.156); width: 200px; margin-left: 50px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
                             NEXUS</h3>
                         <h2>Thuê là có <br />Không đắn đo</h2>
-                        <a href="#" class="site-btn" style="margin-top: 15px;">SHOP NOW</a>
+                        <a href="shop-grid.php" class="site-btn" style="margin-top: 15px;">SHOP NOW</a>
                     </div>
                 </div>
             </div>

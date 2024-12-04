@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/mainStyle.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <!-- Header Section Begin -->
 <header class="header">
@@ -39,15 +41,24 @@
                 <div class="col-lg-4 col-md-4">
                     <div class="header__top__right">
                         <?php if (isset($_SESSION['tenKH'])): ?>
-                            <div class="header__top__right__social">
-                                <p>Xin chào, <?php echo htmlspecialchars($_SESSION['tenKH']); ?></p>
-                            </div>
-                            <div class="header__top__right__auth">
-                                <a href="user/logout.php"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                            <div>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle"
+                                        style="background-color: #E75480; color: white; font-size: 15px;" type="button"
+                                        id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-user"></i> <?php echo htmlspecialchars($_SESSION['tenKH']); ?>
+                                    </button>
+                                    <ul class="dropdown-menu" style="font-size: 15px;">
+                                        <li><a class="dropdown-item" href="user/profile.php">Quản lý thông tin cá nhân</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="user/logout.php"><i class="fa fa-sign-out"></i>
+                                                Đăng xuất</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         <?php else: ?>
                             <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-user"></i> Đăng ký</a>
+                                <a href="user/signup.php"><i class="fa fa-user"></i> Đăng ký</a>
                             </div>
                             <div class="header__top__right__auth">
                                 <a href="user/login.php"><i class="fa fa-user"></i> Đăng nhập</a>
@@ -55,6 +66,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
