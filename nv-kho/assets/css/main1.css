@@ -1850,6 +1850,7 @@ table.grid td {
 .table.align-items-center td, .table.align-items-center th {
     vertical-align: middle;
     font-size: 15px;
+    text-align:center
 }
 .table thead th {
     font-size: .72rem;

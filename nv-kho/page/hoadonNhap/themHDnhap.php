@@ -1,26 +1,22 @@
+<?php
+ if (!isset($_GET['page'])) {
+    $page ='themHDnhapkho' ;
+} else {
+    $page = $_GET['page'];
+}
+$conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', database: 'nexus_store');
+?>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <?php require_once "layout/header.php" ?>
-  <title>Thêm Phiếu Nhập Sách</title>
-</head>
 
 <body class="bg-theme bg-theme2">
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Sidebar -->
-      <?php require_once "layout/left_sidebar.php" ?>
-
-      <!-- Topbar -->
-      <header class="topbar-nav">
-        <?php require_once "layout/topbar.php" ?>
-      </header>
 
       <!-- Form thêm phiếu nhập -->
       <div class="row mt-5">
         <div class="col-12">
-          <h4 class="fw-bold text-center">Phiếu Nhập Ấn Phẩm</h4>
+          <h4 class="fw-bold text-center">Hóa Đơn Nhập Ấn Phẩm</h4>
           <form class="form-createPM">
             <!-- Nhập thông tin nhân viên -->
             <div class="mb-3">
@@ -67,7 +63,7 @@
             </div>
 
             <!-- Kệ chứa -->
-            <div class="mt-4">
+            <!-- <div class="mt-4">
               <label class="form-label fw-bold">Kệ Chứa:</label>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="ke1" name="ke[]" value="keSo1">
@@ -85,12 +81,13 @@
                 <input class="form-check-input" type="checkbox" id="ke4" name="ke[]" value="keSo4">
                 <label class="form-check-label" for="ke4">Kệ số 4</label>
               </div>
-            </div>
+            </div> -->
 
 
             <!-- Nút Tạo Phiếu -->
-            <div class="mt-4">
-              <button type="button" class="btn btn-primary">Tạo Phiếu Nhập</button>
+            <div class="mt-4 ">
+              <button type="submit" class="btn btn-primary" name="themHDnhap">Tạo</button>
+              <button type="submit" class="btn btn-danger" name="huy">Hủy</button>
             </div>
           </form>
         </div>
@@ -98,8 +95,6 @@
     </div>
   </div>
 
-  <!-- Footer -->
-  <?php require_once "layout/script.php" ?>
 </body>
 
 </html>
