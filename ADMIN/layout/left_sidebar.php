@@ -31,10 +31,13 @@
 
         <!-- Đơn hàng -->
         <li class="list-group-item">
-            <a href="#" class="sidebar-link" id="order"><span>Đơn hàng</span></a>
+            <a href="#" class="sidebar-link" id="order">
+                <span>Đơn hàng</span>
+                <span class="arrow">&#9654;</span></a>
+
             <!-- Danh sách ngày tháng năm -->
             <ul id="orderForm" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
-                <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/formTimKiem.php">Tìm kiếm đơn hàng</a></li>
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/formTimKiem.php">Tìm kiếm Đơn Hàng</a></li>
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/danhSachDonHang.php">Danh Sách Đơn Hàng</a></li>
             </ul>
         </li>
@@ -44,7 +47,10 @@
 
         <!-- Thống kê ấn phẩm -->
         <li class="list-group-item">
-            <a href="#" class="sidebar-link" id="statsLinkPublications"><span>Thống kê ấn phẩm</span></a>
+            <a href="#" class="sidebar-link" id="statsLinkPublications">
+                <span>Thống kê ấn phẩm</span>
+                <span class="arrow">&#9654;</span>
+            </a>
             <!-- Danh sách ngày tháng năm -->
             <ul id="dateListPublications" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/thongke/thongKeSanPhamTheoNgay.php">Ngày</a></li>
@@ -55,7 +61,10 @@
 
         <!-- Thống kê doanh thu -->
         <li class="list-group-item">
-            <a href="#" class="sidebar-link" id="statsLinkRevenue"><span>Báo cáo doanh thu</span></a>
+            <a href="#" class="sidebar-link" id="statsLinkRevenue">
+                <span>Báo cáo doanh thu</span>
+                <span class="arrow">&#9654;</span>
+            </a>
             <!-- Danh sách ngày tháng năm -->
             <ul id="dateListRevenue" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
                 <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a></li>
@@ -93,6 +102,7 @@
 
             // Lấy ID của danh sách cần hiển thị
             let targetId = null;
+            let arrow = link.querySelector('.arrow');
 
             switch (link.getAttribute('id')) {
                 case 'statsLinkPublications':
@@ -125,9 +135,22 @@
                 }
             });
 
+
+            // Đặt mũi tên cho danh sách hiện tại
+            document.querySelectorAll('.arrow').forEach(arw => {
+                if (arw !== arrow) {
+                    arw.innerHTML = '&#9654;'; // Mũi tên phải
+                }
+            });
+
             // Chuyển đổi hiển thị danh sách hiện tại
-            if (targetList) {
-                targetList.style.display = targetList.style.display === 'block' ? 'none' : 'block';
+            // Toggle danh sách con hiện tại và đổi mũi tên
+            if (targetList.style.display === 'none' || targetList.style.display === '') {
+                targetList.style.display = 'block';
+                arrow.innerHTML = '&#9660;'; // Mũi tên xuống
+            } else {
+                targetList.style.display = 'none';
+                arrow.innerHTML = '&#9654;'; // Mũi tên phải
             }
         });
     });

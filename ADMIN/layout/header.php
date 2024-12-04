@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Dashtreme Admin - Free Dashboard for Bootstrap 4 by Codervent</title>
+<title>Dashboard</title>
 <!-- loader-->
 <link href="/bookstore/ADMIN/assets/css/pace.min.css" rel="stylesheet" />
 <script src="/bookstore/ADMIN/assets/js/pace.min.js"></script>
