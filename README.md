@@ -15,4 +15,4 @@
 4. Hiện tại chưa hoàn thành chức năng đăng ký nên phiền mọi người thêm người dùng trực tiếp vào database.
 
 #LƯU Ý ĐĂNG KÝ KHÁCH HÀNG
-Hiện chưa thực hiện chức năng xác thực email nhưng có thể thực hiện đăng ký thông thường, nên dùng email thật của cá nhân để sau này có thể nhận được mail quên mật khẩu hoặc mail xác thực.
+1. Hiện chưa thực hiện chức năng xác thực email nhưng có thể thực hiện đăng ký thông thường, nên dùng email thật của cá nhân để sau này có thể nhận được mail quên mật khẩu hoặc mail xác thực.
