@@ -8,7 +8,7 @@
 <!-- sidebar-menu js -->
 <script src="assets/js/sidebar-menu.js"></script>
 <!-- loader scripts -->
-<script src="assets/js/jquery.loading-indicator.js"></script>
+<script src="/bookstore/ADMIN/assets/js/jquery.loading-indicator.js"></script>
 <!-- Custom scripts -->
 <script src="assets/js/app-script.js"></script>
 <!-- Chart js -->

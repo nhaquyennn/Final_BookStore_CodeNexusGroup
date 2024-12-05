@@ -1,8 +1,7 @@
 <?php
 session_start();
-// Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
+// Kiểm tra nếu session 'user' không tồn tại
 if (!isset($_SESSION['user'])) {
-    // Nếu chưa đăng nhập, chuyển hướng về trang login
     header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
     exit();
 }
@@ -10,155 +9,125 @@ if (!isset($_SESSION['user'])) {
 // Gọi Controller để lấy dữ liệu
 require_once "../../../controller/thongKeController.php";
 $controller = new ThongKeController();
-$data = $controller->thongKeSanPhamTheoNgay(); // Gọi hàm từ Controller
+$data = $controller->thongKeSanPhamTheoNgay();
 $error = $controller->getError();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <?php require_once "../../../layout/header.php"; ?> <!-- Import layout header -->
+    <!-- Header file -->
+    <?php require_once "../../../layout/header.php"; ?>
 </head>
 
 <body class="bg-theme bg-theme9">
-    <!-- Start wrapper-->
     <div id="wrapper">
-
-        <!--Start sidebar-wrapper-->
-        <?php require_once "../../../layout/left_sidebar.php"; ?> <!-- Import sidebar -->
-        <!--End sidebar-wrapper-->
-
-        <!--Start topbar header-->
+        <!-- Sidebar -->
+        <?php require_once "../../../layout/left_sidebar.php"; ?>
         <header class="topbar-nav">
-            <?php require_once "../../../layout/topbar.php"; ?> <!-- Import topbar -->
+            <?php require_once "../../../layout/topbar.php"; ?>
         </header>
-        <!--End topbar header-->
 
         <div class="clearfix"></div>
-
-        <!--Start content-wrapper-->
         <div class="content-wrapper">
-
-            <!--Start container-fluid-->
             <div class="container-fluid">
 
-                <!--Start Dashboard Content-->
+                <!-- Form nhập liệu -->
                 <div class="card mt-3">
                     <div class="card-body">
-                        <!-- Hiển thị lỗi nếu có -->
                         <?php if (!empty($error)): ?>
-                            <div class="alert alert-danger"><?= $error ?></div>
+                            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
                         <?php endif; ?>
 
-                        <!-- Form nhập liệu cho thống kê -->
                         <form method="POST" action="">
                             <div class="form-row">
-                                <!-- Ngày bắt đầu -->
                                 <div class="form-group col-md-4">
                                     <label for="ngayBatDau" class="text-white">Ngày bắt đầu:</label>
                                     <input type="date" name="ngayBatDau" id="ngayBatDau" class="form-control" required min="2021-01-01" max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayBatDau'] ?? '') ?>">
                                 </div>
-
-                                <!-- Ngày kết thúc -->
                                 <div class="form-group col-md-4">
                                     <label for="ngayKetThuc" class="text-white">Ngày kết thúc:</label>
                                     <input type="date" name="ngayKetThuc" id="ngayKetThuc" class="form-control" required min="2021-01-01" max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayKetThuc'] ?? '') ?>">
                                 </div>
                             </div>
-                            <!-- Nút xem thống kê -->
                             <button type="submit" class="btn btn-primary">Xem thống kê</button>
                         </form>
                     </div>
                 </div>
-                <!--End Dashboard Content-->
 
-                <!--start overlay-->
-                <div class="overlay toggle-menu"></div>
-                <!--end overlay-->
-
-                <!-- Hiển thị biểu đồ nếu có dữ liệu -->
+                <!-- Biểu đồ -->
                 <?php if (isset($data) && count($data) > 0): ?>
                     <div class="card mt-3">
                         <div class="card-body">
-                            <!-- Canvas chứa biểu đồ -->
-                            <canvas id="thongKeChart" height="200"></canvas>
+                            <canvas id="thongKeChart" height="400"></canvas>
                         </div>
                     </div>
-                    <script>
-                        // Lấy dữ liệu từ PHP cho biểu đồ
-                        const labels = <?= json_encode(array_column($data, 'Ngay')) ?>;
-                        const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
-                        const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
 
-                        // Khởi tạo biểu đồ với Chart.js
-                        const ctx = document.getElementById('thongKeChart').getContext('2d');
-                        new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: labels,
-                                datasets: [{
-                                    label: 'Tổng số lượng sản phẩm',
-                                    data: values,
-                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                    borderColor: 'rgba(75, 192, 192, 1)',
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                plugins: {
-                                    tooltip: {
-                                        callbacks: {
-                                            label: function(context) {
-                                                const index = context.dataIndex;
-                                                return 'Sản phẩm bán chạy: ' + products[index];
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            // Debug JSON dữ liệu trong console
+                            console.log('Raw Data:', <?= json_encode($data, JSON_PRETTY_PRINT) ?>);
+
+                            // Lấy dữ liệu từ PHP
+                            const labels = <?= json_encode(array_column($data, 'Ngay')) ?>;
+                            const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
+                            const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
+
+                            // Tạo biểu đồ
+                            const ctx = document.getElementById('thongKeChart')?.getContext('2d');
+                            if (ctx) {
+                                new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: labels,
+                                        datasets: [{
+                                            label: 'Tổng số lượng sản phẩm',
+                                            data: values,
+                                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                            borderColor: 'rgba(75, 192, 192, 1)',
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(context) {
+                                                        const index = context.dataIndex;
+                                                        return `Ngày: ${labels[index]} - Sản phẩm bán chạy: ${products[index]} - Số lượng: ${values[index]}`;
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        scales: {
+                                            x: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Ngày'
+                                                }
+                                            },
+                                            y: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Số lượng'
+                                                }
                                             }
                                         }
                                     }
-                                },
-                                scales: {
-                                    x: {
-                                        title: {
-                                            display: true,
-                                            text: 'Ngày'
-                                        }
-                                    },
-                                    y: {
-                                        title: {
-                                            display: true,
-                                            text: 'Số lượng'
-                                        }
-                                    }
-                                }
+                                });
                             }
                         });
                     </script>
                 <?php else: ?>
-                    <!-- Hiển thị thông báo nếu không có dữ liệu -->
                     <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
                 <?php endif; ?>
             </div>
-            <!--End Charts-->
         </div>
-        <!-- End container-fluid-->
-
     </div>
-    <!--End content-wrapper-->
 
-    <!--Start Back To Top Button-->
-    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-    <!--End Back To Top Button-->
-
-    <!--Start right sidebar-->
-    <?php require_once "../../../layout/right_sidebar.php"; ?> <!-- Import right sidebar -->
-    <!--End right sidebar-->
-
-    </div>
-    <!--End wrapper-->
-
-    <!--Start footer-->
-    <?php require_once "../../../layout/script.php"; ?> <!-- Import footer scripts -->
-    <!--End footer-->
-
+    <!-- Footer Scripts -->
+    <?php require_once "../../../layout/script.php"; ?>
 </body>
 
 </html>

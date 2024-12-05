@@ -48,7 +48,9 @@ class ThongKeController
             } else {
               // Gọi model để lấy dữ liệu
               $data = $this->model->thongKeSanPhamTheoNgay($startDate->format('Y-m-d'), $endDate->format('Y-m-d'));
-              if (empty($data)) {
+
+              // Nếu dữ liệu rỗng, gán lỗi
+              if (!is_array($data) || empty($data)) {
                 $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
               }
             }
@@ -59,12 +61,15 @@ class ThongKeController
       }
     }
 
-    return $data;
+    // Trả về dữ liệu hoặc mảng trống để tránh lỗi
+    return is_array($data) ? $data : [];
   }
+
 
   public function thongKeSanPhamTheoThang()
   {
-    $data = []; // Biến lưu dữ liệu kết quả
+    $data = []; // Biến lưu kết quả thống kê
+    $this->error = ''; // Khởi tạo biến lưu lỗi
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Lấy dữ liệu từ form
@@ -72,32 +77,40 @@ class ThongKeController
       $thangKetThuc = $_POST['thangKetThuc'] ?? null;
       $nam = $_POST['nam'] ?? null;
 
+      // Kiểm tra tính hợp lệ của dữ liệu nhập vào
       if (!$thangBatDau || !$thangKetThuc || !$nam) {
         $this->error = "Vui lòng nhập đầy đủ tháng bắt đầu, tháng kết thúc và năm.";
       } elseif ($thangBatDau > $thangKetThuc) {
         $this->error = "Tháng bắt đầu phải nhỏ hơn hoặc bằng tháng kết thúc.";
       } else {
         try {
-          // Gọi model để lấy dữ liệu
+          // Gọi hàm từ model để lấy dữ liệu
           $data = $this->model->thongKeSanPhamTheoThang((int)$thangBatDau, (int)$thangKetThuc, (int)$nam);
+
+          // Kiểm tra nếu không có dữ liệu
           if (empty($data)) {
             $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
           }
         } catch (Exception $e) {
-          $this->error = "Đã xảy ra lỗi: " . htmlspecialchars($e->getMessage());
+          // Xử lý lỗi truy vấn hoặc lỗi không mong muốn
+          $this->error = "Đã xảy ra lỗi khi truy vấn dữ liệu: " . htmlspecialchars($e->getMessage());
         }
       }
     }
 
-    return $data;
+    // Trả về dữ liệu nếu có, hoặc trả về thông báo lỗi
+    return is_array($data) ? $data : [];
   }
+
+
+
 
   public function thongKeSanPhamTheoNam()
   {
-    $data = []; // Biến lưu dữ liệu kết quả
+    $data = [];
+    $this->error = '';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // Lấy dữ liệu từ form
       $namBatDau = $_POST['namBatDau'] ?? null;
       $namKetThuc = $_POST['namKetThuc'] ?? null;
 
@@ -107,8 +120,8 @@ class ThongKeController
         $this->error = "Năm bắt đầu phải nhỏ hơn hoặc bằng năm kết thúc.";
       } else {
         try {
-          // Gọi model để lấy dữ liệu
           $data = $this->model->thongKeSanPhamTheoNam((int)$namBatDau, (int)$namKetThuc);
+
           if (empty($data)) {
             $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
           }
