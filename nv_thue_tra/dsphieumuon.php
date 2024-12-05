@@ -66,8 +66,9 @@
                                                     <td>{$row['NgayTao']}</td>
                                                     <td>" . number_format($row['TongTien'], 0, ',', '.') . " VND</td>
                                                     <td>{$row['tinhTrang']}</td>
-                                                    <td>
-                                                        <a href='ctphieumuon.php?maPhieuMuon={$row['maPhieuMuon']}' class='btn btn-sm btn-info'></a>
+                                                    <td>                                                    
+                                                        <a href='chitietphieumuon.php?id={$row['maPhieuMuon']} class='btn btn-info btn-sm text-white'><i class='fa fa-eye-slash' aria-hidden='true'></i></a>
+                                                        <a href='suaphieumuon.php?name={$row['tenKH']}' class='btn btn-danger btn-sm text-white'><i class='fa fa-pencil' aria-hidden='true'></i></a>
                                                     </td>
                                                 </tr>";
                                             }
