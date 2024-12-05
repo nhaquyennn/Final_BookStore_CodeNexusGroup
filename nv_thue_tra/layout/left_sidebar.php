@@ -18,8 +18,8 @@
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Tạo phiếu</span>
                 <ul class="dropdown-menu">
-                    <li><a href="phieumuon.php">Phiếu mượn</a></li>
-                    <li><a href="phieutra.php">Phiếu trả</a></li>
+                    <li><a href="dsphieumuon.php">Phiếu mượn</a></li>
+                    <li><a href="dsphieutra.php">Phiếu trả</a></li>
                 </ul>
             </a>
         </li>
