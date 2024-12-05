@@ -16,13 +16,13 @@ class ThongKeModel
     // Câu truy vấn SQL
     $query = "
             SELECT DATE(NgayTao) as Ngay, 
-                   SUM(soLuong) as TongSoLuong, 
-                   (SELECT TenAnPham 
-                    FROM chitietphieumuon 
-                    JOIN anpham ON chitietphieumuon.maAnPham = anpham.maAnPham 
-                    WHERE chitietphieumuon.maPhieuMuon = phieumuon.MaPhieuMuon 
-                    ORDER BY soLuong DESC 
-                    LIMIT 1) as TenSanPhamBanChay
+            SUM(soLuong) as TongSoLuong, 
+            MAX((SELECT TenAnPham 
+                  FROM chitietphieumuon 
+                  JOIN anpham ON chitietphieumuon.maAnPham = anpham.maAnPham 
+                  WHERE chitietphieumuon.maPhieuMuon = phieumuon.MaPhieuMuon 
+                  ORDER BY soLuong DESC 
+                  LIMIT 1)) as TenSanPhamBanChay
             FROM phieumuon 
             JOIN chitietphieumuon ON phieumuon.MaPhieuMuon = chitietphieumuon.maPhieuMuon
             WHERE NgayTao BETWEEN ? AND ?

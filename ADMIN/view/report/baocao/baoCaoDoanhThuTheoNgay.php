@@ -1,8 +1,8 @@
 <?php
 session_start();
-// Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
+
+// Kiểm tra nếu session 'user' không tồn tại
 if (!isset($_SESSION['user'])) {
-  // Nếu chưa đăng nhập, chuyển hướng về trang login
   header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
   exit();
 }
@@ -47,7 +47,7 @@ $error = $controller->getError();
           <div class="card-body">
             <!-- Hiển thị lỗi nếu có -->
             <?php if (!empty($error)): ?>
-              <div class="alert alert-danger"><?= $error ?></div>
+              <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
             <!-- Form nhập liệu cho thống kê -->
@@ -77,7 +77,7 @@ $error = $controller->getError();
         <!--end overlay-->
 
         <!-- Hiển thị biểu đồ nếu có dữ liệu -->
-        <?php if (isset($data) && count($data) > 0): ?>
+        <?php if (!empty($data)): ?>
           <div class="card mt-3">
             <div class="card-body">
               <!-- Canvas chứa biểu đồ -->
@@ -110,7 +110,7 @@ $error = $controller->getError();
                     callbacks: {
                       label: function(context) {
                         const index = context.dataIndex;
-                        return 'Sản phẩm bán chạy: ' + products[index];
+                        return `Ngày: ${labels[index]} - Sản phẩm bán chạy: ${products[index]} - Số lượng: ${values[index]}`;
                       }
                     }
                   }

@@ -16,7 +16,7 @@ $error = $controller->getError();
 <html lang="en">
 
 <head>
-    <?php require_once "../../../layout/header.php"; ?> <!-- Import layout header -->
+    <?php require_once "../../../layout/header.php"; ?>
 </head>
 
 <body class="bg-theme bg-theme9">
@@ -24,12 +24,12 @@ $error = $controller->getError();
     <div id="wrapper">
 
         <!--Start sidebar-wrapper-->
-        <?php require_once "../../../layout/left_sidebar.php"; ?> <!-- Import sidebar -->
+        <?php require_once "../../../layout/left_sidebar.php"; ?>
         <!--End sidebar-wrapper-->
 
         <!--Start topbar header-->
         <header class="topbar-nav">
-            <?php require_once "../../../layout/topbar.php"; ?> <!-- Import topbar -->
+            <?php require_once "../../../layout/topbar.php"; ?>
         </header>
         <!--End topbar header-->
 

@@ -6,9 +6,10 @@ class PhieuMuonModel
   private $conn;
 
   // Constructor để khởi tạo kết nối
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conn = $db; // Gán kết nối database cho thuộc tính $conn
+    global $conn;
+    $this->conn = $conn;
   }
 
   // Hàm lấy thông tin phiếu mượn theo mã phiếu mượn
