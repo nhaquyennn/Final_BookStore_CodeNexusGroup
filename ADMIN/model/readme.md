@@ -1,1 +1,0 @@
-#đây là file model

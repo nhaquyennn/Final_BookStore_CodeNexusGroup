@@ -1,5 +1,6 @@
 <?php
 include_once '../database/db_connect.php';
+include_once '../cart_functions.php';
 session_start();
 
 // Lấy dữ liệu từ biểu mẫu
@@ -23,7 +24,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
 
-    // Mã hóa mật khẩu người dùng nhập vào với MD5
+    // Mã hóa mật khẩu người dùng nhập vào với MD5 (Khuyến nghị chuyển sang password_hash)
     $hashedPassword = md5($password);
 
     // So sánh mật khẩu đã mã hóa với mật khẩu trong cơ sở dữ liệu
@@ -44,6 +45,10 @@ if ($result->num_rows > 0) {
                 $_SESSION['user'] = $user['email'];
                 $_SESSION['maTK'] = $user['maTK'];
                 $_SESSION['tenKH'] = $khachhang['tenKH']; // Lưu tên khách hàng
+                $_SESSION['maNguoiDung'] = $user['maNguoiDung']; // Lưu maNguoiDung
+
+                // Tải giỏ hàng từ cơ sở dữ liệu
+                $_SESSION['shopping_cart'] = get_cart_from_db($_SESSION['maNguoiDung']);
             }
             header("Location: ../index.php");
             exit();

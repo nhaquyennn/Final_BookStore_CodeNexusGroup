@@ -90,5 +90,19 @@ if ($result && $result->num_rows > 0) {
 } else {
     $products = []; // Không có dữ liệu
 }
+//code của phúc
+// Truy vấn lấy danh mục từ bảng danhmucap
+$sql = "SELECT MaDanhMuc, TenDanhMuc, MoTa, hinhAnh 
+        FROM danhmucap";
 
-?>
+$result = $conn->query($sql);
+
+$categories = [];
+
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $categories[] = $row['TenDanhMuc'];
+    }
+} else {
+    $categories = [];
+}

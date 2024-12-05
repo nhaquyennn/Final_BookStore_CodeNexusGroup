@@ -1,4 +1,6 @@
-<?php session_start() ?>
+<?php
+session_start();
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -72,7 +74,7 @@
                         <li><a href="./shop-grid.php">Sản phẩm</a></li>
                         <li><a href="#">Giỏ hàng</a>
                             <ul class="header__menu__dropdown">
-                                <li><a href="./shoping-cart.php">Shoping Cart</a></li>
+                                <li><a href="./shopping-cart.php">Shoping Cart</a></li>
                                 <li><a href="./checkout.php">Check Out</a></li>
                             </ul>
                         </li>

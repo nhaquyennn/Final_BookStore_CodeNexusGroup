@@ -1,7 +1,0 @@
-{
-  "editor.formatOnSave": true,
-
-  "[php]": {
-    "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
-  }
-}
