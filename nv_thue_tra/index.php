@@ -6,7 +6,7 @@ include("layout/right_sidebar.php");
 include("layout/script.php");
 include("layout/topbar.php");
 //body
-include("page/taoYCxoa.php");
+include("page/phieumuon.php");
 //footer
 include("layout/footer.php");
 ?>

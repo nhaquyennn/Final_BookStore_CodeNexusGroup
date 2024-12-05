@@ -4,7 +4,18 @@
 } else {
     $page = $_GET['page'];
 }
+if(isset($_GET['maDM'])){
+    $maDM = $_GET['maDM'];
+}
 $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', database: 'final_nexus');
+$sql = "select*from danhmucap where MaDanhMuc = $maDM";
+$result = $conn -> query(query: $sql);
+if($result->num_rows > 0){
+    while ($row = mysqli_fetch_assoc(result: $result)){
+        $tenDM = $row['TenDanhMuc'];
+        $moTa = $row['MoTa'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +32,15 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                 <div class="container">
                     <h4 class="text-center mb-4">PHIẾU YÊU CẦU XÓA DANH MỤC</h4>
                     <form action="submit_request.php" method="POST">
+                        <!-- Danh mục -->
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Danh mục</label>
+                            <input type="text" class="form-control" id="DM" name="DM" value="<?php echo $tenDM?>" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="employeeName" class="form-label">Mô tả</label>
+                            <input type="text" class="form-control" id="moTa" name="moTa" value="<?php echo $moTa?>" readonly>
+                        </div>
                         <!-- Tên nhân viên -->
                         <div class="mb-3">
                             <label for="employeeName" class="form-label">Mã nhân viên</label>
@@ -31,25 +51,7 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                             <input type="text" class="form-control" id="employeeName" name="employeeName" placeholder="Nhập tên nhân viên" required>
                         </div>
 
-                        <!-- Danh mục -->
-                        <div class="mb-3">
-                            <label for="categoryName" class="form-label">Danh mục</label>
-                            <select id="book-category" name="DM">
-                                <?php
-                                $sql = "SELECT MaDanhMuc, TenDanhMuc FROM danhmucap";
-                                $result = $conn->query($sql);
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<option value='" . $row['MaDanhMuc'] . "'>" . $row['TenDanhMuc'] . "</option>";
-                                    }
-                                }
-                                ?>
-                                </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="employeeName" class="form-label">Mô tả</label>
-                            <input type="text" class="form-control" id="employeeName" name="employeeName" required>
-                        </div>
+                        
 
                         <!-- Lý do xóa -->
                         <div class="mb-3">
@@ -63,6 +65,8 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                             <a href="danhMucAP.php"><button type="submit" class="btn btn-primary">Gửi </button></a>
                         </div>
                     </form>
+                    <?php
+                     ?>
                 </div>
                 <!--End main content-->
 

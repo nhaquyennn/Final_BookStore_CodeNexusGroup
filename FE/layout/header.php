@@ -1,3 +1,5 @@
+<?php session_start() ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
@@ -20,6 +22,8 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/mainStyle.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <!-- Header Section Begin -->
 <header class="header">
@@ -36,14 +40,33 @@
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <div class="header__top__right">
-                        <div class="header__top__right__social">
-                            <a href="#"><i class="fa fa-user"></i> Đăng ký</a>
-                        </div>
-                        <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Đăng nhập</a>
-                        </div>
+                        <?php if (isset($_SESSION['tenKH'])): ?>
+                            <div>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle"
+                                        style="background-color: #E75480; color: white; font-size: 15px;" type="button"
+                                        id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-user"></i> <?php echo htmlspecialchars($_SESSION['tenKH']); ?>
+                                    </button>
+                                    <ul class="dropdown-menu" style="font-size: 15px;">
+                                        <li><a class="dropdown-item" href="user/profile.php">Quản lý thông tin cá nhân</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="user/logout.php"><i class="fa fa-sign-out"></i>
+                                                Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php else: ?>
+                            <div class="header__top__right__social">
+                                <a href="user/signup.php"><i class="fa fa-user"></i> Đăng ký</a>
+                            </div>
+                            <div class="header__top__right__auth">
+                                <a href="user/login.php"><i class="fa fa-user"></i> Đăng nhập</a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -71,9 +94,9 @@
                 </nav>
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <form action="#">
-                            <input type="text" placeholder="Bạn cần gì ?">
-                            <button type="submit" class="site-btn">TÌM KIẾM</button>
+                        <form action="controlCustomerUI/controlSearch.php" method="GET">
+                            <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." required>
+                            <button type="submit" name="search" class="site-btn">Tìm kiếm</button>
                         </form>
                     </div>
                 </div>
