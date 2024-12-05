@@ -64,7 +64,7 @@ $error = $controller->getError();
                 <?php if (!empty($data)): ?>
                     <div class="card mt-3">
                         <div class="card-body">
-                            <canvas id="chartThongKe" height="200"></canvas>
+                            <canvas id="chartThongKe" height="300"></canvas>
                         </div>
                     </div>
                     <script>

@@ -14,22 +14,27 @@ class ThongKeModel
   public function thongKeSanPhamTheoNgay($ngayBatDau, $ngayKetThuc)
   {
     $query = "
-        SELECT 
-    MONTH(NgayTao) AS Thang,
-    SUM(soLuong) AS TongSoLuong,
-    (SELECT TenAnPham 
-     FROM chitietphieumuon 
-     JOIN anpham ON chitietphieumuon.maAnPham = anpham.maAnPham 
-     WHERE chitietphieumuon.maPhieuMuon = phieumuon.MaPhieuMuon 
-     ORDER BY chitietphieumuon.soLuong DESC 
-     LIMIT 1
-    ) AS TenSanPhamBanChay
-FROM phieumuon 
-JOIN chitietphieumuon ON phieumuon.MaPhieuMuon = chitietphieumuon.maPhieuMuon
-WHERE MONTH(NgayTao) BETWEEN ? AND ? 
-  AND YEAR(NgayTao) = ?
-GROUP BY MONTH(NgayTao);
-    ";
+    SELECT 
+        DATE(NgayTao) AS Ngay,
+        SUM(soLuong) AS TongSoLuong,
+        (SELECT TenAnPham 
+         FROM chitietphieumuon 
+         JOIN anpham ON chitietphieumuon.maAnPham = anpham.maAnPham 
+         WHERE chitietphieumuon.maPhieuMuon IN (
+             SELECT MaPhieuMuon
+             FROM phieumuon 
+             WHERE DATE(NgayTao) = DATE(phieumuon.NgayTao)
+         )
+         ORDER BY soLuong DESC
+         LIMIT 1
+        ) AS TenSanPhamBanChay
+    FROM phieumuon 
+    JOIN chitietphieumuon ON phieumuon.MaPhieuMuon = chitietphieumuon.maPhieuMuon
+    WHERE NgayTao BETWEEN ? AND ?
+    GROUP BY DATE(NgayTao);
+";
+
+
 
     $stmt = $this->conn->prepare($query);
     if (!$stmt) {
