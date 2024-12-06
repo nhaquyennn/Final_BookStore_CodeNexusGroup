@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="zxx">
-<?php include 'controlCustomerUI/controlCategory.php'; ?>
+<?php
+include 'controlCustomerUI/controlCategoryIndex.php';
+include 'controlCustomerUI/controlCategoryGrid.php';
+include 'controlCustomerUI/controlFilterProduct.php';
+
+?>
 
 
 <head>

@@ -1,9 +1,38 @@
 <?php
-include 'controlCustomerUI/controlCategory.php';
 include 'controlCustomerUI/controlShopGrid.php';
+include 'controlCustomerUI/controlFilterProduct.php';
+include 'controlCustomerUI/controlCategoryGrid.php';
 
-// Lấy dữ liệu từ session
-$products_search = isset($_SESSION['products_search']) ? $_SESSION['products_search'] : [];
+// Lấy các danh mục và bộ lọc
+$categories_name_only = getAllCategories($conn);
+$authors = getAllAuthors($conn);
+$publishers = getAllPublishers($conn);
+$years = getAllPublishYears($conn);
+$rentalPrices = getAllRentalPrices($conn);
+
+// Xử lý bộ lọc từ request
+$filter_params = [];
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $filter_params = [
+        'category' => $_GET['category'] ?? '',
+        'min_price' => $_GET['min_price'] ?? '',
+        'max_price' => $_GET['max_price'] ?? '',
+        'author' => $_GET['author'] ?? '',
+        'publisher' => $_GET['publisher'] ?? '',
+        'year' => $_GET['year'] ?? '',
+        'sort' => $_GET['sort'] ?? ''
+    ];
+
+    // Lọc sản phẩm theo điều kiện
+    $products = filterProducts($conn, $filter_params);
+} else {
+    // Nếu không có filter, lấy tất cả sản phẩm
+    $products = filterProducts($conn, []);
+}
+
+
+// Tổng số lượng ấn phẩm
+$totalQuantity_dauap = count($products);
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -13,66 +42,91 @@ $products_search = isset($_SESSION['products_search']) ? $_SESSION['products_sea
 </head>
 
 <body>
-    <!-- Product Section Begin -->
     <section class="product spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
-                        <div class="sidebar__item">
-                            <h4>DANH MỤC</h4>
-                            <ul>
-                                <li class="active" data-filter="*">Tất cả</li>
-                                <?php foreach ($categories_name_only as $category): ?>
-                                    <li><a href="#"><?php echo htmlspecialchars($category); ?></a></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Price</h4>
-                            <div class="price-range-wrap">
-                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                    data-min="10" data-max="540">
-                                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                </div>
-                                <div class="range-slider">
-                                    <div class="price-input">
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
-                                    </div>
-                                </div>
+                        <form method="get" action="">
+                            <!-- Danh mục -->
+                            <div class="sidebar__item">
+                                <h4>DANH MỤC</h4>
+                                <ul>
+                                    <li><input type="radio" name="category" value="" checked> Tất cả</li>
+                                    <?php foreach ($categories_name_only as $category): ?>
+                                        <li>
+                                            <input type="radio" name="category"
+                                                value="<?php echo htmlspecialchars($category); ?>">
+                                            <?php echo htmlspecialchars($category); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Tác giả</h4>
-                            <ul>
-                                <li class="active" data-filter="*">Tất cả</li>
-                                <?php foreach ($authors as $author): ?>
-                                    <li><a href="#"><?php echo htmlspecialchars($author); ?></a></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Nhà xuất bản</h4>
-                            <ul>
-                                <li class="active" data-filter="*">Tất cả</li>
-                                <?php foreach ($publishers as $publisher): ?>
-                                    <li><a href="#"><?php echo htmlspecialchars($publisher); ?></a></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Năm xuất bản</h4>
-                            <ul>
-                                <li class="active" data-filter="*">Tất cả</li>
-                                <?php foreach ($years as $year): ?>
-                                    <li><a href="#"><?php echo htmlspecialchars($year); ?></a></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <div class="sidebar__item">
+
+                            <!-- Khoảng giá -->
+                            <div class="sidebar__item">
+                                <h4>Giá</h4>
+                                <form method="GET" action="controlCustomerUI/controlFilterProduct.php">
+                                    <input type="number" name="min_price" placeholder="Giá tối thiểu">
+                                    <input type="number" name="max_price" placeholder="Giá tối đa">
+                                    <button type="submit">Lọc</button>
+                                </form>
+                            </div>
+
+                            <!-- Tác giả -->
+                            <div class="sidebar__item">
+                                <h4>Tác giả</h4>
+                                <ul>
+                                    <li><input type="radio" name="author" value="" checked> Tất cả</li>
+                                    <?php foreach ($authors as $author): ?>
+                                        <li>
+                                            <input type="radio" name="author"
+                                                value="<?php echo htmlspecialchars($author); ?>">
+                                            <?php echo htmlspecialchars($author); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+
+                            <!-- Nhà xuất bản -->
+                            <div class="sidebar__item">
+                                <h4>Nhà xuất bản</h4>
+                                <ul>
+                                    <li><input type="radio" name="publisher" value="" checked> Tất cả</li>
+                                    <?php foreach ($publishers as $publisher): ?>
+                                        <li>
+                                            <input type="radio" name="publisher"
+                                                value="<?php echo htmlspecialchars($publisher); ?>">
+                                            <?php echo htmlspecialchars($publisher); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+
+                            <!-- Năm xuất bản -->
+                            <div class="sidebar__item">
+                                <h4>Năm xuất bản</h4>
+                                <ul>
+                                    <li><input type="radio" name="year" value="" checked> Tất cả</li>
+                                    <?php foreach ($years as $year): ?>
+                                        <li>
+                                            <input type="radio" name="year" value="<?php echo htmlspecialchars($year); ?>">
+                                            <?php echo htmlspecialchars($year); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+
+                            <!-- Sắp xếp -->
+                            <div class="sidebar__item">
+                                <h4>Sắp xếp theo</h4>
+                                <select name="sort">
+                                    <option value="">Mặc định</option>
+                                    <option value="low_to_high">Giá từ thấp đến cao</option>
+                                    <option value="high_to_low">Giá từ cao đến thấp</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Áp dụng bộ lọc</button>
                             <div class="latest-product__text">
                                 <h4>Sản phẩm mới</h4>
                                 <div class="latest-product__slider owl-carousel">
@@ -101,27 +155,13 @@ $products_search = isset($_SESSION['products_search']) ? $_SESSION['products_sea
                                     <?php endif; ?>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-7">
                     <div class="filter__item">
                         <div class="row">
-                            <div class="col-lg-4 col-md-5">
-                                <div class="filter__sort">
-                                    <span>Sắp xếp theo</span>
-                                    <select>
-                                        <option value="0">Mặc định</option>
-                                        <option value="0">Giá từ thấp đến cao</option>
-                                        <option value="0">Giá từ cao đến thấp</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4">
-                                <div class="filter__found">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-3">
+                            <div class="col-lg-12 col-md-12">
                                 <h5 style="text-align: right">
                                     <span><?php echo htmlspecialchars($totalQuantity_dauap); ?></span> ấn phẩm
                                 </h5>
@@ -135,13 +175,16 @@ $products_search = isset($_SESSION['products_search']) ? $_SESSION['products_sea
                                     <div class="product__item">
                                         <div class="product__item__pic">
                                             <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
-                                                alt="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
+                                                alt="<?php echo htmlspecialchars($product['TenDauAnPham']); ?>">
                                             <ul class="product__item__pic__hover">
                                                 <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="product__item__text">
                                             <h5><?php echo htmlspecialchars($product['TenAnPham']); ?></h5>
+                                            <h6 style="margin-top: 10px;">Tình trạng:
+                                                <?php echo htmlspecialchars($product['tinhTrang']); ?>
+                                            </h6>
                                             <h6 style="margin-top: 10px;">Giá:
                                                 <?php echo number_format($product['Giathue'], 0, ',', '.'); ?> VND
                                             </h6>
@@ -150,16 +193,13 @@ $products_search = isset($_SESSION['products_search']) ? $_SESSION['products_sea
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>Không có sản phẩm nào khớp với từ khóa tìm kiếm hoặc để hiển thị.</p>
+                            <p>Không có sản phẩm nào khớp với bộ lọc.</p>
                         <?php endif; ?>
                     </div>
-
                 </div>
             </div>
         </div>
-        </div>
     </section>
-    <!-- Product Section End -->
 
     <footer>
         <?php require_once 'layout/footer.php' ?>

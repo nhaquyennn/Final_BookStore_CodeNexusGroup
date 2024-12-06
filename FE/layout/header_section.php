@@ -1,4 +1,3 @@
-<!-- Hero Section Begin-->
 <section class="hero">
     <div class="container">
         <div class="row">
@@ -11,7 +10,9 @@
                     <div class="active">
                         <ul>
                             <?php foreach ($categories_name_only as $category): ?>
-                                <li><a href="#"><?php echo htmlspecialchars($category); ?></a></li>
+                                <li><a
+                                        href="shop-grid.php?category=<?php echo urlencode($category); ?>"><?php echo htmlspecialchars($category); ?></a>
+                                </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
