@@ -32,14 +32,12 @@
                         <form class="form-createPM col-12">
                             <table>
                                 <tr>
-                                    <td>Mã khách hàng</td>
-                                    <td><input type="text"></td>
+                                    <td style="padding-left:12px">Số điện thoại</td>
+                                    <td><input type="tel" id="phone" name="phone"></td>
                                 </tr>
                                 <tr>
                                     <td>Tên khách hàng</td>
                                     <td><input type="text"></td>
-                                    <td style="padding-left:12px">Số điện thoại</td>
-                                    <td><input type="tel" id="phone" name="phone"></td>
                                 </tr>
                                 <tr>
                                     <td>Ngày mượn</td>

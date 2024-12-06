@@ -42,7 +42,6 @@
                                             <th>Mã khách hàng</th>
                                             <th>Tên khách hàng</th>
                                             <th>Địa chỉ</th>
-                                            <th>Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>

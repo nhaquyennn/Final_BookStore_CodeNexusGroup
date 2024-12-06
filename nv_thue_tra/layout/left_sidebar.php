@@ -13,7 +13,8 @@
             <hr>
         </li> -->
         <li><a href="quanlyKH.php"><i class="zmdi"></i><span>Khách hàng </span></a></li>
-        <li class="dropdown">
+        <li><a href="dsphieumuon.php"><i class="zmdi"></i><span>Phiếu mượn </span></a></li>
+        <!-- <li class="dropdown">
             <a href="">
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Tạo phiếu</span>
@@ -22,7 +23,7 @@
                     <li><a href="dsphieutra.php">Phiếu trả</a></li>
                 </ul>
             </a>
-        </li>
+        </li> -->
         <li>
             <hr>
         </li>

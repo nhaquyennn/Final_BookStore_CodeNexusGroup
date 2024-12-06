@@ -24,7 +24,8 @@
 
                 <!--Start main content-->
                 <div class="PM row">
-                    <div class="btn-create-PM col-12 mb-3">
+                    <div class="btn-create-PM col-12">
+                        <h3 class="text-center text-white">QUẢN LÝ PHIẾU MƯỢN</h3>
                         <a href="taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
                     </div>
                 </div>
@@ -48,7 +49,7 @@
                                         <?php
                                         // Truy vấn lấy danh sách phiếu mượn
                                         $query = "SELECT 
-                                                      phieumuon.maPhieuMuon, 
+                                                      phieumuon.MaPhieuMuon, 
                                                       khachhang.tenKH, 
                                                       phieumuon.NgayTao, 
                                                       phieumuon.TongTien, 
@@ -61,14 +62,14 @@
                                         if ($result && $result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr>
-                                                    <td>{$row['maPhieuMuon']}</td>
+                                                    <td>{$row['MaPhieuMuon']}</td>
                                                     <td>{$row['tenKH']}</td>
                                                     <td>{$row['NgayTao']}</td>
                                                     <td>" . number_format($row['TongTien'], 0, ',', '.') . " VND</td>
                                                     <td>{$row['tinhTrang']}</td>
                                                     <td>                                                    
-                                                        <a href='chitietphieumuon.php?id={$row['maPhieuMuon']} class='btn btn-info btn-sm text-white'><i class='fa fa-eye-slash' aria-hidden='true'></i></a>
-                                                        <a href='suaphieumuon.php?name={$row['tenKH']}' class='btn btn-danger btn-sm text-white'><i class='fa fa-pencil' aria-hidden='true'></i></a>
+                                                        <a href='chitietphieumuon.php?id={$row['MaPhieuMuon']} class='btn btn-sm text-white'><i class='fa fa-eye-slash' aria-hidden='true'></i></a>
+                                                        <a href='suaphieumuon.php?id={$row['MaPhieuMuon']}' class='btn btn-link btn-sm text-white'><i class='fa fa-pencil' aria-hidden='true'></i></a>
                                                     </td>
                                                 </tr>";
                                             }
