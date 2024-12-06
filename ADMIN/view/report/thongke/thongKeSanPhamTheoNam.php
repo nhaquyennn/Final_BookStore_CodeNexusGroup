@@ -60,6 +60,13 @@ $error = $controller->getError();
                     </div>
                 </div>
 
+
+                <!--start overlay-->
+                <div class="overlay toggle-menu"></div>
+                <!--end overlay-->
+
+
+
                 <!-- Display the chart if data is available -->
                 <?php if (!empty($data)): ?>
                     <div class="card mt-3">
@@ -120,8 +127,31 @@ $error = $controller->getError();
                 <?php endif; ?>
             </div>
         </div>
+
+        <!--Start Back To Top Button-->
+        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+        <!--End Back To Top Button-->
+        <!--Start right sidebar-->
+        <?php require_once "../../../layout/right_sidebar.php"; ?> <!-- Import right sidebar -->
+        <!--End right sidebar-->
     </div>
-    <?php require_once "../../../layout/script.php"; ?>
+
+
+    <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+
+    <!--Start right sidebar-->
+    <?php require_once "../../../layout/right_sidebar.php"; ?> <!-- Import right sidebar -->
+    <!--End right sidebar-->
+
+    </div>
+    <!--End wrapper-->
+
+    <!--Start footer-->
+    <?php require_once "../../../layout/script.php"; ?> <!-- Import footer scripts -->
+    <!--End footer-->
+
 </body>
 
 </html>

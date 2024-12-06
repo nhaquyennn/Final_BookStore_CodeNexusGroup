@@ -11,49 +11,58 @@ class BaoCaoModel
     $this->conn = $conn;
   }
 
-  public function thongKeSanPhamTheoNgay($ngayBatDau, $ngayKetThuc)
+  public function baoCaoDoanhThuTheoNgay($ngayBatDau, $ngayKetThuc)
   {
-    // Câu truy vấn SQL
     $query = "
-            SELECT DATE(NgayTao) as Ngay, 
-                   SUM(soLuong) as TongSoLuong, 
-                   (SELECT TenAnPham 
-                    FROM chitietphieumuon 
-                    JOIN anpham ON chitietphieumuon.maAnPham = anpham.maAnPham 
-                    WHERE chitietphieumuon.maPhieuMuon = phieumuon.MaPhieuMuon 
-                    ORDER BY soLuong DESC 
-                    LIMIT 1) as TenSanPhamBanChay
-            FROM phieumuon 
-            JOIN chitietphieumuon ON phieumuon.MaPhieuMuon = chitietphieumuon.maPhieuMuon
-            WHERE NgayTao BETWEEN ? AND ?
-            GROUP BY DATE(NgayTao)
-        ";
+       SELECT 
+    DATE(p.NgayTao) AS Ngay,
+    SUM(ct.soLuong * ct.giaMoiSanPham) AS TongDoanhThu,
+    MAX(
+        CONCAT(
+            a.TenAnPham, '||', ct.soLuong * ct.giaMoiSanPham
+        )
+    ) AS SanPhamBanChayVaDoanhThu
+FROM 
+    phieumuon AS p
+JOIN 
+    chitietphieumuon AS ct ON p.MaPhieuMuon = ct.maPhieuMuon
+JOIN 
+    anpham AS a ON ct.maAnPham = a.maAnPham
+WHERE 
+    p.NgayTao BETWEEN ? AND ?
+GROUP BY 
+    DATE(p.NgayTao)
+ORDER BY 
+    DATE(p.NgayTao);
 
-    // Chuẩn bị câu truy vấn
+    ";
+
     $stmt = $this->conn->prepare($query);
 
-    // Gán giá trị cho các tham số
-    $stmt->bind_param("ss", $ngayBatDau, $ngayKetThuc);
+    if (!$stmt) {
+      throw new Exception("Lỗi chuẩn bị truy vấn: " . $this->conn->error);
+    }
 
-    // Thực thi truy vấn
+    $stmt->bind_param("ss", $ngayBatDau, $ngayKetThuc);
     $stmt->execute();
 
-    // Lấy kết quả
     $result = $stmt->get_result();
 
-    // Chuyển kết quả thành mảng
+    if (!$result) {
+      throw new Exception("Lỗi truy vấn SQL: " . $this->conn->error);
+    }
+
     $data = [];
     while ($row = $result->fetch_assoc()) {
       $data[] = $row;
     }
 
-    // Đóng statement
     $stmt->close();
 
-    return $data; // Trả về mảng kết quả
+    return $data;
   }
 
-  public function thongKeSanPhamTheoThang($thangBatDau, $thangKetThuc, $nam)
+  public function baoCaoDoanhThuTheoThang($thangBatDau, $thangKetThuc, $nam)
   {
     $query = "SELECT MONTH(NgayTao) as Thang, SUM(soLuong) as TongSoLuong 
                 FROM phieumuon 
@@ -70,13 +79,40 @@ class BaoCaoModel
   }
 
   // Thống kê sản phẩm theo năm
-  public function thongKeSanPhamTheoNam($namBatDau, $namKetThuc)
+  public function baoCaoDoanhThuTheoNam($namBatDau, $namKetThuc)
   {
-    $query = "SELECT YEAR(NgayTao) as Nam, SUM(soLuong) as TongSoLuong
-               FROM phieumuon
-               JOIN chitietphieumuon ON phieumuon.MaPhieuMuon = chitietphieumuon.maPhieuMuon
-               WHERE YEAR(NgayTao) BETWEEN ? AND ?
-               GROUP BY YEAR(NgayTao)";
+    $query = "
+        SELECT 
+            YEAR(p.NgayTao) AS Nam,
+            SUM(ct.soLuong * ct.giaMoiSanPham) AS TongDoanhThu,
+            (
+                SELECT a.TenAnPham 
+                FROM chitietphieumuon AS ct2 
+                JOIN anpham AS a ON ct2.maAnPham = a.maAnPham 
+                WHERE ct2.maPhieuMuon = p.MaPhieuMuon 
+                ORDER BY ct2.soLuong DESC, ct2.giaMoiSanPham DESC 
+                LIMIT 1
+            ) AS SanPhamBanChay,
+            (
+                SELECT SUM(ct2.soLuong * ct2.giaMoiSanPham) 
+                FROM chitietphieumuon AS ct2 
+                JOIN anpham AS a ON ct2.maAnPham = a.maAnPham 
+                WHERE ct2.maPhieuMuon = p.MaPhieuMuon 
+                ORDER BY ct2.soLuong DESC, ct2.giaMoiSanPham DESC 
+                LIMIT 1
+            ) AS DoanhThuSanPhamBanChay
+        FROM 
+            phieumuon AS p
+        JOIN 
+            chitietphieumuon AS ct ON p.MaPhieuMuon = ct.maPhieuMuon
+        WHERE 
+            YEAR(p.NgayTao) BETWEEN ? AND ?
+        GROUP BY 
+            YEAR(p.NgayTao)
+        ORDER BY 
+            YEAR(p.NgayTao);
+    ";
+
 
     $stmt = $this->conn->prepare($query);
     $stmt->bind_param("ii", $namBatDau, $namKetThuc);

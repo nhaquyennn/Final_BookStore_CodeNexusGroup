@@ -8,9 +8,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 // Gọi Controller để lấy dữ liệu
-require_once "../../../controller/thongKeController.php";
-$controller = new ThongKeController();
-$data = $controller->thongKeSanPhamTheoNgay(); // Gọi hàm từ Controller
+require_once "../../../controller/baoCaoController.php";
+$controller = new BaoCaoController();
+$data = $controller->baoCaoDoanhThuTheoNgay(); // Gọi hàm từ Controller
 $error = $controller->getError();
 ?>
 <!DOCTYPE html>
@@ -18,6 +18,7 @@ $error = $controller->getError();
 
 <head>
   <?php require_once "../../../layout/header.php"; ?> <!-- Import layout header -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Đảm bảo tải thư viện Chart.js -->
 </head>
 
 <body class="bg-theme bg-theme9">
@@ -85,19 +86,20 @@ $error = $controller->getError();
             </div>
           </div>
           <script>
-            // Lấy dữ liệu từ PHP cho biểu đồ
+            // Lấy dữ liệu từ PHP
             const labels = <?= json_encode(array_column($data, 'Ngay')) ?>;
-            const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
+            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>;
             const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
+            const productRevenues = <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>;
 
-            // Khởi tạo biểu đồ với Chart.js
+            // Khởi tạo biểu đồ Chart.js
             const ctx = document.getElementById('thongKeChart').getContext('2d');
             new Chart(ctx, {
               type: 'bar',
               data: {
                 labels: labels,
                 datasets: [{
-                  label: 'Tổng số lượng sản phẩm',
+                  label: 'Tổng doanh thu',
                   data: values,
                   backgroundColor: 'rgba(75, 192, 192, 0.2)',
                   borderColor: 'rgba(75, 192, 192, 1)',
@@ -110,7 +112,12 @@ $error = $controller->getError();
                     callbacks: {
                       label: function(context) {
                         const index = context.dataIndex;
-                        return `Ngày: ${labels[index]} - Sản phẩm bán chạy: ${products[index]} - Số lượng: ${values[index]}`;
+                        return `
+                Ngày: ${labels[index]}\n
+                Sản phẩm bán chạy: ${products[index]}\n
+                Doanh thu sản phẩm: ${parseInt(productRevenues[index]).toLocaleString()} VND\n
+                Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND
+              `;
                       }
                     }
                   }
@@ -125,13 +132,15 @@ $error = $controller->getError();
                   y: {
                     title: {
                       display: true,
-                      text: 'Số lượng'
-                    }
+                      text: 'Doanh thu (VND)'
+                    },
+                    beginAtZero: true
                   }
                 }
               }
             });
           </script>
+
         <?php else: ?>
           <!-- Hiển thị thông báo nếu không có dữ liệu -->
           <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>

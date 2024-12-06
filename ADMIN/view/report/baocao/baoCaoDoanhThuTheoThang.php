@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // Kiểm tra nếu session 'user' không tồn tại
 if (!isset($_SESSION['user'])) {
   header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
@@ -7,9 +8,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 // Gọi Controller để lấy dữ liệu
-require_once "../../../controller/thongKeController.php";
-$controller = new ThongKeController();
-$data = $controller->thongKeSanPhamTheoThang(); // Gọi hàm từ Controller
+require_once "../../../controller/baoCaoController.php";
+$controller = new BaoCaoController();
+$data = $controller->baoCaoDoanhThuTheoThang(); // Gọi hàm từ Controller
 $error = $controller->getError();
 ?>
 <!DOCTYPE html>
@@ -17,6 +18,7 @@ $error = $controller->getError();
 
 <head>
   <?php require_once "../../../layout/header.php"; ?>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Thêm thư viện Chart.js -->
 </head>
 
 <body class="bg-theme bg-theme9">
@@ -46,7 +48,7 @@ $error = $controller->getError();
           <div class="card-body">
             <!-- Hiển thị lỗi nếu có -->
             <?php if (!empty($error)): ?>
-              <div class="alert alert-danger"><?= $error ?></div>
+              <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
             <!-- Form nhập liệu cho thống kê -->
@@ -57,7 +59,7 @@ $error = $controller->getError();
                   <label for="thangBatDau" class="text-white">Tháng bắt đầu:</label>
                   <select name="thangBatDau" id="thangBatDau" class="form-control" required>
                     <?php for ($i = 1; $i <= 12; $i++): ?>
-                      <option value="<?= $i ?>" <?= (isset($thangBatDau) && $thangBatDau == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= (isset($_POST['thangBatDau']) && $_POST['thangBatDau'] == $i) ? 'selected' : '' ?>><?= $i ?></option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -67,7 +69,7 @@ $error = $controller->getError();
                   <label for="thangKetThuc" class="text-white">Tháng kết thúc:</label>
                   <select name="thangKetThuc" id="thangKetThuc" class="form-control" required>
                     <?php for ($i = 1; $i <= 12; $i++): ?>
-                      <option value="<?= $i ?>" <?= (isset($thangKetThuc) && $thangKetThuc == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= (isset($_POST['thangKetThuc']) && $_POST['thangKetThuc'] == $i) ? 'selected' : '' ?>><?= $i ?></option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -77,7 +79,7 @@ $error = $controller->getError();
                   <label for="nam" class="text-white">Năm:</label>
                   <select name="nam" id="nam" class="form-control" required>
                     <?php for ($i = 2021; $i <= 2024; $i++): ?>
-                      <option value="<?= $i ?>" <?= (isset($nam) && $nam == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= (isset($_POST['nam']) && $_POST['nam'] == $i) ? 'selected' : '' ?>><?= $i ?></option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -102,9 +104,9 @@ $error = $controller->getError();
             </div>
           </div>
           <script>
-            // Lấy dữ liệu từ PHP cho biểu đồ
+            // Lấy dữ liệu từ PHP
             const labels = <?= json_encode(array_column($data, 'Thang')) ?>;
-            const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
+            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>;
 
             // Khởi tạo biểu đồ với Chart.js
             const ctx = document.getElementById('thongKeChart').getContext('2d');
@@ -113,7 +115,7 @@ $error = $controller->getError();
               data: {
                 labels: labels,
                 datasets: [{
-                  label: 'Tổng số lượng sản phẩm',
+                  label: 'Tổng doanh thu',
                   data: values,
                   backgroundColor: 'rgba(75, 192, 192, 0.2)',
                   borderColor: 'rgba(75, 192, 192, 1)',
@@ -121,6 +123,15 @@ $error = $controller->getError();
                 }]
               },
               options: {
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      label: function(context) {
+                        return `Tháng: ${context.label}, Doanh thu: ${context.raw.toLocaleString()} VND`;
+                      }
+                    }
+                  }
+                },
                 scales: {
                   x: {
                     title: {
@@ -131,8 +142,9 @@ $error = $controller->getError();
                   y: {
                     title: {
                       display: true,
-                      text: 'Số lượng'
-                    }
+                      text: 'Doanh thu (VND)'
+                    },
+                    beginAtZero: true
                   }
                 }
               }

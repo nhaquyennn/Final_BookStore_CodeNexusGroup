@@ -55,6 +55,8 @@ $error = $controller->getError();
                     </div>
                 </div>
 
+
+
                 <!-- Biểu đồ -->
                 <?php if (isset($data) && count($data) > 0): ?>
                     <div class="card mt-3">
@@ -126,8 +128,21 @@ $error = $controller->getError();
         </div>
     </div>
 
-    <!-- Footer Scripts -->
-    <?php require_once "../../../layout/script.php"; ?>
+    <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+
+    <!--Start right sidebar-->
+    <?php require_once "../../../layout/right_sidebar.php"; ?> <!-- Import right sidebar -->
+    <!--End right sidebar-->
+
+    </div>
+    <!--End wrapper-->
+
+    <!--Start footer-->
+    <?php require_once "../../../layout/script.php"; ?> <!-- Import footer scripts -->
+    <!--End footer-->
+
 </body>
 
 </html>

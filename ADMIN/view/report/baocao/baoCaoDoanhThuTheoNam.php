@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // Kiểm tra nếu session 'user' không tồn tại
 if (!isset($_SESSION['user'])) {
   header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
@@ -7,9 +8,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 // Gọi Controller để lấy dữ liệu
-require_once "../../../controller/thongKeController.php";
-$controller = new ThongKeController();
-$data = $controller->thongKeSanPhamTheoNam(); // Gọi hàm từ Controller
+require_once "../../../controller/baoCaoController.php";
+$controller = new BaoCaoController();
+$data = $controller->baoCaoDoanhThuTheoNam(); // Gọi hàm từ Controller
 $error = $controller->getError();
 ?>
 <!DOCTYPE html>
@@ -92,18 +93,18 @@ $error = $controller->getError();
             </div>
           </div>
           <script>
-            // Lấy dữ liệu từ PHP cho biểu đồ
+            // Lấy dữ liệu từ PHP
             const labels = <?= json_encode(array_column($data, 'Nam')) ?>;
-            const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
+            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>;
 
-            // Khởi tạo biểu đồ với Chart.js
+            // Khởi tạo biểu đồ
             const ctx = document.getElementById('thongKeChart').getContext('2d');
             new Chart(ctx, {
               type: 'bar',
               data: {
                 labels: labels,
                 datasets: [{
-                  label: 'Tổng số lượng sản phẩm',
+                  label: 'Tổng doanh thu (VND)',
                   data: values,
                   backgroundColor: 'rgba(75, 192, 192, 0.2)',
                   borderColor: 'rgba(75, 192, 192, 1)',
@@ -121,8 +122,9 @@ $error = $controller->getError();
                   y: {
                     title: {
                       display: true,
-                      text: 'Số lượng'
-                    }
+                      text: 'Doanh thu (VND)'
+                    },
+                    beginAtZero: true
                   }
                 }
               }
