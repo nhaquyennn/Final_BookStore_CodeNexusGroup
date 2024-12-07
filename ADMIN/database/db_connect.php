@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
 $username = 'root';
-$password = '';
-$dbname = 'final_nexus';
+$password = 'root';
+$dbname = 'nexus_store';
 
 // Kết nối MySQLi
 $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -11,4 +11,3 @@ $conn = mysqli_connect($host, $username, $password, $dbname);
 if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
-?>

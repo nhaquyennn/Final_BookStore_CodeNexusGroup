@@ -1,0 +1,1 @@
+#xóa file statitis.js 

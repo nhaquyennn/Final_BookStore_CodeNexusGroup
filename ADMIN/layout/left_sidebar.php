@@ -1,11 +1,13 @@
 <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
     <div class="brand-logo">
         <a href="index.html">
-            <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+            <img src="/bookstore/ADMIN/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
             <h5 class="logo-text">Admin</h5>
         </a>
     </div>
+
     <ul class="sidebar-menu do-nicescrol">
+        <!-- Dashboard -->
         <li><a href="index.php" class="sidebar-link"><span>Dashboard</span></a></li>
         <li>
             <hr>
@@ -13,106 +15,102 @@
 
         <!-- Yêu cầu -->
         <li class="dropdown">
-            <a href="#" class="sidebar-link dropdown-toggle">
-                <span>Yêu cầu</span>
-                <span class="arrow"></span>
-            </a>
+            <a href="requirements.php" class="sidebar-link"><span>Yêu cầu</span></a>
             <ul class="dropdown-menu">
                 <li><a href="#">Yêu cầu xóa khách hàng</a></li>
                 <li><a href="#">Yêu cầu xóa ấn phẩm</a></li>
             </ul>
         </li>
 
+        <!-- Khuyến mãi -->
         <li><a href="promotion.html" class="sidebar-link"><span>Khuyến mãi</span></a></li>
+
+        <!-- Ấn phẩm -->
         <li><a href="product.php" class="sidebar-link"><span>Ấn phẩm</span></a></li>
 
         <!-- Đơn hàng -->
-        <li class="dropdown">
-            <a href="#" class="sidebar-link dropdown-toggle">
-                <span>Đơn hàng</span>
-                <span class="arrow"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="list-group-item"><a href="view/order/formTimKiem.php">Tìm kiếm đơn hàng</a></li>
-                <li class="list-group-item"><a href="view/order/donHangChoDuyet.php">Duyệt đơn hàng</a></li>
+        <li class="list-group-item">
+            <a href="#" class="sidebar-link" id="statsLinkPublications"><span>Đơn hàng</span></a>
+            <ul id="dateListPublications" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/formTimKiem.php">Tìm kiếm đơn hàng</a></li>
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/order/duyetDonHang.php">Duyệt đơn hàng</a></li>
             </ul>
         </li>
 
+        <!-- Danh mục -->
         <li><a href="category.html" class="sidebar-link"><span>Danh mục</span></a></li>
 
         <!-- Thống kê ấn phẩm -->
-        <li class="dropdown">
-            <a href="#" class="sidebar-link dropdown-toggle">
-                <span>Thống kê sản phẩm</span>
-                <span class="arrow"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="view/report/thongke/thongKeSanPhamTheoNgay.php">Ngày</a></li>
-                <li><a href="view/report/thongke/thongKeSanPhamTheoThang.php">Tháng</a></li>
-                <li><a href="view/report/thongke/thongKeSanPhamTheoNam.php">Năm</a></li>
+        <li class="list-group-item">
+            <a href="#" class="sidebar-link" id="statsLinkPublications"><span>Thống kê ấn phẩm</span></a>
+            <ul id="dateListPublications" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/thongke/thongKeSanPhamTheoNgay.php">Ngày</a></li>
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/thongke/thongKeSanPhamTheoThang.php">Tháng</a></li>
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/thongke/thongKeSanPhamTheoNam.php">Năm</a></li>
             </ul>
         </li>
+
         <!-- Thống kê doanh thu -->
-        <li class="dropdown">
-            <a href="#" class="sidebar-link dropdown-toggle">
-                <span>Báo cáo doanh thu</span>
-                <span class="arrow"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a></li>
-                <li><a href="view/report/baocao/baoCaoDoanhThuTheoThang.php">Tháng</a></li>
-                <li><a href="view/report/baocao/baoCaoDoanhThuTheoNam.php">Năm</a></li>
+        <li class="list-group-item">
+            <a href="#" class="sidebar-link" id="statsLinkRevenue"><span>Báo cáo doanh thu</span></a>
+            <ul id="dateListRevenue" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a></li>
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/baocao/baoCaoDoanhThuTheoThang.php">Tháng</a></li>
+                <li class="list-group-item"><a href="/bookstore/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNam.php">Năm</a></li>
             </ul>
         </li>
+
+        <!-- Hóa đơn -->
         <li><a href="bill.html" class="sidebar-link"><span>Hóa đơn</span></a></li>
+
+        <!-- Nhân viên -->
         <li><a href="employees.php" class="sidebar-link"><span>Nhân viên</span></a></li>
+
+        <!-- Khách hàng -->
         <li><a href="customers.php" class="sidebar-link"><span>Khách hàng</span></a></li>
         <li>
             <hr>
         </li>
+
+        <!-- Thông tin cá nhân -->
         <li><a href="profile.php" class="sidebar-link"><span>Thông tin cá nhân</span></a></li>
+
+        <!-- Đăng xuất -->
         <li><a href="user/logout.php" class="sidebar-link"><span>Đăng xuất</span></a></li>
     </ul>
 </div>
 
 <script>
-    // Lấy tất cả các mục có lớp 'sidebar-link'
-    const navLinks = document.querySelectorAll('.sidebar-link');
+    // Gán sự kiện click cho các liên kết trong sidebar
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); // Ngăn chặn hành động mặc định
 
-    // Lấy URL hiện tại
-    const currentUrl = window.location.href;
+            // Lấy ID của danh sách cần hiển thị
+            let targetId = null;
+            if (link.getAttribute('id') === 'statsLinkPublications') {
+                targetId = 'dateListPublications';
+            } else if (link.getAttribute('id') === 'statsLinkRevenue') {
+                targetId = 'dateListRevenue';
+            }
 
-    // Duyệt qua từng mục và kiểm tra nếu URL khớp
-    navLinks.forEach(link => {
-        if (link.href === currentUrl) {
-            link.classList.add('active');
-        }
-    });
+            // Nếu không có danh sách con liên quan, bỏ qua
+            if (!targetId) return;
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            // Lấy danh sách cần hiển thị
+            const targetList = document.getElementById(targetId);
 
-        dropdownToggles.forEach((toggle) => {
-            toggle.addEventListener('click', (e) => {
-                e.preventDefault(); // Ngăn chặn chuyển hướng khi nhấn vào link
-
-                // Tìm dropdown tương ứng
-                const dropdown = toggle.parentElement;
-                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-
-                // Đóng các dropdown khác (nếu muốn)
-                document.querySelectorAll('.dropdown.open').forEach((openDropdown) => {
-                    if (openDropdown !== dropdown) {
-                        openDropdown.classList.remove('open');
-                        openDropdown.querySelector('.dropdown-menu').style.display = 'none';
-                    }
-                });
-
-                // Mở/đóng dropdown hiện tại
-                dropdown.classList.toggle('open');
-                dropdownMenu.style.display = dropdown.classList.contains('open') ? 'block' : 'none';
+            // Đóng tất cả các danh sách con khác
+            document.querySelectorAll('.list-group').forEach(list => {
+                if (list !== targetList) {
+                    list.style.display = 'none'; // Ẩn các danh sách không liên quan
+                }
             });
+
+            // Chuyển đổi hiển thị danh sách hiện tại
+            if (targetList) {
+                targetList.style.display = targetList.style.display === 'block' ? 'none' : 'block';
+            }
         });
     });
-
 </script>

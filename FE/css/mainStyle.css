@@ -96,7 +96,7 @@ Helper CSS
     right: 0;
     height: 4px;
     width: 80px;
-    background: #e75480;
+    background: #E75480;
     content: "";
     margin: 0 auto;
 }
@@ -133,7 +133,7 @@ Helper CSS
     color: #ffffff;
     text-transform: uppercase;
     font-weight: 700;
-    background: #fcdee6;
+    background: #FCDEE6;
     letter-spacing: 2px;
 }
 
@@ -144,8 +144,9 @@ Helper CSS
     text-transform: uppercase;
     display: inline-block;
     padding: 13px 30px 12px;
-    background: #e75480;
+    background: #E75480;
     border: none;
+    
 }
 
 /* Preloder */
@@ -472,6 +473,46 @@ Header
     padding: 24px 0;
 }
 
+/* .header__cart ul {
+    display: inline-block;
+    margin-right: 25px;
+}
+
+.header__cart ul li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.header__cart ul li:last-child {
+    margin-right: 0;
+}
+
+.header__cart ul li a {
+    position: relative;
+}
+
+.header__cart ul li a i {
+    font-size: 18px;
+    color: #1c1c1c;
+} */
+
+/* .header__cart ul li a span {
+    height: 13px;
+    width: 13px;
+    background: #FCDEE6;
+    font-size: 10px;
+    color: #ffffff;
+    line-height: 13px;
+    text-align: center;
+    font-weight: 700;
+    display: inline-block;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: -12px;
+} */
+
 .header__cart .header__cart__price {
     font-size: 14px;
     color: red;
@@ -777,7 +818,7 @@ Featured
     bottom: -2px;
     width: 100%;
     height: 2px;
-    background: #e75480;
+    background: #E75480;
     content: "";
     opacity: 0;
 }
@@ -825,8 +866,8 @@ Featured
 }
 
 .featured__item__pic__hover li:hover a {
-    background: #fcdee6;
-    border-color: #fcdee6;
+    background: #FCDEE6;
+    border-color: #FCDEE6;
 }
 
 .featured__item__pic__hover li:hover a i {
@@ -904,7 +945,7 @@ Latest Product
 .latest-product__slider.owl-carousel .owl-nav button {
     height: 30px;
     width: 30px;
-    background: #f3f6fa;
+    background: #F3F6FA;
     border: 1px solid #e6e6e6;
     font-size: 14px;
     color: #636363;
@@ -1118,11 +1159,11 @@ Sidebar
 }
 
 .sidebar__item__color.sidebar__item__color--gray label:after {
-    background: #e9a625;
+    background: #E9A625;
 }
 
 .sidebar__item__color.sidebar__item__color--red label:after {
-    background: #d62d2d;
+    background: #D62D2D;
 }
 
 .sidebar__item__color.sidebar__item__color--black label:after {
@@ -1130,11 +1171,11 @@ Sidebar
 }
 
 .sidebar__item__color.sidebar__item__color--blue label:after {
-    background: #249bc8;
+    background: #249BC8;
 }
 
 .sidebar__item__color.sidebar__item__color--green label:after {
-    background: #3cc032;
+    background: #3CC032;
 }
 
 .sidebar__item__color label {
@@ -1242,8 +1283,8 @@ Sidebar
 }
 
 .product__item__pic__hover li:hover a {
-    background: #fcdee6;
-    border-color: #fcdee6;
+    background: #FCDEE6;
+    border-color: #FCDEE6;
 }
 
 .product__item__pic__hover li:hover a i {
@@ -1441,7 +1482,7 @@ Sidebar
 }
 
 .filter__option span:hover {
-    color: #fcdee6;
+    color: #FCDEE6;
 }
 
 .product__item {
@@ -1482,8 +1523,8 @@ Sidebar
 }
 
 .product__item__pic__hover li:hover a {
-    background: #fcdee6;
-    border-color: #fcdee6;
+    background: #FCDEE6;
+    border-color: #FCDEE6;
 }
 
 .product__item__pic__hover li:hover a i {
@@ -1563,8 +1604,8 @@ Sidebar
 
 .product__pagination a:hover,
 .blog__pagination a:hover {
-    background: #fcdee6;
-    border-color: #fcdee6;
+    background: #FCDEE6;
+    border-color: #FCDEE6;
     color: #ffffff;
 }
 
@@ -1576,6 +1617,10 @@ Sidebar
 /*---------------------
   Shop Details
 -----------------------*/
+
+.product-details {
+    padding-top: 80px;
+}
 
 .product__details__pic__item {
     margin-bottom: 20px;
@@ -1606,7 +1651,7 @@ Sidebar
 
 .product__details__text .product__details__rating i {
     margin-right: -2px;
-    color: #edbb0e;
+    color: #EDBB0E;
 }
 
 .product__details__text .product__details__rating span {
@@ -1791,6 +1836,7 @@ Sidebar
 -----------------------*/
 
 .shoping-cart {
+    padding-top: 80px;
     padding-bottom: 80px;
 }
 
@@ -1827,11 +1873,13 @@ Sidebar
 .shoping__cart__table table tbody tr td.shoping__cart__item {
     width: 630px;
     text-align: left;
+
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item img {
     display: inline-block;
     margin-right: 25px;
+
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item h5 {
@@ -1840,8 +1888,8 @@ Sidebar
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item .sp {
-    align-items: center;
-    padding-top: 75px;
+	align-items: center;
+    padding-top:75px;
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__price {
@@ -1950,10 +1998,11 @@ Sidebar
     text-transform: uppercase;
     display: inline-block;
     padding: 13px 30px 12px;
-    background: #e75480;
+    background: #E75480;
     border: none;
-    width: 100%;
-    text-align: center;
+    width:100%;
+    text-align:center;
+
 }
 
 .shoping__checkout h5 {
@@ -2008,14 +2057,14 @@ Sidebar
     color: #999999;
     text-align: center;
     background: #f5f5f5;
-    border-top: 1px solid #6ab963;
+    border-top: 1px solid #6AB963;
     padding: 12px 0 12px;
     margin-bottom: 75px;
 }
 
 .checkout h6 span {
     font-size: 16px;
-    color: #6ab963;
+    color: #6AB963;
     margin-right: 5px;
 }
 
@@ -2085,8 +2134,8 @@ Sidebar
 }
 
 .checkout__input__checkbox label input:checked~.checkmark {
-    background: #fcdee6;
-    border-color: #fcdee6;
+    background: #FCDEE6;
+    border-color: #FCDEE6;
 }
 
 .checkout__input__checkbox label input:checked~.checkmark:after {
@@ -2313,7 +2362,7 @@ Sidebar
 }
 
 .blog__sidebar__item ul li a:hover {
-    color: #fcdee6;
+    color: #FCDEE6;
 }
 
 .blog__sidebar__search {
@@ -2533,7 +2582,7 @@ Sidebar
 }
 
 .blog__details__widget .blog__details__social a:hover {
-    color: #fcdee6;
+    color: #FCDEE6;
 }
 
 .blog__details__widget .blog__details__social a:last-child {
@@ -2545,7 +2594,7 @@ Sidebar
 -----------------------*/
 
 .footer {
-    background: #f3f6fa;
+    background: #F3F6FA;
     padding-top: 70px;
     padding-bottom: 0;
 }
@@ -2651,7 +2700,7 @@ Sidebar
 }
 
 .footer__widget .footer__widget__social a:hover {
-    background: #fcdee6;
+    background: #FCDEE6;
     color: #ffffff;
     border-color: #ffffff;
 }
@@ -2689,7 +2738,7 @@ Sidebar
 
 .contact__widget span {
     font-size: 36px;
-    color: #fcdee6;
+    color: #FCDEE6;
 }
 
 .contact__widget h4 {
@@ -2728,7 +2777,7 @@ Sidebar
 
 .map .map-inside i {
     font-size: 48px;
-    color: #fcdee6;
+    color: #FCDEE6;
     position: absolute;
     bottom: -75px;
     left: 50%;

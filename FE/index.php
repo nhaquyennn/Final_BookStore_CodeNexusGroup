@@ -7,6 +7,12 @@
 </head>
 
 <body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+
     <!-- Categories Section Begin -->
     <section class="categories">
         <div class="container">

@@ -12,7 +12,7 @@ $email = $_SESSION['user']; // Lấy email từ session
 $user = null; // Khởi tạo biến chứa thông tin người dùng
 
 // Truy vấn thông tin người dùng
-$sql = "SELECT nguoidung.tenNguoiDung, nguoidung.diaChi, nhanvien.chucVu, nhanvien.maNhanVien, taikhoan.email, taikhoan.matkhau 
+$sql = "SELECT nguoidung.tenNguoiDung, nguoidung.diaChi, nhanvien.chucVu, nhanvien.maNhanVien, taikhoan.email 
         FROM nguoidung 
         INNER JOIN nhanvien ON nguoidung.maNguoiDung = nhanvien.maNguoiDung 
         INNER JOIN taikhoan ON nguoidung.maNguoiDung = taikhoan.maNguoiDung 
@@ -29,8 +29,8 @@ if ($result->num_rows === 1) {
     die("Không tìm thấy thông tin người dùng.");
 }
 
-// Xử lý khi người dùng nhấn nút "Lưu thay đổi thông tin"
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
+// Xử lý khi người dùng nhấn nút "Lưu thay đổi"
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newName = $_POST['tenNguoiDung'] ?? '';
     $newEmail = $_POST['email'] ?? '';
 
@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         if ($stmt->execute()) {
             $_SESSION['user'] = $newEmail; // Cập nhật email trong session
             echo "<script>
-                    alert('Thay đổi thông tin thành công!');
-                    window.location.href = 'profile.php';
+                    alert('Thay đổi thành công!');
+                    window.location.href = '../profile.php';
                 </script>";
             exit();
         } else {
@@ -57,35 +57,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         }
     }
 }
-
-// Xử lý đổi mật khẩu
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
-    $old_password = $_POST['old_password'] ?? '';
-    $new_password = $_POST['new_password'] ?? '';
-    $confirm_password = $_POST['confirm_password'] ?? '';
-
-    $old_password_hashed = md5($old_password); // Mã hóa mật khẩu cũ
-    if ($old_password_hashed !== $user['matkhau']) {
-        $error = "Mật khẩu cũ không chính xác."; // Lỗi sai mật khẩu cũ
-    } elseif ($new_password !== $confirm_password) {
-        $error = "Mật khẩu mới và xác nhận không khớp."; // Lỗi xác nhận không khớp
-    } else {
-        $new_password_hashed = md5($new_password); // Mã hóa mật khẩu mới
-        $updatePasswordSql = "UPDATE taikhoan SET matkhau = ? WHERE email = ?";
-        $stmt = $conn->prepare($updatePasswordSql);
-        $stmt->bind_param('ss', $new_password_hashed, $email);
-
-        if ($stmt->execute()) {
-            echo "<script>
-                    alert('Đổi mật khẩu thành công!');
-                    window.location.href = 'profile.php';
-                </script>";
-            exit();
-        } else {
-            $error = "Đã xảy ra lỗi khi đổi mật khẩu.";
-        }
-    }
-}
-
-
 ?>
+

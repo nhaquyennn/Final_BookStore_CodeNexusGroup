@@ -60,23 +60,6 @@
                                             </td>
                                         </tr>
 
-                                        <tr>
-                                            <td>YC1</td>
-                                            <td>Xóa ấn phẩm B</td>
-                                            <td>14/10/2024</td>
-                                            <td>
-                                                <strong>Mã nhân viên:</strong> 23456<br>
-                                                <strong>Tên :</strong> Lê Thị B<br>
-                                                <strong>Bộ phận:</strong> Bán hàng<br>
-                                            </td>
-                                            <td>Chờ Duyệt</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-primary"><i
-                                                        class="fa fa-eye"></i></button>
-                                                <button class="btn btn-sm btn-warning">Duyệt</button>
-                                                <button class="btn btn-sm btn-danger">Từ chối</button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

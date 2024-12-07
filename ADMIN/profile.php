@@ -82,9 +82,14 @@ require_once 'controlUser/controlProfile.php';
                   </div>
 
                   <!-- Sửa thông tin -->
+                  <?php if (!empty($error)): ?>
+                    <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
+                  <?php endif; ?>
                   <div class="tab-pane" id="edit">
-                    <form method="POST" action="">
-                      <input type="hidden" name="update_profile" value="1">
+                    <form method="POST" action="controlUser/controlProfile.php">
+                      <input type="hidden" name="maNguoiDung"
+                        value="<?php echo htmlspecialchars($user['maNhanVien']); ?>">
+
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label">Tên nhân viên</label>
                         <div class="col-lg-9">
@@ -112,11 +117,7 @@ require_once 'controlUser/controlProfile.php';
 
                   <!-- Đổi mật khẩu -->
                   <div class="tab-pane" id="pw_change">
-                    <form method="POST" action="">
-                      <?php if (!empty($error)): ?>
-                        <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
-                      <?php endif; ?>
-                      <input type="hidden" name="change_password" value="1">
+                    <form method="POST" action="controlChangePassword.php">
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label">Mật khẩu cũ</label>
                         <div class="col-lg-9">
@@ -130,7 +131,7 @@ require_once 'controlUser/controlProfile.php';
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Xác nhận mật khẩu</label>
+                        <label class="col-lg-3 col-form-label form-control-label">Xác nhận mật khẩu mới</label>
                         <div class="col-lg-9">
                           <input class="form-control" type="password" name="confirm_password" required>
                         </div>
@@ -138,7 +139,7 @@ require_once 'controlUser/controlProfile.php';
                       <div class="form-group row">
                         <div class="col-lg-9 offset-lg-3">
                           <input type="reset" class="btn btn-secondary" value="Hủy">
-                          <input type="submit" class="btn btn-primary" value="Đổi mật khẩu">
+                          <input type="submit" class="btn btn-primary" value="Lưu thay đổi">
                         </div>
                       </div>
                     </form>
@@ -151,16 +152,17 @@ require_once 'controlUser/controlProfile.php';
         </div>
         <!-- End Main Content -->
 
+        <!-- Right Sidebar -->
+        <?php require_once "layout/right_sidebar.php"; ?>
+        <!-- End Right Sidebar -->
+
+        <!-- Footer -->
+        <?php require_once "layout/script.php"; ?>
+        <!-- End Footer -->
+
       </div>
     </div>
   </div>
-
-  <!-- Footer -->
-  <?php require_once "layout/footer.php"; ?>
-  <!-- End Footer -->
-
-  <?php require_once "layout/script.php"; ?>
-  
 </body>
 
 </html>
