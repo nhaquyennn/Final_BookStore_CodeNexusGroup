@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 04, 2024 lúc 10:33 PM
+-- Thời gian đã tạo: Th12 07, 2024 lúc 11:02 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -20,23 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `final_nexus`
 --
-
-DELIMITER $$
---
--- Thủ tục
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updateGiaThue` ()   BEGIN
-    -- Cập nhật giá thuê cho các tình trạng khác
-    UPDATE anpham
-    SET giaThue = giaThue * 0.9
-    WHERE tinhTrang = 'Tốt';
-
-    UPDATE anpham
-    SET giaThue = giaThue * 0.7
-    WHERE tinhTrang = 'Hư hỏng nhẹ';
-END$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -73,17 +56,16 @@ INSERT INTO `anpham` (`maAnPham`, `TenAnPham`, `Giathue`, `tinhTrang`, `soLuongC
 (12, 'Mắt Biếc', 24500, 'Mới', 0, 100, 12),
 (13, 'Thế Giới Không Có Người Xấu', 135000, 'Tốt', 0, 30, 7),
 (14, 'Thế Giới Không Có Người Xấu', 105000, 'Hư hỏng nhẹ', 0, 30, 7),
-(15, 'Căn Phòng Của Những Điều Kỳ Diệu', 120000, 'Mới', 0, 27, 8),
-(16, 'Căn Phòng Của Những Điều Kỳ Diệu', 120000, 'Mới', 23, 27, 8),
-(17, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 135000, 'Mới', 0, 60, 9),
-(18, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 121500, 'Tốt', 20, 60, 9),
-(19, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 200000, 'Mới', 0, 70, 10),
-(20, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 140000, 'Hư hỏng nhẹ', 0, 70, 10),
-(21, 'Chuyện Bên Rìa Thế Giới', 31500, 'Mới', 0, 85, 1),
-(22, 'Đội Quân Doraemon - Đại Chiến Thuật Côn Trùng', 15000, 'Mới', 0, 140, 6),
-(23, 'Tạp Chí Bóng đá Plus - Tháng 12/2024', 10000, 'Mới', 0, 30, 13),
-(24, 'Tạp Chí Bóng Đá Plus - Tháng 11/2024', 10000, 'Mới', 0, 30, 15),
-(25, 'Đẹp Magazine - Tháng 12/2024', 10000, 'Mới', 2, 28, 14);
+(15, 'Căn Phòng Của Những Điều Kỳ Diệu', 120000, 'Mới', 23, 27, 8),
+(16, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 135000, 'Mới', 0, 60, 9),
+(17, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 121500, 'Tốt', 20, 60, 9),
+(18, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 200000, 'Mới', 0, 70, 10),
+(19, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 140000, 'Hư hỏng nhẹ', 0, 70, 10),
+(20, 'Chuyện Bên Rìa Thế Giới', 31500, 'Mới', 0, 85, 1),
+(21, 'Đội Quân Doraemon - Đại Chiến Thuật Côn Trùng', 15000, 'Mới', 0, 140, 6),
+(22, 'Tạp Chí Bóng đá Plus - Tháng 12/2024', 10000, 'Mới', 0, 30, 13),
+(23, 'Tạp Chí Bóng Đá Plus - Tháng 11/2024', 10000, 'Mới', 0, 30, 15),
+(24, 'Đẹp Magazine - Tháng 12/2024', 10000, 'Mới', 2, 28, 14);
 
 -- --------------------------------------------------------
 
@@ -159,7 +141,7 @@ INSERT INTO `dauap` (`madauAP`, `TenDauAnPham`, `Tacgia`, `NXB`, `Tongsoluong`, 
 (4, 'Sapiens: Lược Sử Loài Người', 'Yuval Noah Harari', 'NXB Dân Trí', 200, '200000', 2, 'luoc-su-loai-nguoi.jpg', 'Một cái nhìn tổng quan về sự tiến hóa và lịch sử của loài người từ thời kỳ tiền sử đến ngày nay.', '2018-11-11'),
 (5, 'Harry Potter và Hòn Đá Phù Thủy', 'J.K. Rowling', 'NXB Kim Đồng', 110, '120000', 3, 'harry-potter-hon-da-phu-thuy.jpg', 'Cuốn sách đầu tiên trong loạt truyện nổi tiếng về cậu bé phù thủy Harry Potter, bắt đầu hành trình kỳ diệu tại trường học phép thuật.', '2021-03-01'),
 (6, 'Đội Quân Doraemon - Đại Chiến Thuật Côn Trùng', 'Fujiko F Fujio', 'NXB Kim Đồng', 140, '65000', 3, 'dai-chien-thuat-con-trung.webp', 'Một cuộc phiêu lưu thú vị với đội quân Doraemon đối đầu với những thử thách đầy cam go.', '2022-01-05'),
-(7, 'Thế Giới Không Có Người Xấu', 'Whon Jaehun', 'NXB Dân Trí\n', 30, '85000', 1, 'the-gioi-khong-co-nguoi-xau.jpg', 'Tác phẩm phân tích và đi sâu vào sự hiểu biết về bản chất con người và những yếu tố tạo nên sự thiện và ác.', '2019-05-25'),
+(7, 'Thế Giới Không Có Người Xấu', 'Whon Jaehun', 'NXB Dân Trí', 30, '85000', 1, 'the-gioi-khong-co-nguoi-xau.jpg', 'Tác phẩm phân tích và đi sâu vào sự hiểu biết về bản chất con người và những yếu tố tạo nên sự thiện và ác.', '2019-05-25'),
 (8, 'Căn Phòng Của Những Điều Kỳ Diệu', 'Julien Sandrel', 'NXB Kim Đồng', 50, '110000', 4, 'can-phong-cua-nhung-dieu-ky-dieu.jpg', 'Câu chuyện hấp dẫn về những điều kỳ diệu xảy ra trong một căn phòng chứa đựng vô vàn bí ẩn.', '2020-09-15'),
 (9, 'Thế Giới Nghệ Thuật - Nghệ Thuật Trừu Tượng', 'Anna Moszynska', 'NXB Thế Giới', 80, '13000', 5, 'the-gioi-nghe-thuat.jpg', 'Khám phá thế giới nghệ thuật trừu tượng, nơi cảm xúc và ý tưởng được thể hiện qua những hình ảnh và màu sắc không thực.', '2021-02-28'),
 (10, 'Dẫn Luận Về Lịch Sử Nghệ Thuật', 'Dana Arnold', 'NXB Hồng Đức', 70, '14000', 5, 'dan-luan-ls.webp', 'Một tác phẩm khám phá sự phát triển của nghệ thuật qua các thời kỳ, với các cuộc tranh luận về những giá trị nghệ thuật.', '2021-04-10'),
@@ -186,6 +168,28 @@ CREATE TRIGGER `update_soLuongTonKho` AFTER UPDATE ON `dauap` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `giohang`
+--
+
+CREATE TABLE `giohang` (
+  `id` int(11) NOT NULL,
+  `maNguoiDung` int(10) NOT NULL,
+  `maAnPham` int(10) NOT NULL,
+  `SoLuong` int(10) NOT NULL DEFAULT 1,
+  `NgayTra` date NOT NULL DEFAULT (curdate() + interval 15 day)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `giohang`
+--
+
+INSERT INTO `giohang` (`id`, `maNguoiDung`, `maAnPham`, `SoLuong`, `NgayTra`) VALUES
+(8, 5, 13, 5, '2024-12-22'),
+(9, 5, 6, 5, '2024-12-07');
 
 -- --------------------------------------------------------
 
@@ -221,8 +225,8 @@ CREATE TABLE `khachhang` (
 
 INSERT INTO `khachhang` (`maKH`, `tenKH`, `diaChi`, `maNguoiDung`) VALUES
 (1, 'Quách Đạt Phúc', '125 Phó Cơ Điều, Quận 5, TPHCM', 4),
-(2, 'Phúc Mỹ', '555 WTF, Quận Gò Vấp', 5),
-(4, 'Nguyễn Văn B', '', 11);
+(2, 'Phúc My', '555 WTF, Quận Gò Vấp', 5),
+(4, 'Nguyễn Văn Bê', '', 11);
 
 -- --------------------------------------------------------
 
@@ -238,6 +242,14 @@ CREATE TABLE `khuyenmai` (
   `NgayBatDau` date DEFAULT NULL,
   `maCTPM` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `khuyenmai`
+--
+
+INSERT INTO `khuyenmai` (`MaKhuyenMai`, `TenKhuyenMai`, `PhanTramGiamgia`, `NgayKetThuc`, `NgayBatDau`, `maCTPM`) VALUES
+(1, 'CHAOXMAS2024 - GIAM 15%', 15, '2024-12-26', '2024-12-09', 0),
+(4, 'THANHVIENVIP - GIAM 10% ', 10, '2024-12-31', '2024-12-08', 0);
 
 -- --------------------------------------------------------
 
@@ -273,8 +285,8 @@ INSERT INTO `nguoidung` (`maNguoiDung`, `tenNguoiDung`, `gioiTinh`, `email`, `SD
 (2, 'Trần Ngọc Mai', 'Nữ', 'maitran@example.com', 987654321),
 (3, 'Nguyễn Thị Tèo', 'Nữ', 'hungnguyen2u@gmail.com', 223699874),
 (4, 'Quách Đạt Phúc', 'Nam', 'unidsalt@gmail.com', 89885759),
-(5, 'Phúc Mỹ', 'Nam', 'phucmy@gmail.com', 11256698),
-(11, 'Nguyễn Văn B', 'Không xác định', 'nguyenvanb@example.com', 0);
+(5, 'Phúc My', 'Nam', 'phucmy@gmail.com', 11256698),
+(11, 'Nguyễn Văn Bê', 'Không xác định', 'nguyenvanb@example.com', 0);
 
 -- --------------------------------------------------------
 
@@ -411,6 +423,14 @@ ALTER TABLE `dauap`
   ADD KEY `MaDanhMuc` (`MaDanhMuc`);
 
 --
+-- Chỉ mục cho bảng `giohang`
+--
+ALTER TABLE `giohang`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_user_product` (`maNguoiDung`,`maAnPham`),
+  ADD KEY `maAnPham` (`maAnPham`);
+
+--
 -- Chỉ mục cho bảng `hoadonnhapap`
 --
 ALTER TABLE `hoadonnhapap`
@@ -505,6 +525,12 @@ ALTER TABLE `dauap`
   MODIFY `madauAP` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
+-- AUTO_INCREMENT cho bảng `giohang`
+--
+ALTER TABLE `giohang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT cho bảng `hoadonnhapap`
 --
 ALTER TABLE `hoadonnhapap`
@@ -520,7 +546,7 @@ ALTER TABLE `khachhang`
 -- AUTO_INCREMENT cho bảng `khuyenmai`
 --
 ALTER TABLE `khuyenmai`
-  MODIFY `MaKhuyenMai` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `MaKhuyenMai` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `nguoidung`
@@ -581,6 +607,13 @@ ALTER TABLE `dauap`
   ADD CONSTRAINT `dauap_ibfk_1` FOREIGN KEY (`MaDanhMuc`) REFERENCES `danhmucap` (`MaDanhMuc`);
 
 --
+-- Các ràng buộc cho bảng `giohang`
+--
+ALTER TABLE `giohang`
+  ADD CONSTRAINT `giohang_ibfk_1` FOREIGN KEY (`maNguoiDung`) REFERENCES `nguoidung` (`maNguoiDung`) ON DELETE CASCADE,
+  ADD CONSTRAINT `giohang_ibfk_2` FOREIGN KEY (`maAnPham`) REFERENCES `anpham` (`maAnPham`) ON DELETE CASCADE;
+
+--
 -- Các ràng buộc cho bảng `hoadonnhapap`
 --
 ALTER TABLE `hoadonnhapap`
@@ -591,12 +624,6 @@ ALTER TABLE `hoadonnhapap`
 --
 ALTER TABLE `khachhang`
   ADD CONSTRAINT `fk_nguoidung` FOREIGN KEY (`maNguoiDung`) REFERENCES `nguoidung` (`maNguoiDung`);
-
---
--- Các ràng buộc cho bảng `khuyenmai`
---
-ALTER TABLE `khuyenmai`
-  ADD CONSTRAINT `khuyenmai_ibfk_1` FOREIGN KEY (`maCTPM`) REFERENCES `chitietpm` (`maCTPM`);
 
 --
 -- Các ràng buộc cho bảng `nhanvien`

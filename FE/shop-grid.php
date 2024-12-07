@@ -2,6 +2,8 @@
 include 'controlCustomerUI/controlShopGrid.php';
 include 'controlCustomerUI/controlFilterProduct.php';
 include 'controlCustomerUI/controlCategoryGrid.php';
+// Bao gồm các control files
+
 
 // Lấy các danh mục và bộ lọc
 $categories_name_only = getAllCategories($conn);
@@ -28,7 +30,6 @@ $products = filterProducts($conn, $filter_params);
 if (empty($products)) {
     echo "<p>Không có sản phẩm nào khớp với bộ lọc.</p>";
 }
-
 
 // Tổng số lượng ấn phẩm
 $totalQuantity_dauap = count($products);
@@ -193,7 +194,7 @@ $totalQuantity_dauap = count($products);
                                                             class="fa fa-shopping-cart"></i></a></li>
                                                 <!-- Thêm nút xem chi tiết với biểu tượng con mắt -->
                                                 <li><a style="background-color: #E75480; border: none; color: white"
-                                                        href="shop-details.php?id=<?php echo urlencode($product['TenAnPham']); ?>"><i
+                                                        href="shop-details.php?id=<?php echo urlencode($product['maAnPham']); ?>"><i
                                                             class="fa fa-eye"></i></a></li>
                                             </ul>
                                         </div>

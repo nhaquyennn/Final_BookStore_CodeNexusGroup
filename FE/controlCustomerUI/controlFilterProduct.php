@@ -2,11 +2,12 @@
 function filterProducts($conn, $params)
 {
     // Chỉ định cột cần lấy, bao gồm TenDauAnPham và Giathue
-    $query = "  SELECT anpham.TenAnPham, anpham.tinhTrang, anpham.Giathue, danhmucap.TenDanhMuc, dauap.hinhAnh
-                FROM dauap 
-                JOIN danhmucap ON dauap.MaDanhMuc = danhmucap.MaDanhMuc 
-                JOIN anpham ON dauap.madauAP = anpham.madauAP 
-                WHERE 1=1";
+    $query = "  SELECT anpham.maAnPham, anpham.TenAnPham, anpham.tinhTrang, anpham.Giathue, danhmucap.TenDanhMuc, dauap.hinhAnh
+            FROM dauap 
+            JOIN danhmucap ON dauap.MaDanhMuc = danhmucap.MaDanhMuc 
+            JOIN anpham ON dauap.madauAP = anpham.madauAP 
+            WHERE 1=1";
+
     $conditions = [];
 
     // Lọc theo danh mục

@@ -1,10 +1,13 @@
 <?php
 // controlCustomerUI/controlProductDetails.php
 
-
+// Bắt đầu phiên làm việc nếu chưa bắt đầu
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Bao gồm kết nối cơ sở dữ liệu
-require_once __DIR__ . '/../database/db_connect.php'; // Kết nối cơ sở dữ liệu
+include_once 'database/db_connect.php';
 
 // Kiểm tra xem id đã được truyền qua GET chưa
 if (isset($_GET['id'])) {

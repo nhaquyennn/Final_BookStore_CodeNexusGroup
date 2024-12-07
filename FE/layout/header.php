@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php 
+error_reporting(E_ALL & ~E_NOTICE);
+session_start(); 
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
@@ -22,6 +25,7 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/mainStyle.css" type="text/css">
     <link rel="stylesheet" href="assets/css/filter.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/checkout.css" type="text/css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
@@ -84,7 +88,7 @@
                         <li><a href="./shop-grid.php">Sản phẩm</a></li>
                         <li><a href="#">Giỏ hàng</a>
                             <ul class="header__menu__dropdown">
-                                <li><a href="./shopping-cart.php">Shoping Cart</a></li>
+                                <li><a href="./shopping_cart.php">Shoping Cart</a></li>
                                 <li><a href="./checkout.php">Check Out</a></li>
                             </ul>
                         </li>

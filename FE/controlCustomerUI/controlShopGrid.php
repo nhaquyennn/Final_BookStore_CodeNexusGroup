@@ -25,4 +25,5 @@ if ($result && $result->num_rows > 0) {
 } else {
     $products = []; // Không có dữ liệu
 }
+
 ?>

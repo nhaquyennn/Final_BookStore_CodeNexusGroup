@@ -65,7 +65,7 @@ function getAllRentalPrices($conn)
 
 
 // Truy vấn lấy dữ liệu từ các bảng, chỉ lấy các sản phẩm có tinhTrang là "Mới"
-$sql_new = "SELECT a.TenAnPham, a.Giathue, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
+$sql_new = "SELECT a.TenAnPham, a.Giathue, a.tinhTrang, a.maAnPham, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
         FROM anpham a
         INNER JOIN dauap d ON a.madauAP = d.madauAP
         INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc
@@ -88,21 +88,5 @@ if ($result_new && $result_new->num_rows > 0) {
     }
 } else {
     $products_new = []; // Không có dữ liệu
-}
-//code của phúc
-// Truy vấn lấy danh mục từ bảng danhmucap
-$sql = "SELECT MaDanhMuc, TenDanhMuc, MoTa, image 
-        FROM danhmucap";
-
-$result = $conn->query($sql);
-
-$categories = [];
-
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $categories[] = $row['TenDanhMuc'];
-    }
-} else {
-    $categories = [];
 }
 ?>

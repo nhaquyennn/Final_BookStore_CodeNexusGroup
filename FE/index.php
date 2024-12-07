@@ -43,8 +43,10 @@ $products = filterProducts($conn, $filter_params); ?>
                             <div class="categories__item">
                                 <img src="img/products/<?php echo htmlspecialchars($category_with_image['image']); ?>"
                                     alt="<?php echo htmlspecialchars($category_with_image['TenDanhMuc']); ?>">
-                                <h5><a href="#"><?php echo htmlspecialchars($category_with_image['TenDanhMuc']); ?></a>
-                                </h5>
+                                <h5><a
+                                        href="shop-grid.php?category=<?php echo urlencode($category_with_image['TenDanhMuc']); ?>&min_price=0&max_price=1000000&author=&publisher=&year=&sort=">
+                                        <?php echo htmlspecialchars($category_with_image['TenDanhMuc']); ?>
+                                    </a></h5>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -69,7 +71,9 @@ $products = filterProducts($conn, $filter_params); ?>
                                             <div class="featured__item__pic set-bg"
                                                 data-setbg="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>">
                                                 <ul class="featured__item__pic__hover">
-                                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                    <li><a style="background-color: #E75480; border: none; color: white"
+                                                            href="shop-details.php?id=<?php echo urlencode($product['maAnPham']); ?>"><i
+                                                                class="fa fa-eye"></i></a></li>
                                                 </ul>
                                             </div>
                                             <div class="featured__item__text">
@@ -104,7 +108,8 @@ $products = filterProducts($conn, $filter_params); ?>
                                 foreach ($chunks as $chunk): ?>
                                     <div class="latest-product__slider__item">
                                         <?php foreach ($chunk as $product): ?>
-                                            <a href="#" class="latest-product__item">
+                                            <a href="shop-details.php?id=<?php echo urlencode($product['maAnPham']); ?>"
+                                                class="latest-product__item">
                                                 <div class="latest-product__item__pic">
                                                     <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
                                                         alt="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
@@ -134,7 +139,8 @@ $products = filterProducts($conn, $filter_params); ?>
                                 foreach ($chunks as $chunk): ?>
                                     <div class="latest-product__slider__item">
                                         <?php foreach ($chunk as $product): ?>
-                                            <a href="#" class="latest-product__item">
+                                            <a href="shop-details.php?id=<?php echo urlencode($product['maAnPham']); ?>"
+                                                class="latest-product__item">
                                                 <div class="latest-product__item__pic">
                                                     <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
                                                         alt="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
@@ -164,7 +170,8 @@ $products = filterProducts($conn, $filter_params); ?>
                                 foreach ($chunks as $chunk): ?>
                                     <div class="latest-product__slider__item">
                                         <?php foreach ($chunk as $product): ?>
-                                            <a href="#" class="latest-product__item">
+                                            <a href="shop-details.php?id=<?php echo urlencode($product['maAnPham']); ?>"
+                                                class="latest-product__item">
                                                 <div class="latest-product__item__pic">
                                                     <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
                                                         alt="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
@@ -184,6 +191,7 @@ $products = filterProducts($conn, $filter_params); ?>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
