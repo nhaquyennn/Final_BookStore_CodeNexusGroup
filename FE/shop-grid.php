@@ -11,23 +11,22 @@ $years = getAllPublishYears($conn);
 $rentalPrices = getAllRentalPrices($conn);
 
 // Xử lý bộ lọc từ request
-$filter_params = [];
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $filter_params = [
-        'category' => $_GET['category'] ?? '',
-        'min_price' => $_GET['min_price'] ?? '',
-        'max_price' => $_GET['max_price'] ?? '',
-        'author' => $_GET['author'] ?? '',
-        'publisher' => $_GET['publisher'] ?? '',
-        'year' => $_GET['year'] ?? '',
-        'sort' => $_GET['sort'] ?? ''
-    ];
+$filter_params = [
+    'category' => $_GET['category'] ?? '', // Nếu không có category, mặc định là trống
+    'min_price' => $_GET['min_price'] ?? '0', // Mức giá tối thiểu mặc định là 0
+    'max_price' => $_GET['max_price'] ?? '1000000', // Mức giá tối đa mặc định là 1000000
+    'author' => $_GET['author'] ?? '',
+    'publisher' => $_GET['publisher'] ?? '',
+    'year' => $_GET['year'] ?? '',
+    'sort' => $_GET['sort'] ?? ''
+];
 
-    // Lọc sản phẩm theo điều kiện
-    $products = filterProducts($conn, $filter_params);
-} else {
-    // Nếu không có filter, lấy tất cả sản phẩm
-    $products = filterProducts($conn, []);
+// Lọc sản phẩm theo điều kiện
+$products = filterProducts($conn, $filter_params);
+
+// Nếu không có sản phẩm nào, có thể hiển thị thông báo không có sản phẩm nào
+if (empty($products)) {
+    echo "<p>Không có sản phẩm nào khớp với bộ lọc.</p>";
 }
 
 
@@ -169,12 +168,18 @@ $totalQuantity_dauap = count($products);
                     <div class="filter__item">
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
-                                <h5 style="text-align: right">
+                                <h5 style="text-align: left; float: left;">
+                                    <!-- Nút bỏ lọc ở góc trái -->
+                                    <a href="shop-grid.php" class="btn-reset-filter">Bỏ lọc</a>
+                                </h5>
+                                <h5 style="text-align: right;">
+                                    <!-- Số lượng ấn phẩm ở góc phải -->
                                     <span><?php echo htmlspecialchars($totalQuantity_dauap); ?></span> ấn phẩm
                                 </h5>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <?php if (!empty($products)): ?>
                             <?php foreach ($products as $product): ?>

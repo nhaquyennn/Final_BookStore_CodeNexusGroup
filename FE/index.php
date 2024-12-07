@@ -4,8 +4,26 @@
 include 'controlCustomerUI/controlCategoryIndex.php';
 include 'controlCustomerUI/controlCategoryGrid.php';
 include 'controlCustomerUI/controlFilterProduct.php';
+// Lấy các danh mục và bộ lọc
+$categories_name_only = getAllCategories($conn);
+$authors = getAllAuthors($conn);
+$publishers = getAllPublishers($conn);
+$years = getAllPublishYears($conn);
+$rentalPrices = getAllRentalPrices($conn);
 
-?>
+// Lấy tất cả các sản phẩm khi không có bộ lọc
+$filter_params = [
+    'category' => $_GET['category'] ?? '',
+    'min_price' => $_GET['min_price'] ?? 0,
+    'max_price' => $_GET['max_price'] ?? 1000000,
+    'author' => $_GET['author'] ?? '',
+    'publisher' => $_GET['publisher'] ?? '',
+    'year' => $_GET['year'] ?? '',
+    'sort' => $_GET['sort'] ?? ''
+];
+
+// Lọc sản phẩm theo điều kiện
+$products = filterProducts($conn, $filter_params); ?>
 
 
 <head>
@@ -108,66 +126,31 @@ include 'controlCustomerUI/controlFilterProduct.php';
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
-                        <h4>Đánh giá cao</h4>
+                        <h4>Mới nhất</h4>
                         <div class="latest-product__slider owl-carousel">
-                            <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
+                            <?php if (!empty($products_new)): ?>
+                                <?php
+                                $chunks = array_chunk($products_new, 3); // Chia sản phẩm thành các nhóm 3 sản phẩm
+                                foreach ($chunks as $chunk): ?>
+                                    <div class="latest-product__slider__item">
+                                        <?php foreach ($chunk as $product): ?>
+                                            <a href="#" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
+                                                        alt="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6><?php echo htmlspecialchars($product['TenAnPham']); ?></h6>
+                                                    <span><?php echo number_format($product['Giathue'], 0, ',', '.'); ?>
+                                                        VND</span>
+                                                </div>
+                                            </a>
+                                        <?php endforeach; ?>
                                     </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                            </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>Không có sản phẩm mới để hiển thị.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

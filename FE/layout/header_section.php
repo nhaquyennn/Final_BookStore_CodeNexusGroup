@@ -8,13 +8,15 @@
                         <span>DANH MỤC</span>
                     </div>
                     <div class="active">
-                        <ul>
-                            <?php foreach ($categories_name_only as $category): ?>
-                                <li><a
-                                        href="shop-grid.php?category=<?php echo urlencode($category); ?>"><?php echo htmlspecialchars($category); ?></a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
+                        <form method="get" action="shop-grid.php">
+                            <ul>
+                                <?php foreach ($categories_name_only as $category): ?>
+                                    <li><a
+                                            href="shop-grid.php?category=<?php echo urlencode($category); ?>&min_price=<?php echo htmlspecialchars($filter_params['min_price']); ?>&max_price=<?php echo htmlspecialchars($filter_params['max_price']); ?>&author=<?php echo htmlspecialchars($filter_params['author']); ?>&publisher=<?php echo htmlspecialchars($filter_params['publisher']); ?>&year=<?php echo htmlspecialchars($filter_params['year']); ?>&sort=<?php echo htmlspecialchars($filter_params['sort']); ?>"><?php echo htmlspecialchars($category); ?></a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </form>
                     </div>
                 </div>
             </div>

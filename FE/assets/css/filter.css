@@ -49,7 +49,7 @@
     align-items: center;
     gap: 15px;
     width: 100%;
-    margin-top: 25px;
+    margin-top: 2px;
 }
 
 input[type="range"] {
@@ -223,4 +223,21 @@ button[type="submit"]:not(.site-btn):hover {
 .ui-widget.ui-widget-content {
     background-color: none;
     border: none;
+}
+
+.btn-reset-filter {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: #ff4747;
+    /* Màu nền đỏ cho nút */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-reset-filter:hover {
+    background-color: #e03939;
+    /* Màu nền khi hover */
 }
