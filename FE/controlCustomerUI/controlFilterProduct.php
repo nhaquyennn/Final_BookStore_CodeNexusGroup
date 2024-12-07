@@ -15,13 +15,15 @@ function filterProducts($conn, $params)
     }
 
     // Lọc theo khoảng giá
-    if (!empty($params['min_price']) && !empty($params['max_price'])) {
+    if (isset($params['min_price']) && isset($params['max_price'])) {
         $minPrice = floatval($params['min_price']);
         $maxPrice = floatval($params['max_price']);
 
-        // Thêm điều kiện lọc cho giá thuê
-        $conditions[] = "anpham.Giathue BETWEEN $minPrice AND $maxPrice";
+        if ($minPrice <= $maxPrice) {
+            $conditions[] = "anpham.Giathue BETWEEN $minPrice AND $maxPrice";
+        }
     }
+
 
     // Lọc theo tác giả
     if (!empty($params['author'])) {

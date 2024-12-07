@@ -66,12 +66,19 @@ $totalQuantity_dauap = count($products);
                             <!-- Khoảng giá -->
                             <div class="sidebar__item">
                                 <h4>Giá</h4>
-                                <form method="GET" action="controlCustomerUI/controlFilterProduct.php">
-                                    <input type="number" name="min_price" placeholder="Giá tối thiểu">
-                                    <input type="number" name="max_price" placeholder="Giá tối đa">
-                                    <button type="submit">Lọc</button>
-                                </form>
+                                <div class="price-range">
+                                    <input type="range" id="min_price" name="min_price" min="0" max="1000000"
+                                        step="10000" value="0" oninput="updatePriceLabels()">
+                                    <input type="range" id="max_price" name="max_price" min="0" max="1000000"
+                                        step="10000" value="1000000" oninput="updatePriceLabels()">
+                                    <div class="price-labels">
+                                        <span id="min_price_label">0 VND</span> - <span id="max_price_label">1,000,000
+                                            VND</span>
+                                    </div>
+                                </div>
+                                <button type="submit" style="width: 221px; margin-top:60px ">Lọc</button>
                             </div>
+
 
                             <!-- Tác giả -->
                             <div class="sidebar__item">
@@ -204,6 +211,16 @@ $totalQuantity_dauap = count($products);
     <footer>
         <?php require_once 'layout/footer.php' ?>
     </footer>
+    <script>
+        function updatePriceLabels() {
+            const minPrice = document.getElementById('min_price').value;
+            const maxPrice = document.getElementById('max_price').value;
+
+            document.getElementById('min_price_label').textContent = parseInt(minPrice).toLocaleString() + ' VND';
+            document.getElementById('max_price_label').textContent = parseInt(maxPrice).toLocaleString() + ' VND';
+        }
+
+    </script>
 </body>
 
 </html>
