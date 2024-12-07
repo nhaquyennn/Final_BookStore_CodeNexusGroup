@@ -11,9 +11,10 @@ if (!isset($_SESSION['user'])) {
 $email = $_SESSION['user']; // Lấy email từ session
 $user = null; // Khởi tạo biến chứa thông tin người dùng
 
-$sql = "SELECT khachhang.tenKH, khachhang.maKH, khachhang.diaChi, nguoidung.email, nguoidung.gioiTinh 
+$sql = "SELECT khachhang.tenKH, khachhang.maKH, khachhang.diaChi, nguoidung.email, nguoidung.gioiTinh, taikhoan.matkhau 
         FROM khachhang 
         INNER JOIN nguoidung ON khachhang.maNguoiDung = nguoidung.maNguoiDung 
+        INNER JOIN taikhoan ON nguoidung.maNguoiDung = taikhoan.maNguoiDung 
         WHERE nguoidung.email = ?";
 
 $stmt = $conn->prepare($sql);
@@ -30,20 +31,26 @@ if ($result->num_rows === 1) {
 
 // Xử lý khi người dùng nhấn nút "Lưu thay đổi thông tin"
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
-    $newName = $_POST['tenNguoiDung'] ?? '';
-    $newEmail = $_POST['email'] ?? '';
+    $newName = $_POST['tenNguoiDung'] ?? '';  // Tên người dùng mới
+    $newEmail = $_POST['email'] ?? '';  // Email mới
 
     if (empty($newName) || empty($newEmail)) {
         $error = "Vui lòng điền đầy đủ thông tin.";
     } else {
-        // Cập nhật thông tin người dùng
-        $updateSql = "UPDATE nguoidung 
-                    INNER JOIN taikhoan ON nguoidung.maNguoiDung = taikhoan.maNguoiDung 
-                    SET nguoidung.tenNguoiDung = ?, taikhoan.email = ? 
+        // Cập nhật thông tin người dùng, khách hàng và tài khoản
+        $updateSql = "UPDATE nguoidung
+                    INNER JOIN taikhoan ON nguoidung.maNguoiDung = taikhoan.maNguoiDung
+                    INNER JOIN khachhang ON khachhang.maNguoiDung = nguoidung.maNguoiDung
+                    SET nguoidung.tenNguoiDung = ?, taikhoan.email = ?, khachhang.tenKH = ?, nguoidung.email = ?
                     WHERE taikhoan.email = ?";
-        $stmt = $conn->prepare($updateSql);
-        $stmt->bind_param('sss', $newName, $newEmail, $email);
 
+        // Chuẩn bị câu lệnh SQL
+        $stmt = $conn->prepare($updateSql);
+
+        // Bind tham số: tên người dùng mới, email mới, tên khách hàng mới, email mới, email hiện tại
+        $stmt->bind_param('sssss', $newName, $newEmail, $newName, $newEmail, $email);
+
+        // Thực thi câu lệnh SQL
         if ($stmt->execute()) {
             $_SESSION['user'] = $newEmail; // Cập nhật email trong session
             echo "<script>
@@ -56,6 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         }
     }
 }
+
+
 
 // Xử lý đổi mật khẩu
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {

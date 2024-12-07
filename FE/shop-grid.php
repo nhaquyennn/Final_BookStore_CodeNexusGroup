@@ -189,7 +189,12 @@ $totalQuantity_dauap = count($products);
                                             <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
                                                 alt="<?php echo htmlspecialchars($product['TenDauAnPham']); ?>">
                                             <ul class="product__item__pic__hover">
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                <li><a href="#" style="background-color: #E75480; border: none; color: white"><i
+                                                            class="fa fa-shopping-cart"></i></a></li>
+                                                <!-- Thêm nút xem chi tiết với biểu tượng con mắt -->
+                                                <li><a style="background-color: #E75480; border: none; color: white"
+                                                        href="shop-details.php?id=<?php echo urlencode($product['TenAnPham']); ?>"><i
+                                                            class="fa fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="product__item__text">
@@ -208,6 +213,7 @@ $totalQuantity_dauap = count($products);
                             <p>Không có sản phẩm nào khớp với bộ lọc.</p>
                         <?php endif; ?>
                     </div>
+
                 </div>
             </div>
         </div>

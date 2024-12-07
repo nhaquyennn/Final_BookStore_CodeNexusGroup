@@ -61,7 +61,8 @@ require_once '../controlUser/controlProfile.php';
               <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
                   <li class="nav-item">
-                    <a href="#profile" data-toggle="tab" class="nav-link active">
+                    <a href="#profile" data-toggle="tab"
+                      class="nav-link <?php echo (!isset($error)) ? 'active' : ''; ?>">
                       <i class="icon-user"></i> <span class="hidden-xs">Thông tin</span>
                     </a>
                   </li>
@@ -71,7 +72,8 @@ require_once '../controlUser/controlProfile.php';
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#pw_change" data-toggle="tab" class="nav-link">
+                    <a href="#pw_change" data-toggle="tab"
+                      class="nav-link <?php echo isset($error) ? 'active' : ''; ?>">
                       <i class="icon-lock"></i> <span class="hidden-xs">Đổi mật khẩu</span>
                     </a>
                   </li>
@@ -79,7 +81,7 @@ require_once '../controlUser/controlProfile.php';
 
                 <div class="tab-content p-3">
                   <!-- Thông tin cá nhân -->
-                  <div class="tab-pane active" id="profile">
+                  <div class="tab-pane <?php echo (!isset($error)) ? 'active' : ''; ?>" id="profile">
                     <div class="row">
                       <div class="col-md-12">
                         <h4 class="text-center mt-2 mb-3">THÔNG TIN CÁ NHÂN</h4>
@@ -118,10 +120,10 @@ require_once '../controlUser/controlProfile.php';
                     <form method="POST" action="">
                       <input type="hidden" name="update_profile" value="1">
                       <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Tên nhân viên</label>
+                        <label class="col-lg-3 col-form-label form-control-label">Tên khách hàng</label>
                         <div class="col-lg-9">
                           <input class="form-control" type="text" name="tenNguoiDung"
-                            value="<?php echo htmlspecialchars($user['tenNguoiDung']); ?>" required>
+                            value="<?php echo htmlspecialchars($user['tenKH']); ?>" required>
                         </div>
                       </div>
 
@@ -143,7 +145,7 @@ require_once '../controlUser/controlProfile.php';
                   </div>
 
                   <!-- Đổi mật khẩu -->
-                  <div class="tab-pane" id="pw_change">
+                  <div class="tab-pane <?php echo isset($error) ? 'active' : ''; ?>" id="pw_change">
                     <form method="POST" action="">
                       <?php if (!empty($error)): ?>
                         <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
@@ -179,6 +181,7 @@ require_once '../controlUser/controlProfile.php';
 
               </div>
             </div>
+
           </div>
         </div>
         <!-- End Main Content -->
