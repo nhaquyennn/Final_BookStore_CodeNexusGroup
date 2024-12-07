@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
 
 // include file controller
 require_once __DIR__ . '/../../controller/phieuMuonController.php';
-require_once __DIR__ . '/../../database/db_connect.php';
+
 
 // Khởi tạo Controller và xử lý yêu cầu
 $controller = new PhieuMuonController($conn);
