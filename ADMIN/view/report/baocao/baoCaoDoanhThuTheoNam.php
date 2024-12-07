@@ -16,30 +16,25 @@ $error = $controller->getError();
 <html lang="en">
 
 <head>
-  <?php require_once "../../../layout/header.php"; ?> <!-- Import layout header -->
+  <?php require_once "../../../layout/header.php" ?>
 </head>
 
 <body class="bg-theme bg-theme9">
   <!-- Start wrapper-->
   <div id="wrapper">
-
-    <!--Start sidebar-wrapper-->
-    <?php require_once "../../../layout/left_sidebar.php"; ?> <!-- Import sidebar -->
-    <!--End sidebar-wrapper-->
-
-    <!--Start topbar header-->
-    <header class="topbar-nav">
-      <?php require_once "../../../layout/topbar.php"; ?> <!-- Import topbar -->
-    </header>
-    <!--End topbar header-->
-
     <div class="clearfix"></div>
-
-    <!--Start content-wrapper-->
     <div class="content-wrapper">
-
-      <!--Start container-fluid-->
       <div class="container-fluid">
+
+        <!--Start sidebar-wrapper-->
+        <?php require_once "../../../layout/left_sidebar.php"; ?> <!-- Import sidebar -->
+        <!--End sidebar-wrapper-->
+
+        <!--Start topbar header-->
+        <header class="topbar-nav">
+          <?php require_once "../../../layout/topbar.php"; ?> <!-- Import topbar -->
+        </header>
+        <!--End topbar header-->
 
         <!--Start Dashboard Content-->
         <div class="card mt-3">
@@ -136,7 +131,6 @@ $error = $controller->getError();
       <!--End Charts-->
     </div>
     <!-- End container-fluid-->
-
   </div>
   <!--End content-wrapper-->
 

@@ -1,4 +1,3 @@
 <?php
-#khai báo điều hướng report 
-define("BASE_URL", "http://localhost:84/bookstore/ADMIN/");
-define("BASE_PATH", __DIR__ . "/../");
+define('BASE_URL', '/Final_BookStore_CodeNexusGroup/ADMIN/');
+?>
