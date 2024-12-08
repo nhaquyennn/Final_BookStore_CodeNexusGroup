@@ -1,5 +1,5 @@
 <?php
-require_once 'controlCheckout.php'; // Đảm bảo kết nối database và các hàm
+require_once 'controlCheckout.php'; // Kết nối database và các hàm
 
 if (isset($_POST['coupon_code'])) {
     $couponCode = $_POST['coupon_code'];
@@ -10,10 +10,10 @@ if (isset($_POST['coupon_code'])) {
     // Tính tổng tiền gốc từ giỏ hàng
     $totalAmount = 0;
     foreach ($cartItems as $item) {
-        $totalAmount += $item['Giathue'] * $item['SoLuong']; // Giá thuê * Số lượng
+        $totalAmount += $item['Giathue'] * $item['SoLuong'];
     }
 
-    // Gọi hàm tính giá sau giảm giá
+    // Tính giá sau khi áp dụng mã giảm giá
     $discountedPrice = calculateDiscountedPrice($totalAmount, $couponCode, $conn);
 
     // Tính số tiền giảm giá
@@ -24,5 +24,8 @@ if (isset($_POST['coupon_code'])) {
         'discountText' => number_format($discountAmount, 0, '', '.') . ' VND',
         'totalPrice' => number_format($discountedPrice, 0, '', '.') . ' VND'
     ]);
+    exit; // Đảm bảo không xuất thêm dữ liệu
+} else {
+    echo json_encode(['error' => 'Coupon code not provided']);
+    exit;
 }
-?>

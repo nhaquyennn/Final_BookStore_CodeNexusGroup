@@ -23,25 +23,27 @@ function getCoupons($conn)
     // Trả về mảng dữ liệu khuyến mãi
     return $coupons;
 }
-function calculateDiscountedPrice($originalPrice, $couponCode, $conn)
-{
-    // Lấy danh sách khuyến mãi
-    $coupons = getCoupons($conn);
+// Tính giá sau khi giảm giá
+function calculateDiscountedPrice($totalAmount, $couponCode, $conn) {
+    // Mặc định không có giảm giá
+    $discountPercent = 0;
 
-    // Kiểm tra nếu mã khuyến mãi hợp lệ
-    foreach ($coupons as $coupon) {
-        if ($coupon['MaKhuyenMai'] == $couponCode) {
-            $discountPercent = $coupon['PhanTramGiamGia']; // Phần trăm giảm giá
-            $discountAmount = $originalPrice * ($discountPercent / 100); // Tính số tiền giảm
-            $discountedPrice = $originalPrice - $discountAmount; // Giá sau khuyến mãi
+    // Lấy thông tin mã giảm giá từ database
+    if (!empty($couponCode)) {
+        $stmt = $conn->prepare("SELECT PhanTramGiamGia FROM khuyenmai WHERE MaKhuyenMai = ?");
+        $stmt->bind_param("s", $couponCode);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-            // Trả về giá sau khuyến mãi
-            return $discountedPrice;
+        if ($row = $result->fetch_assoc()) {
+            $discountPercent = $row['PhanTramGiamGia'];
         }
+        $stmt->close();
     }
 
-    // Nếu không tìm thấy mã khuyến mãi, trả về giá gốc
-    return $originalPrice;
+    // Tính toán giá sau giảm giá
+    $discountedPrice = $totalAmount - ($totalAmount * $discountPercent / 100);
+    return max($discountedPrice, 0); // Đảm bảo giá trị không âm
 }
 
 function getCartDetails($conn)

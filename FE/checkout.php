@@ -148,9 +148,6 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                                         ?>
                                     </span>
                                 </div>
-
-
-
                                 <div>
                                     <h5 class="checkout__payment__title">Phương thức thanh toán</h5>
                                     <div class="checkout__input__checkbox">
@@ -182,24 +179,24 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Khi chọn khuyến mãi từ dropdown
             $('#coupon_code').change(function () {
-                var couponCode = $(this).val();  // Lấy mã khuyến mãi được chọn
+                var couponCode = $(this).val();
 
-                // Gửi yêu cầu AJAX đến server để tính lại giá trị giảm giá
                 $.ajax({
-                    url: 'controlCustomerUI/controlUpdateCoupon.php',  // Tạo một file PHP để xử lý yêu cầu AJAX
+                    url: 'controlCustomerUI/controlUpdateCoupon.php',
                     type: 'POST',
                     data: { coupon_code: couponCode },
                     success: function (response) {
-                        // Cập nhật giá trị khuyến mãi và tổng cộng từ server
-                        var data = JSON.parse(response);
+                        try {
+                            var data = JSON.parse(response);
 
-                        // Cập nhật phần khuyến mãi
-                        $('#discountText').text(data.discountText); // Hiển thị tên khuyến mãi và số tiền giảm
-
-                        // Cập nhật tổng cộng
-                        $('.checkout__order__total span').eq(2).text(data.totalPrice); // Cập nhật tổng tiền sau khi giảm
+                            // Cập nhật thông tin giảm giá và tổng tiền
+                            $('#discountAmount').text(data.discountText);
+                            $('#discountText').text(data.totalPrice);
+                        } catch (error) {
+                            alert('Phản hồi không hợp lệ từ server.');
+                            console.error(error);
+                        }
                     },
                     error: function () {
                         alert('Có lỗi xảy ra, vui lòng thử lại!');
@@ -208,9 +205,6 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
             });
         });
     </script>
-
-
-
     <footer>
         <?php require_once 'layout/footer.php' ?>
     </footer>
