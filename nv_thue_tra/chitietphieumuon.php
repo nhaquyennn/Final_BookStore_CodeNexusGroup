@@ -69,8 +69,8 @@
                                                         <td>{$row['maAnPham']}</td>
                                                         <td>{$row['TenAnPham']}</td>
                                                         <td>{$row['SoLuong']}</td>
-                                                        <td>" . number_format($row['DonGia'], 0, ',', '.') . " đ</td>
-                                                        <td><img src='{$row['hinhAnh']}' alt='Hình ảnh' style='width: 100px; height: auto;'></td>
+                                                        <td>" . number_format($row['DonGia'], 0, ',', '.') . " ₫</td>
+                                                        <td><img src='img/{$row['hinhAnh']}' alt='Hình ảnh' style='width: 65px; height: auto;'></td>                                                    
                                                     </tr>";
                                                 }
                                             } else {
@@ -86,18 +86,7 @@
                         </div>
                     </div>
                 </div>
-                <!--End main content-->
-
             </div>
-            <!-- End wrapper-->
-
-            <!--Start right sidebar-->
-            <?php require_once "layout/right_sidebar.php"; ?>
-            <!--End right sidebar-->
-
-            <!--Start footer-->
-            <?php require_once "layout/script.php"; ?>
-            <!--End footer-->
         </div>
     </div>
 </body>

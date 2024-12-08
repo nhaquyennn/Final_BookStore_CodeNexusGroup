@@ -74,16 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <!--End main content-->
-
             </div>
-            <!-- End wrapper-->
-
-            <!--Start right sidebar-->
-            <!--End right sidebar-->
-
-            <!--Start footer-->
-            <!--End footer-->
         </div>
     </div>
 </body>

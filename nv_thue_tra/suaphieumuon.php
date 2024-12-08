@@ -56,7 +56,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
                 <div class="container">
                     <h3 class="text-center mt-5">CẬP NHẬT THÔNG TIN PHIẾU MƯỢN</h3>
-                    <form action="submit_suaphieumuon.php" method="POST">
+                    <form action="" method="POST">
                         <!-- Truyền giá trị mã phiếu mượn -->
                         <input type="hidden" name="MaPhieuMuon" value="<?php echo $row['MaPhieuMuon']; ?>">
 
@@ -87,10 +87,46 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
 </body>
 
 </html>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Lấy dữ liệu từ form
+    $maPhieuMuon = $_POST['MaPhieuMuon']; // Mã phiếu mượn
+    $customerName = $_POST['customerName']; // Tên khách hàng
+    $date = $_POST['date']; // Ngày tạo (định dạng datetime-local)
+    $countMoney = $_POST['countMoney']; // Tổng tiền
+    $tinhTrang = $_POST['tinhTrang']; // Tình trạng phiếu mượn
+
+    // Kiểm tra dữ liệu
+    if (empty($maPhieuMuon) || empty($customerName) || empty($date) || empty($countMoney) || empty($tinhTrang)) {
+        echo "Vui lòng điền đầy đủ thông tin!";
+        exit();
+    }
+
+    // Câu lệnh SQL để cập nhật phiếu mượn
+    $query = "UPDATE phieumuon 
+              SET NgayTao = ?, TongTien = ?, tinhTrang = ?
+              WHERE MaPhieuMuon = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("sdsi", $date, $countMoney, $tinhTrang, $maPhieuMuon);
+
+    // Thực thi câu lệnh SQL
+    if ($stmt->execute()) {
+        echo "<script>
+            alert('Cập nhật thành công!');
+            window.location.href = 'dsphieumuon.php';
+        </script>";
+    } else {
+        echo "Lỗi khi cập nhật: " . $stmt->error;
+    }
+
+    // Đóng kết nối
+    $stmt->close();
+    $conn->close();
+}
+?>

@@ -34,18 +34,7 @@
                     </div>
                 </div>
             </div>
-            <!--End main content-->
-
         </div>
-        <!-- End wrapper-->
-
-        <!--Start right sidebar-->
-        <?php require_once "layout/right_sidebar.php" ?>
-        <!--End right sidebar-->
-
-        <!--Start footer-->
-        <?php require_once "layout/script.php" ?>
-        <!--End footer-->
     </div>
     </div>
 </body>
