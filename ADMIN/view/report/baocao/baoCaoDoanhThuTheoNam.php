@@ -1,4 +1,8 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
 // Kiểm tra nếu session 'user' không tồn tại
@@ -17,7 +21,9 @@ $error = $controller->getError();
 <html lang="en">
 
 <head>
-  <?php require_once "../../../layout/header.php"; ?> <!-- Import layout header -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Thêm thư viện Chart.js -->
+  <?php require_once "../../../layout/header.php"; ?>
+  <!-- Import layout header -->
 </head>
 
 <body class="bg-theme bg-theme9">
@@ -25,12 +31,14 @@ $error = $controller->getError();
   <div id="wrapper">
 
     <!--Start sidebar-wrapper-->
-    <?php require_once "../../../layout/left_sidebar.php"; ?> <!-- Import sidebar -->
+    <?php require_once "../../../layout/left_sidebar.php"; ?>
+    <!-- Import sidebar -->
     <!--End sidebar-wrapper-->
 
     <!--Start topbar header-->
     <header class="topbar-nav">
-      <?php require_once "../../../layout/topbar.php"; ?> <!-- Import topbar -->
+      <?php require_once "../../../layout/topbar.php"; ?>
+      <!-- Import topbar -->
     </header>
     <!--End topbar header-->
 
@@ -47,7 +55,7 @@ $error = $controller->getError();
           <div class="card-body">
             <!-- Hiển thị lỗi nếu có -->
             <?php if (!empty($error)): ?>
-              <div class="alert alert-danger"><?= $error ?></div>
+            <div class="alert alert-danger"><?= $error ?></div>
             <?php endif; ?>
 
             <!-- Form nhập liệu cho thống kê -->
@@ -58,7 +66,9 @@ $error = $controller->getError();
                   <label for="namBatDau" class="text-white">Năm bắt đầu:</label>
                   <select name="namBatDau" id="namBatDau" class="form-control" required>
                     <?php for ($i = 2021; $i <= 2024; $i++): ?>
-                      <option value="<?= $i ?>" <?= isset($_POST['namBatDau']) && $_POST['namBatDau'] == $i ? 'selected' : '' ?>><?= $i ?></option>
+                    <option value="<?= $i ?>"
+                      <?= isset($_POST['namBatDau']) && $_POST['namBatDau'] == $i ? 'selected' : '' ?>><?= $i ?>
+                    </option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -68,7 +78,9 @@ $error = $controller->getError();
                   <label for="namKetThuc" class="text-white">Năm kết thúc:</label>
                   <select name="namKetThuc" id="namKetThuc" class="form-control" required>
                     <?php for ($i = 2021; $i <= 2024; $i++): ?>
-                      <option value="<?= $i ?>" <?= isset($_POST['namKetThuc']) && $_POST['namKetThuc'] == $i ? 'selected' : '' ?>><?= $i ?></option>
+                    <option value="<?= $i ?>"
+                      <?= isset($_POST['namKetThuc']) && $_POST['namKetThuc'] == $i ? 'selected' : '' ?>><?= $i ?>
+                    </option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -86,53 +98,89 @@ $error = $controller->getError();
 
         <!-- Hiển thị biểu đồ nếu có dữ liệu -->
         <?php if (isset($data) && count($data) > 0): ?>
-          <div class="card mt-3">
-            <div class="card-body">
-              <!-- Canvas chứa biểu đồ -->
-              <canvas id="thongKeChart" height="200"></canvas>
-            </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <!-- Canvas chứa biểu đồ -->
+            <canvas id="thongKeChart" height="200"></canvas>
           </div>
-          <script>
-            // Lấy dữ liệu từ PHP
-            const labels = <?= json_encode(array_column($data, 'Nam')) ?>;
-            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>;
+        </div>
+        <script>
+        // Lấy dữ liệu từ PHP
+        const labels = <?= json_encode(array_column($data, 'Nam')) ?>;
+        const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>;
+        const bestProducts = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>;
+        const productRevenues = <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>;
 
-            // Khởi tạo biểu đồ
-            const ctx = document.getElementById('thongKeChart').getContext('2d');
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: labels,
-                datasets: [{
-                  label: 'Tổng doanh thu (VND)',
-                  data: values,
-                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: 'Năm'
+        // Kiểm tra dữ liệu trả về từ PHP
+        console.log('Labels:', labels);
+        console.log('Values:', values);
+        console.log('Best Products:', bestProducts);
+        console.log('Product Revenues:', productRevenues);
+
+        // Khởi tạo biểu đồ
+        const ctx = document.getElementById('thongKeChart');
+        if (ctx) {
+          const chartContext = ctx.getContext('2d');
+          new Chart(chartContext, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Tổng doanh thu (VND)',
+                data: values,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              plugins: {
+                tooltip: {
+                  callbacks: {
+                    label: function(context) {
+                      const index = context.dataIndex;
+                      const productName = bestProducts[index] || 'Không có dữ liệu';
+                      const productRevenue = productRevenues[index] ? parseInt(productRevenues[index])
+                        .toLocaleString() : '0';
+                      return [
+                        `Năm: ${labels[index]}`,
+                        `Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND`,
+                        `Sản phẩm bán chạy: ${productName}`,
+                        `Doanh thu sản phẩm: ${productRevenue} VND`
+                      ];
                     }
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: 'Doanh thu (VND)'
-                    },
-                    beginAtZero: true
                   }
                 }
-              }
-            });
-          </script>
+              },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Năm'
+                  }
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Doanh thu (VND)'
+                  },
+                  beginAtZero: true
+                }
+              },
+              responsive: true,
+              maintainAspectRatio: false
+            }
+          });
+        } else {
+          console.error('Không tìm thấy phần tử canvas cho biểu đồ!');
+        }
+        </script>
+
+
+
         <?php else: ?>
-          <!-- Hiển thị thông báo nếu không có dữ liệu -->
-          <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
+        <!-- Hiển thị thông báo nếu không có dữ liệu -->
+        <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
         <?php endif; ?>
       </div>
       <!--End Charts-->
@@ -147,14 +195,16 @@ $error = $controller->getError();
   <!--End Back To Top Button-->
 
   <!--Start right sidebar-->
-  <?php require_once "../../../layout/right_sidebar.php"; ?> <!-- Import right sidebar -->
+  <?php require_once "../../../layout/right_sidebar.php"; ?>
+  <!-- Import right sidebar -->
   <!--End right sidebar-->
 
   </div>
   <!--End wrapper-->
 
   <!--Start footer-->
-  <?php require_once "../../../layout/script.php"; ?> <!-- Import footer scripts -->
+  <?php require_once "../../../layout/script.php"; ?>
+  <!-- Import footer scripts -->
   <!--End footer-->
 
 </body>

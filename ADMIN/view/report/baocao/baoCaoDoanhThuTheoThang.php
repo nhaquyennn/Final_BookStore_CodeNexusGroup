@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
 // Kiểm tra nếu session 'user' không tồn tại
@@ -59,7 +64,9 @@ $error = $controller->getError();
                   <label for="thangBatDau" class="text-white">Tháng bắt đầu:</label>
                   <select name="thangBatDau" id="thangBatDau" class="form-control" required>
                     <?php for ($i = 1; $i <= 12; $i++): ?>
-                      <option value="<?= $i ?>" <?= (isset($_POST['thangBatDau']) && $_POST['thangBatDau'] == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>"
+                        <?= (isset($_POST['thangBatDau']) && $_POST['thangBatDau'] == $i) ? 'selected' : '' ?>><?= $i ?>
+                      </option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -69,7 +76,9 @@ $error = $controller->getError();
                   <label for="thangKetThuc" class="text-white">Tháng kết thúc:</label>
                   <select name="thangKetThuc" id="thangKetThuc" class="form-control" required>
                     <?php for ($i = 1; $i <= 12; $i++): ?>
-                      <option value="<?= $i ?>" <?= (isset($_POST['thangKetThuc']) && $_POST['thangKetThuc'] == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>"
+                        <?= (isset($_POST['thangKetThuc']) && $_POST['thangKetThuc'] == $i) ? 'selected' : '' ?>><?= $i ?>
+                      </option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -79,7 +88,8 @@ $error = $controller->getError();
                   <label for="nam" class="text-white">Năm:</label>
                   <select name="nam" id="nam" class="form-control" required>
                     <?php for ($i = 2021; $i <= 2024; $i++): ?>
-                      <option value="<?= $i ?>" <?= (isset($_POST['nam']) && $_POST['nam'] == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= (isset($_POST['nam']) && $_POST['nam'] == $i) ? 'selected' : '' ?>>
+                        <?= $i ?></option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -107,6 +117,8 @@ $error = $controller->getError();
             // Lấy dữ liệu từ PHP
             const labels = <?= json_encode(array_column($data, 'Thang')) ?>;
             const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>;
+            const products = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>;
+            const productRevenues = <?= json_encode(array_column($data, 'DoanhThuSanPham')) ?>;
 
             // Khởi tạo biểu đồ với Chart.js
             const ctx = document.getElementById('thongKeChart').getContext('2d');
@@ -127,7 +139,13 @@ $error = $controller->getError();
                   tooltip: {
                     callbacks: {
                       label: function(context) {
-                        return `Tháng: ${context.label}, Doanh thu: ${context.raw.toLocaleString()} VND`;
+                        const index = context.dataIndex;
+                        return `
+                                Tháng: ${labels[index]}\n
+                                Sản phẩm bán chạy: ${products[index]}\n
+                                Doanh thu sản phẩm: ${parseInt(productRevenues[index]).toLocaleString()} VND\n
+                                Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND
+                            `;
                       }
                     }
                   }
@@ -150,6 +168,7 @@ $error = $controller->getError();
               }
             });
           </script>
+
         <?php else: ?>
           <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
         <?php endif; ?>

@@ -62,54 +62,78 @@ ORDER BY
 
   public function baoCaoDoanhThuTheoThang($thangBatDau, $thangKetThuc, $nam)
   {
-    $query = "SELECT MONTH(NgayTao) as Thang, SUM(soLuong) as TongSoLuong 
-                FROM phieumuon 
-                JOIN chitietphieumuon ON phieumuon.MaPhieuMuon = chitietphieumuon.maPhieuMuon
-                WHERE MONTH(NgayTao) BETWEEN ? AND ? AND YEAR(NgayTao) = ?
-                GROUP BY MONTH(NgayTao)";
+    $query = "
+    SELECT 
+    MONTH(p.NgayTao) AS Thang,
+    SUM(ct.SoLuong * (ct.DonGia - ct.GiamGia)) AS TongDoanhThu,
+    MAX(a.TenAnPham) AS SanPhamBanChay, -- Sản phẩm bán chạy nhất trong tháng
+    MAX(ct.SoLuong * (ct.DonGia - ct.GiamGia)) AS DoanhThuSanPham -- Doanh thu của sản phẩm bán chạy nhất
+FROM 
+    phieumuon AS p
+JOIN 
+    chitietpm AS ct ON p.MaPhieuMuon = ct.MaPhieuMuon
+JOIN 
+    anpham AS a ON ct.MaAnPham = a.MaAnPham
+WHERE 
+    YEAR(p.NgayTao) = ? -- Lọc theo năm
+    AND MONTH(p.NgayTao) BETWEEN ? AND ? -- Lọc khoảng tháng
+GROUP BY 
+    Thang -- Nhóm theo tháng
+ORDER BY 
+    Thang ASC;
 
+";
+
+
+
+
+    // Thứ tự bind_param: Năm, Tháng bắt đầu, Tháng kết thúc
     $stmt = $this->conn->prepare($query);
-    $stmt->bind_param("iii", $thangBatDau, $thangKetThuc, $nam);
+    if (!$stmt) {
+      throw new Exception("Prepare failed: " . $this->conn->error);
+    }
+
+    $stmt->bind_param("iii", $nam, $thangBatDau, $thangKetThuc);
     $stmt->execute();
 
     $result = $stmt->get_result();
+    if (!$result) {
+      throw new Exception("Query failed: " . $this->conn->error);
+    }
+
     return $result->fetch_all(MYSQLI_ASSOC);
   }
+
 
   // Thống kê sản phẩm theo năm
   public function baoCaoDoanhThuTheoNam($namBatDau, $namKetThuc)
   {
     $query = "
-        SELECT 
-            YEAR(p.NgayTao) AS Nam,
-            SUM(ct.soLuong * ct.giaMoiSanPham) AS TongDoanhThu,
-            (
-                SELECT a.TenAnPham 
-                FROM chitietphieumuon AS ct2 
-                JOIN anpham AS a ON ct2.maAnPham = a.maAnPham 
-                WHERE ct2.maPhieuMuon = p.MaPhieuMuon 
-                ORDER BY ct2.soLuong DESC, ct2.giaMoiSanPham DESC 
-                LIMIT 1
-            ) AS SanPhamBanChay,
-            (
-                SELECT SUM(ct2.soLuong * ct2.giaMoiSanPham) 
-                FROM chitietphieumuon AS ct2 
-                JOIN anpham AS a ON ct2.maAnPham = a.maAnPham 
-                WHERE ct2.maPhieuMuon = p.MaPhieuMuon 
-                ORDER BY ct2.soLuong DESC, ct2.giaMoiSanPham DESC 
-                LIMIT 1
-            ) AS DoanhThuSanPhamBanChay
-        FROM 
-            phieumuon AS p
-        JOIN 
-            chitietphieumuon AS ct ON p.MaPhieuMuon = ct.maPhieuMuon
-        WHERE 
-            YEAR(p.NgayTao) BETWEEN ? AND ?
-        GROUP BY 
-            YEAR(p.NgayTao)
-        ORDER BY 
-            YEAR(p.NgayTao);
-    ";
+   SELECT 
+    YEAR(p.NgayTao) AS Nam,
+    SUM(ct.SoLuong * (ct.DonGia - ct.GiamGia)) AS TongDoanhThu,
+    MAX(a.TenAnPham) AS SanPhamBanChay,
+    MAX(ct.SoLuong * (ct.DonGia - ct.GiamGia)) AS DoanhThuSanPhamBanChay
+FROM 
+    phieumuon AS p
+JOIN 
+    chitietpm AS ct ON p.MaPhieuMuon = ct.MaPhieuMuon
+JOIN 
+    anpham AS a ON ct.MaAnPham = a.MaAnPham
+WHERE 
+    YEAR(p.NgayTao) BETWEEN ? AND ?
+GROUP BY 
+    YEAR(p.NgayTao)
+ORDER BY 
+    Nam ASC;
+
+";
+
+
+
+
+
+
 
 
     $stmt = $this->conn->prepare($query);
