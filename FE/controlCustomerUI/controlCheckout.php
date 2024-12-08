@@ -69,5 +69,26 @@ function getCartDetails($conn)
         return [];  // Trả về mảng rỗng nếu không có dữ liệu hoặc có lỗi
     }
 }
+/**
+ * Tính phí thuê từng ấn phẩm
+ * 
+ * @param float $giaGoc Giá trị gốc của ấn phẩm
+ * @param string $ngayMuon Ngày mượn (định dạng YYYY-MM-DD)
+ * @param string $ngayTra Ngày trả (định dạng YYYY-MM-DD)
+ * @return float Phí thuê
+ */
+function tinhPhiThue($Giathue, $ngayMuon, $ngayTra) {
+    // Chuyển đổi ngày mượn và ngày trả thành đối tượng DateTime
+    $dateMuon = new DateTime($ngayMuon);
+    $dateTra = new DateTime($ngayTra);
 
+    // Tính số ngày mượn (ngày trả - ngày mượn)
+    $interval = $dateTra->diff($dateMuon);
+    $soNgay = $interval->days; // Số ngày mượn
+
+    // Tính phí thuê: mỗi ngày 5% giá trị gốc
+    $phiThue = $Giathue * 0.05 * $soNgay;
+
+    return $phiThue;
+}
 ?>

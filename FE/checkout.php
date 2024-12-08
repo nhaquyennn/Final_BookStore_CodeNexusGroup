@@ -17,7 +17,7 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                 <h4>Thông tin giao hàng</h4>
                 <form action="#">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="checkout__input">
@@ -27,15 +27,9 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="checkout__input">
                                         <p>Số điện thoại<span>*</span></p>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Email<span>*</span></p>
                                         <input type="text">
                                     </div>
                                 </div>
@@ -49,17 +43,18 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                                 <input type="text" placeholder="Để lại lời nhắn cho cửa hàng.">
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 AAA">
+                        <div class="col-lg-8 col-md-6 AAA">
                             <div class="checkout__order">
                                 <h4>Đơn hàng</h4>
                                 <table class="checkout__table">
                                     <thead>
                                         <tr>
-                                            <th>Sản phẩm</th>
+                                            <th>Ấn phẩm</th>
                                             <th>Số lượng</th>
                                             <th>Đơn giá</th>
                                             <th>Ngày mượn</th>
                                             <th>Ngày trả</th>
+                                            <th>Phí thuê (5% giá trị ấn phẩm)</th>
                                             <th>Tổng cộng</th>
                                         </tr>
                                     </thead>
@@ -70,7 +65,7 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                                         
                                         // Duyệt qua giỏ hàng và hiển thị từng sản phẩm
                                         foreach ($cartItems as $item):
-                                            $totalAmount += $item['Giathue'] * $item['SoLuong']; // Cộng dồn tổng tiền
+                                            $totalAmount += $item['Giathue'] * $item['SoLuong'] + $item['PhiThue']; // Cộng dồn tổng tiền
                                             ?>
                                             <tr>
                                                 <td><?php echo htmlspecialchars($item['TenAnPham']); ?></td>
@@ -78,7 +73,8 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                                                 <td><?php echo number_format($item['Giathue'], 0, '', '.'); ?></td>
                                                 <td><?php echo date('d/m/Y', strtotime($item['NgayMuon'])); ?></td>
                                                 <td><?php echo date('d/m/Y', strtotime($item['NgayTra'])); ?></td>
-                                                <td><?php echo number_format($item['Giathue'] * $item['SoLuong'], 0, '', '.') . ' VND'; ?>
+                                                <td><?php echo number_format($item['PhiThue'], 0, '', '.'); ?></td>
+                                                <td><?php echo number_format($item['Giathue'] * $item['SoLuong'] + $item['PhiThue'], 0, '', '.') . ' VND'; ?>
                                                 </td> <!-- Định dạng số -->
                                             </tr>
                                         <?php endforeach; ?>
@@ -88,11 +84,24 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                                     <span
                                         id="totalPrice"><?php echo number_format($totalAmount, 0, '', '.') . ' VND'; ?></span>
                                 </div>
+
+                                <!-- Hàng phí giao hàng -->
+                                <div class="checkout__order__total">Phí giao hàng
+                                    <span id="shippingFee">
+                                        <?php
+                                        // Định nghĩa phí giao hàng mặc định
+                                        $shippingFee = 20000;
+                                        // Hiển thị phí giao hàng
+                                        echo number_format($shippingFee, 0, '', '.') . ' VND';
+                                        ?>
+                                    </span>
+                                </div>
+
                                 <?php
                                 // Tính tổng tiền giỏ hàng gốc (trước giảm giá)
                                 $totalAmount = 0;
                                 foreach ($cartItems as $item) {
-                                    $totalAmount += $item['Giathue'] * $item['SoLuong'];
+                                    $totalAmount += $item['Giathue'] * $item['SoLuong'] + $item['PhiThue'];
                                 }
 
                                 // Lấy mã khuyến mãi hiện tại từ yêu cầu hoặc mặc định rỗng
@@ -103,6 +112,9 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
 
                                 // Tính số tiền giảm giá
                                 $discountAmount = $totalAmount - $discountedPrice;
+
+                                // Thêm phí giao hàng vào tổng cộng
+                                $finalPrice = $discountedPrice + $shippingFee;
                                 ?>
 
                                 <!-- Hiển thị khuyến mãi -->
@@ -125,8 +137,8 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                                         }
                                         ?>
                                     </select>
-                                    <!-- Mặc định hiển thị giá trị 0 hoặc nếu không có khuyến mãi -->
                                 </div>
+
                                 <!-- Hiển thị số tiền giảm giá -->
                                 <div class="checkout__order__total">
                                     Giảm giá:
@@ -143,11 +155,12 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                                     Tổng cộng:
                                     <span id="discountText">
                                         <?php
-                                        // Hiển thị tổng tiền sau giảm giá (discountedPrice)
-                                        echo number_format($discountedPrice, 0, '', '.') . ' VND';
+                                        // Hiển thị tổng tiền sau giảm giá và phí giao hàng
+                                        echo number_format($finalPrice, 0, '', '.') . ' VND';
                                         ?>
                                     </span>
                                 </div>
+
                                 <div>
                                     <h5 class="checkout__payment__title">Phương thức thanh toán</h5>
                                     <div class="checkout__input__checkbox">
