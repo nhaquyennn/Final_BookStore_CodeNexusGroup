@@ -11,99 +11,105 @@ class ThongKeModel
     $this->conn = $conn;
   }
 
+  // Hàm thống kê sản phẩm bán chạy theo ngày trong một khoảng thời gian
   public function thongKeSanPhamTheoNgay($ngayBatDau, $ngayKetThuc)
   {
     $query = "
     SELECT 
-        DATE(NgayTao) AS Ngay,
-        SUM(soLuong) AS TongSoLuong,
-        (SELECT TenAnPham 
-         FROM chitietphieumuon 
-         JOIN anpham ON chitietphieumuon.maAnPham = anpham.maAnPham 
-         WHERE chitietphieumuon.maPhieuMuon IN (
-             SELECT MaPhieuMuon
-             FROM phieumuon 
-             WHERE DATE(NgayTao) = DATE(phieumuon.NgayTao)
-         )
-         ORDER BY soLuong DESC
-         LIMIT 1
-        ) AS TenSanPhamBanChay
-    FROM phieumuon 
-    JOIN chitietphieumuon ON phieumuon.MaPhieuMuon = chitietphieumuon.maPhieuMuon
-    WHERE NgayTao BETWEEN ? AND ?
-    GROUP BY DATE(NgayTao);
+        DATE(pm.NgayTao) AS Ngay,
+        SUM(ctpm.SoLuong) AS TongSoLuong,
+        MAX(ap.TenAnPham) AS TenSanPhamBanChay
+    FROM phieumuon pm
+    JOIN chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
+    JOIN anpham ap ON ctpm.maAnPham = ap.maAnPham
+    WHERE pm.NgayTao BETWEEN ? AND ?
+    GROUP BY DATE(pm.NgayTao)
+    ORDER BY Ngay;
 ";
 
 
-
+    // Chuẩn bị câu lệnh SQL
     $stmt = $this->conn->prepare($query);
-    if (!$stmt) {
-      error_log("Prepare failed: " . $this->conn->error);
-      return [];
-    }
 
+    // Gán giá trị cho các tham số
     $stmt->bind_param("ss", $ngayBatDau, $ngayKetThuc);
+
+    // Thực thi câu lệnh
     $stmt->execute();
 
+    // Lấy kết quả
     $result = $stmt->get_result();
-    if (!$result) {
-      error_log("Query failed: " . $this->conn->error);
-      return [];
+
+    // Kiểm tra nếu có dữ liệu trả về
+    if ($result->num_rows > 0) {
+      // Lưu kết quả vào mảng
+      $data = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+      // Nếu không có dữ liệu, trả về mảng rỗng
+      $data = [];
     }
 
-    $data = $result->fetch_all(MYSQLI_ASSOC);
+    // Đóng kết nối
     $stmt->close();
 
-    // Ghi log dữ liệu nếu cần, nhưng vẫn trả về kết quả
-    error_log("Query data: " . print_r($data, true));
+    // Trả về kết quả
     return $data;
   }
 
   public function thongKeSanPhamTheoThang($thangBatDau, $thangKetThuc, $nam)
   {
+    // Câu truy vấn sửa lại
     $query = "
-          SELECT 
-    MONTH(phieumuon.NgayTao) AS Thang, 
-    SUM(chitietphieumuon.soLuong) AS TongSoLuong, 
-    anpham.TenAnPham AS TenSanPhamBanChay
-FROM 
-    phieumuon
-JOIN 
-    chitietphieumuon ON phieumuon.MaPhieuMuon = chitietphieumuon.maPhieuMuon
-JOIN 
-    anpham ON chitietphieumuon.maAnPham = anpham.maAnPham
-WHERE 
-    MONTH(phieumuon.NgayTao) BETWEEN ? AND ? 
-    AND YEAR(phieumuon.NgayTao) = ?
-GROUP BY 
-    MONTH(phieumuon.NgayTao), anpham.TenAnPham
-ORDER BY 
-    TongSoLuong DESC
-;
-      ";
+    SELECT 
+        MONTH(pm.NgayTao) AS Thang,
+        SUM(ctpm.SoLuong) AS TongSoLuong,
+        ap.TenAnPham AS TenSanPhamBanChay  -- Lấy tên sản phẩm bán chạy
+    FROM 
+        phieumuon pm
+    JOIN 
+        chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
+    JOIN 
+        anpham ap ON ctpm.maAnPham = ap.maAnPham
+    WHERE 
+        YEAR(pm.NgayTao) = ?  -- Năm
+        AND MONTH(pm.NgayTao) BETWEEN ? AND ?  -- Tháng bắt đầu và tháng kết thúc
+    GROUP BY 
+        MONTH(pm.NgayTao), ap.TenAnPham  -- Nhóm theo tháng và sản phẩm
+    ORDER BY 
+        TongSoLuong DESC;
+";
 
+
+
+
+    // Chuẩn bị câu truy vấn
     $stmt = $this->conn->prepare($query);
     if (!$stmt) {
       error_log("Prepare failed: " . $this->conn->error);
       return [];
     }
 
-    $stmt->bind_param("iii", $thangBatDau, $thangKetThuc, $nam);
+    // Truyền tham số vào câu truy vấn
+    $stmt->bind_param("iii", $nam, $thangBatDau, $thangKetThuc);
     if (!$stmt->execute()) {
       error_log("Execution failed: " . $stmt->error);
       return [];
     }
 
+    // Lấy kết quả
     $result = $stmt->get_result();
     if (!$result) {
       error_log("Query failed: " . $this->conn->error);
       return [];
     }
 
+    // Lấy dữ liệu
     $data = $result->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
+
     return $data;
   }
+
 
 
 
@@ -111,15 +117,33 @@ ORDER BY
   // Thống kê sản phẩm theo năm
   public function thongKeSanPhamTheoNam($namBatDau, $namKetThuc)
   {
-    $query = "SELECT YEAR(NgayTao) as Nam, 
-                     SUM(chitietphieumuon.soLuong) as TongSoLuong,
-                     MAX(anpham.TenAnPham) as TenSanPhamBanChay
-              FROM phieumuon
-              JOIN chitietphieumuon ON phieumuon.MaPhieuMuon = chitietphieumuon.maPhieuMuon
-              JOIN anpham ON chitietphieumuon.maAnPham = anpham.maAnPham
-              WHERE YEAR(NgayTao) BETWEEN ? AND ?
-              GROUP BY YEAR(NgayTao)";
+    $query = "
+    SELECT 
+        YEAR(pm.NgayTao) AS Nam,
+        SUM(ctpm.SoLuong) AS TongSoLuong,
+        MAX(ap.TenAnPham) AS TenSanPhamBanChay -- MAX hoặc GROUP_CONCAT sẽ chọn 1 giá trị cho tên sản phẩm
+    FROM 
+        phieumuon pm
+    JOIN 
+        chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
+    JOIN 
+        anpham ap ON ctpm.maAnPham = ap.maAnPham
+    WHERE 
+        YEAR(pm.NgayTao) BETWEEN ? AND ?
+    GROUP BY 
+        YEAR(pm.NgayTao)
+    ORDER BY 
+        TongSoLuong DESC;
+";
 
+
+
+
+
+
+
+
+    // Chuẩn bị câu truy vấn
     $stmt = $this->conn->prepare($query);
     if (!$stmt) {
       throw new Exception("Prepare failed: " . $this->conn->error);

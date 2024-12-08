@@ -42,7 +42,9 @@ $error = $controller->getError();
                                     <label for="namBatDau" class="text-white">Năm bắt đầu:</label>
                                     <select name="namBatDau" id="namBatDau" class="form-control" required>
                                         <?php for ($i = 2021; $i <= 2024; $i++): ?>
-                                            <option value="<?= $i ?>" <?= isset($_POST['namBatDau']) && $_POST['namBatDau'] == $i ? 'selected' : '' ?>><?= $i ?></option>
+                                            <option value="<?= $i ?>"
+                                                <?= isset($_POST['namBatDau']) && $_POST['namBatDau'] == $i ? 'selected' : '' ?>><?= $i ?>
+                                            </option>
                                         <?php endfor; ?>
                                     </select>
                                 </div>
@@ -50,7 +52,9 @@ $error = $controller->getError();
                                     <label for="namKetThuc" class="text-white">Năm kết thúc:</label>
                                     <select name="namKetThuc" id="namKetThuc" class="form-control" required>
                                         <?php for ($i = 2021; $i <= 2024; $i++): ?>
-                                            <option value="<?= $i ?>" <?= isset($_POST['namKetThuc']) && $_POST['namKetThuc'] == $i ? 'selected' : '' ?>><?= $i ?></option>
+                                            <option value="<?= $i ?>"
+                                                <?= isset($_POST['namKetThuc']) && $_POST['namKetThuc'] == $i ? 'selected' : '' ?>><?= $i ?>
+                                            </option>
                                         <?php endfor; ?>
                                     </select>
                                 </div>
@@ -76,52 +80,61 @@ $error = $controller->getError();
                     </div>
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
-                            const labels = <?= json_encode(array_column($data, 'Nam')) ?>;
-                            const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
+                            // Lấy dữ liệu từ PHP
+                            const labels = <?= json_encode(array_column($data, 'Nam')) ?>; // Lấy các năm từ dữ liệu
+                            const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>; // Tổng số lượng sản phẩm
                             const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
 
-                            const ctx = document.getElementById('chartThongKe').getContext('2d');
-                            new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: labels,
-                                    datasets: [{
-                                        label: 'Tổng số lượng sản phẩm',
-                                        data: values,
-                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                        borderColor: 'rgba(75, 192, 192, 1)',
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    plugins: {
-                                        tooltip: {
-                                            callbacks: {
-                                                label: function(context) {
-                                                    const index = context.dataIndex;
-                                                    return `Năm: ${labels[index]} - Sản phẩm bán chạy: ${products[index]} - Số lượng: ${values[index]}`;
+                            // Chúng ta cần chỉ lấy duy nhất 1 năm cho labels, nếu dữ liệu chỉ chứa 1 năm
+                            const uniqueLabels = [...new Set(labels)]; // Giữ lại những năm duy nhất
+
+                            // Tạo biểu đồ
+                            const ctx = document.getElementById('chartThongKe')?.getContext('2d');
+                            if (ctx) {
+                                new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: uniqueLabels, // Nhãn cho biểu đồ (năm duy nhất)
+                                        datasets: [{
+                                            label: 'Tổng số lượng sản phẩm',
+                                            data: values, // Dữ liệu tổng số lượng sản phẩm theo năm
+                                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                            borderColor: 'rgba(75, 192, 192, 1)',
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(context) {
+                                                        const index = context.dataIndex;
+                                                        return `Sản phẩm bán chạy: ${products[index]} - Số lượng: ${values[index]}`;
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        scales: {
+                                            x: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Năm'
+                                                }
+                                            },
+                                            y: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Số lượng'
                                                 }
                                             }
                                         }
-                                    },
-                                    scales: {
-                                        x: {
-                                            title: {
-                                                display: true,
-                                                text: 'Năm'
-                                            }
-                                        },
-                                        y: {
-                                            title: {
-                                                display: true,
-                                                text: 'Số lượng'
-                                            }
-                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
                         });
                     </script>
+
                 <?php else: ?>
                     <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
                 <?php endif; ?>
@@ -132,7 +145,8 @@ $error = $controller->getError();
         <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
         <!--End Back To Top Button-->
         <!--Start right sidebar-->
-        <?php require_once "../../../layout/right_sidebar.php"; ?> <!-- Import right sidebar -->
+        <?php require_once "../../../layout/right_sidebar.php"; ?>
+        <!-- Import right sidebar -->
         <!--End right sidebar-->
     </div>
 
@@ -142,14 +156,16 @@ $error = $controller->getError();
     <!--End Back To Top Button-->
 
     <!--Start right sidebar-->
-    <?php require_once "../../../layout/right_sidebar.php"; ?> <!-- Import right sidebar -->
+    <?php require_once "../../../layout/right_sidebar.php"; ?>
+    <!-- Import right sidebar -->
     <!--End right sidebar-->
 
     </div>
     <!--End wrapper-->
 
     <!--Start footer-->
-    <?php require_once "../../../layout/script.php"; ?> <!-- Import footer scripts -->
+    <?php require_once "../../../layout/script.php"; ?>
+    <!-- Import footer scripts -->
     <!--End footer-->
 
 </body>

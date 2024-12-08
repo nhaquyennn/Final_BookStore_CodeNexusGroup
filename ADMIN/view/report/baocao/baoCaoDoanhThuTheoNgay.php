@@ -1,24 +1,25 @@
 <?php
 session_start();
 
-// Kiểm tra nếu session 'user' không tồn tại
+// Check if the 'user' session exists
 if (!isset($_SESSION['user'])) {
   header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
   exit();
 }
 
-// Gọi Controller để lấy dữ liệu
+// Call the controller to get data
 require_once "../../../controller/baoCaoController.php";
 $controller = new BaoCaoController();
-$data = $controller->baoCaoDoanhThuTheoNgay(); // Gọi hàm từ Controller
+$data = $controller->baoCaoDoanhThuTheoNgay(); // Call the method from Controller
 $error = $controller->getError();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <?php require_once "../../../layout/header.php"; ?> <!-- Import layout header -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Đảm bảo tải thư viện Chart.js -->
+  <?php require_once "../../../layout/header.php"; ?>
+  <!-- Import layout header -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Ensure Chart.js library is loaded -->
 </head>
 
 <body class="bg-theme bg-theme9">
@@ -26,12 +27,14 @@ $error = $controller->getError();
   <div id="wrapper">
 
     <!--Start sidebar-wrapper-->
-    <?php require_once "../../../layout/left_sidebar.php"; ?> <!-- Import sidebar -->
+    <?php require_once "../../../layout/left_sidebar.php"; ?>
+    <!-- Import sidebar -->
     <!--End sidebar-wrapper-->
 
     <!--Start topbar header-->
     <header class="topbar-nav">
-      <?php require_once "../../../layout/topbar.php"; ?> <!-- Import topbar -->
+      <?php require_once "../../../layout/topbar.php"; ?>
+      <!-- Import topbar -->
     </header>
     <!--End topbar header-->
 
@@ -46,27 +49,29 @@ $error = $controller->getError();
         <!--Start Dashboard Content-->
         <div class="card mt-3">
           <div class="card-body">
-            <!-- Hiển thị lỗi nếu có -->
+            <!-- Display error if there is any -->
             <?php if (!empty($error)): ?>
               <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
-            <!-- Form nhập liệu cho thống kê -->
+            <!-- Form for inputting date range -->
             <form method="POST" action="">
               <div class="form-row">
-                <!-- Ngày bắt đầu -->
+                <!-- Start Date -->
                 <div class="form-group col-md-4">
                   <label for="ngayBatDau" class="text-white">Ngày bắt đầu:</label>
-                  <input type="date" name="ngayBatDau" id="ngayBatDau" class="form-control" required min="2021-01-01" max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayBatDau'] ?? '') ?>">
+                  <input type="date" name="ngayBatDau" id="ngayBatDau" class="form-control" required min="2021-01-01"
+                    max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayBatDau'] ?? '') ?>">
                 </div>
 
-                <!-- Ngày kết thúc -->
+                <!-- End Date -->
                 <div class="form-group col-md-4">
                   <label for="ngayKetThuc" class="text-white">Ngày kết thúc:</label>
-                  <input type="date" name="ngayKetThuc" id="ngayKetThuc" class="form-control" required min="2021-01-01" max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayKetThuc'] ?? '') ?>">
+                  <input type="date" name="ngayKetThuc" id="ngayKetThuc" class="form-control" required min="2021-01-01"
+                    max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayKetThuc'] ?? '') ?>">
                 </div>
               </div>
-              <!-- Nút xem thống kê -->
+              <!-- Button to view stats -->
               <button type="submit" class="btn btn-primary">Xem thống kê</button>
             </form>
           </div>
@@ -77,22 +82,22 @@ $error = $controller->getError();
         <div class="overlay toggle-menu"></div>
         <!--end overlay-->
 
-        <!-- Hiển thị biểu đồ nếu có dữ liệu -->
+        <!-- Display chart if data is available -->
         <?php if (!empty($data)): ?>
           <div class="card mt-3">
             <div class="card-body">
-              <!-- Canvas chứa biểu đồ -->
+              <!-- Canvas for the chart -->
               <canvas id="thongKeChart" height="200"></canvas>
             </div>
           </div>
           <script>
-            // Lấy dữ liệu từ PHP
+            // Get data from PHP
             const labels = <?= json_encode(array_column($data, 'Ngay')) ?>;
             const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>;
-            const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
+            const products = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>;
             const productRevenues = <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>;
 
-            // Khởi tạo biểu đồ Chart.js
+            // Initialize the Chart.js chart
             const ctx = document.getElementById('thongKeChart').getContext('2d');
             new Chart(ctx, {
               type: 'bar',
@@ -113,11 +118,11 @@ $error = $controller->getError();
                       label: function(context) {
                         const index = context.dataIndex;
                         return `
-                Ngày: ${labels[index]}\n
-                Sản phẩm bán chạy: ${products[index]}\n
-                Doanh thu sản phẩm: ${parseInt(productRevenues[index]).toLocaleString()} VND\n
-                Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND
-              `;
+                                                Ngày: ${labels[index]}\n
+                                                Sản phẩm bán chạy: ${products[index]}\n
+                                                Doanh thu sản phẩm: ${parseInt(productRevenues[index]).toLocaleString()} VND\n
+                                                Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND
+                                              `;
                       }
                     }
                   }
@@ -142,7 +147,7 @@ $error = $controller->getError();
           </script>
 
         <?php else: ?>
-          <!-- Hiển thị thông báo nếu không có dữ liệu -->
+          <!-- Display message if no data available -->
           <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
         <?php endif; ?>
       </div>
@@ -158,14 +163,16 @@ $error = $controller->getError();
   <!--End Back To Top Button-->
 
   <!--Start right sidebar-->
-  <?php require_once "../../../layout/right_sidebar.php"; ?> <!-- Import right sidebar -->
+  <?php require_once "../../../layout/right_sidebar.php"; ?>
+  <!-- Import right sidebar -->
   <!--End right sidebar-->
 
   </div>
   <!--End wrapper-->
 
   <!--Start footer-->
-  <?php require_once "../../../layout/script.php"; ?> <!-- Import footer scripts -->
+  <?php require_once "../../../layout/script.php"; ?>
+  <!-- Import footer scripts -->
   <!--End footer-->
 
 </body>

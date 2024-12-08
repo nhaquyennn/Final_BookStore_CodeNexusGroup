@@ -66,44 +66,35 @@ class ThongKeController
   }
 
 
-  public function thongKeSanPhamTheoThang()
+  public function thongKeSanPhamTheoThang($thangBatDau, $thangKetThuc, $nam)
   {
     $data = []; // Biến lưu kết quả thống kê
-    $this->error = ''; // Khởi tạo biến lưu lỗi
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // Lấy dữ liệu từ form
-      $thangBatDau = $_POST['thangBatDau'] ?? null;
-      $thangKetThuc = $_POST['thangKetThuc'] ?? null;
-      $nam = $_POST['nam'] ?? null;
+    // Kiểm tra nếu tháng bắt đầu và tháng kết thúc hợp lệ
+    if (empty($thangBatDau) || empty($thangKetThuc) || empty($nam)) {
+      $this->error = "Vui lòng nhập đầy đủ tháng bắt đầu, tháng kết thúc và năm.";
+    } elseif ($thangBatDau > $thangKetThuc) {
+      $this->error = "Tháng bắt đầu phải nhỏ hơn hoặc bằng tháng kết thúc.";
+    } else {
+      try {
+        // Gọi model để lấy dữ liệu thống kê sản phẩm theo tháng
+        $data = $this->model->thongKeSanPhamTheoThang((int)$thangBatDau, (int)$thangKetThuc, (int)$nam);
 
-      // Kiểm tra tính hợp lệ của dữ liệu nhập vào
-      if (!$thangBatDau || !$thangKetThuc || !$nam) {
-        $this->error = "Vui lòng nhập đầy đủ tháng bắt đầu, tháng kết thúc và năm.";
-      } elseif ($thangBatDau > $thangKetThuc) {
-        $this->error = "Tháng bắt đầu phải nhỏ hơn hoặc bằng tháng kết thúc.";
-      } else {
-        try {
-          // Gọi hàm từ model để lấy dữ liệu
-          $data = $this->model->thongKeSanPhamTheoThang((int)$thangBatDau, (int)$thangKetThuc, (int)$nam);
-
-          // Kiểm tra nếu không có dữ liệu
-          if (empty($data)) {
-            $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
-          }
-        } catch (Exception $e) {
-          // Xử lý lỗi truy vấn hoặc lỗi không mong muốn
-          $this->error = "Đã xảy ra lỗi khi truy vấn dữ liệu: " . htmlspecialchars($e->getMessage());
+        // Kiểm tra nếu không có dữ liệu
+        if (empty($data)) {
+          $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
         }
+      } catch (Exception $e) {
+        // Xử lý lỗi trong trường hợp xảy ra lỗi khi truy vấn
+        $this->error = "Đã xảy ra lỗi khi truy vấn dữ liệu: " . htmlspecialchars($e->getMessage());
+        // Log chi tiết lỗi để phục vụ gỡ lỗi
+        error_log("Lỗi truy vấn: " . $e->getMessage());
       }
     }
 
-    // Trả về dữ liệu nếu có, hoặc trả về thông báo lỗi
+    // Trả về dữ liệu hoặc lỗi
     return is_array($data) ? $data : [];
   }
-
-
-
 
   public function thongKeSanPhamTheoNam()
   {

@@ -14,26 +14,24 @@ class BaoCaoModel
   public function baoCaoDoanhThuTheoNgay($ngayBatDau, $ngayKetThuc)
   {
     $query = "
-       SELECT 
+      SELECT 
     DATE(p.NgayTao) AS Ngay,
-    SUM(ct.soLuong * ct.giaMoiSanPham) AS TongDoanhThu,
-    MAX(
-        CONCAT(
-            a.TenAnPham, '||', ct.soLuong * ct.giaMoiSanPham
-        )
-    ) AS SanPhamBanChayVaDoanhThu
+    SUM(ct.SoLuong * (ct.DonGia - ct.GiamGia)) AS TongDoanhThu, 
+    MAX(a.TenAnPham) AS SanPhamBanChay,  -- Display the product name
+    SUM(ct.SoLuong * (ct.DonGia - ct.GiamGia)) AS DoanhThuSanPham  -- Calculate total revenue for the best-selling product
 FROM 
     phieumuon AS p
 JOIN 
-    chitietphieumuon AS ct ON p.MaPhieuMuon = ct.maPhieuMuon
+    chitietpm AS ct ON p.MaPhieuMuon = ct.MaPhieuMuon
 JOIN 
-    anpham AS a ON ct.maAnPham = a.maAnPham
+    anpham AS a ON ct.MaAnPham = a.MaAnPham
 WHERE 
-    p.NgayTao BETWEEN ? AND ?
+    p.NgayTao BETWEEN ? AND ?  -- Filtering by date range
 GROUP BY 
     DATE(p.NgayTao)
 ORDER BY 
-    DATE(p.NgayTao);
+    TongDoanhThu DESC;  -- Order by total revenue
+
 
     ";
 
