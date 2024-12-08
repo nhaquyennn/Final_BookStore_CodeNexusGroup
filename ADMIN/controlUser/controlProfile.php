@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 require_once __DIR__ . '/../database/db_connect.php';
 
 // Kiểm tra nếu người dùng đã đăng nhập
@@ -12,7 +12,7 @@ $email = $_SESSION['user']; // Lấy email từ session
 $user = null; // Khởi tạo biến chứa thông tin người dùng
 
 // Truy vấn thông tin người dùng
-$sql = "SELECT nguoidung.tenNguoiDung, nguoidung.diaChi, nhanvien.chucVu, nhanvien.maNhanVien, taikhoan.email, taikhoan.matkhau 
+$sql = "SELECT nguoidung.tenNguoiDung, nhanvien.chucVu, nhanvien.maNhanVien, taikhoan.email, taikhoan.matkhau 
         FROM nguoidung 
         INNER JOIN nhanvien ON nguoidung.maNguoiDung = nhanvien.maNguoiDung 
         INNER JOIN taikhoan ON nguoidung.maNguoiDung = taikhoan.maNguoiDung 

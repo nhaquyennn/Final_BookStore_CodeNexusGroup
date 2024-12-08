@@ -49,7 +49,7 @@ function calculateDiscountedPrice($totalAmount, $couponCode, $conn) {
 function getCartDetails($conn)
 {
     // Truy vấn kết hợp bảng giỏ hàng và bảng anpham qua khóa maAnPham
-    $query = "  SELECT giohang.*, anpham.TenAnPham, anpham.Giathue, dauap.hinhAnh,
+    $query = "  SELECT giohang.*, anpham.TenAnPham, anpham.Giathue, dauap.hinhAnh, anpham.PhiThue,
                     NOW() AS NgayMuon
             FROM giohang
             INNER JOIN anpham ON giohang.maAnPham = anpham.maAnPham

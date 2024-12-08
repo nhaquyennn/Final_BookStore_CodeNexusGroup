@@ -61,8 +61,8 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                                     <tbody>
                                         <?php
                                         // Giả sử $cartItems là dữ liệu giỏ hàng từ hàm getCartDetails
-                                        $totalAmount = 0; // Biến lưu tổng tiền của giỏ hàng
-                                        
+                                        $totalAmount = 0;
+
                                         // Duyệt qua giỏ hàng và hiển thị từng sản phẩm
                                         foreach ($cartItems as $item):
                                             $totalAmount += $item['Giathue'] * $item['SoLuong'] + $item['PhiThue']; // Cộng dồn tổng tiền
@@ -206,6 +206,12 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                             // Cập nhật thông tin giảm giá và tổng tiền
                             $('#discountAmount').text(data.discountText);
                             $('#discountText').text(data.totalPrice);
+
+                            // Kiểm tra nếu có khuyến mãi 10%
+                            if (data.couponCode == 5) {
+                                // Hiển thị thông báo về khuyến mãi
+                                alert("Bạn đã đủ điều kiện nhận khuyến mãi 12%!");
+                            }
                         } catch (error) {
                             alert('Phản hồi không hợp lệ từ server.');
                             console.error(error);
@@ -217,6 +223,7 @@ $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ contro
                 });
             });
         });
+
     </script>
     <footer>
         <?php require_once 'layout/footer.php' ?>
