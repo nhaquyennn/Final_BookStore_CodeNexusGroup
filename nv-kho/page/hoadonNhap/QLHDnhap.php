@@ -33,7 +33,6 @@
                                             <th style="font-size: 15px;">Mã nhân viên</th>
                                             <th style="font-size: 15px;">Ngày tạo</th>
                                             <th style="font-size: 15px;">Nội dung</th>
-                                            <th style="font-size: 15px;">Nhà cung cấp</th>
                                             <th style="font-size: 15px;">Tổng tiền</th>
                                         </tr>
                                     </thead>
@@ -56,12 +55,9 @@
                                                         echo "<td>".$row['maNhanVien']."</td>";
                                                         echo "<td>".$row['NgayTao']."</td>";
                                                         echo "<td>".$row['NoiDung']."</td>";
-                                                        echo "<td>".$row['NhaCungCap']."</td>";
                                                         echo "<td>".number_format(num: $row['TongTien'], decimals: 0, decimal_separator: ',', thousands_separator: '.')."</td>";
-                                                        echo "<td> <button class='btn btn-sm btn-primary'><i class='fa fa-eye'></i></button>
-                                                                    <button class='btn btn-warning btn-sm'><i class='fa fa-pencil ' aria-hidden='true'></i></button>
-                                                                    <button class='btn btn-danger btn-sm'>
-                                                                        <a href='guiYeuCauXoaDanhMuc.php'><i class='fa fa-trash-o' aria-hidden='true'></i></a></button>
+                                                        echo "<td> <button class='btn btn-sm btn-primary'><a href='index.php?page=chitietHD&maHD={$row["MaHoaDon"]}'><i class='fa fa-eye'></i></a></button>
+                                                                    
                                                             </td>";
                                                         echo "</tr>";
                                                     }

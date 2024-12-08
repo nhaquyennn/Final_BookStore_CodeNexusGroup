@@ -22,22 +22,22 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                     <form class="form-createAP" action="#" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Mã danh mục</label>
-                            <input type="text" class="form-control" id="idDanhMuc" placeholder="Nhập mã danh mục" name="maDM">
+                            <input type="text" class="form-control" id="idDanhMuc" placeholder="Nhập mã danh mục" name="maDM" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Tên danh mục</label>
-                            <input type="text" class="form-control" id="tenDanhMuc" placeholder="Nhập tên danh mục" name="tenDM">
+                            <input type="text" class="form-control" id="tenDanhMuc" placeholder="Nhập tên danh mục" name="tenDM" required>
                         </div>
 
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Mô tả</label>
-                            <textarea type="text" class="form-control" id="tenAnPham" placeholder="Nhập mô tả" name="moTa"></textarea>
+                            <textarea type="text" class="form-control" id="tenAnPham" placeholder="Nhập mô tả" name="moTa" required></textarea>
                         </div>
 
                         <div class="mt-4">
-                            <a href="index.php?page=quanlyDM"><button type="submit" class="btn btn-primary" name="themDM">Tạo</button></a>
+                            <button type="submit" class="btn btn-primary" name="themDM">Tạo</button>
                             <a href="index.php?page=quanlyDM" class="btn btn-secondary" name="huy">Hủy</a>
                         </div>
 
@@ -51,9 +51,9 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                             $str= "insert into danhmucap (MaDanhMuc, TenDanhMuc, MoTa)
                                     values ('$maDM','$tenDM', '$moTa')";
                             if($conn->query($str)){
-                                echo "<script>alert('Them thanh cong'); window.location.href='index.php?page=quanlyDM'</script>";
+                                echo "<script>alert('Thêm danh mục thành công'); window.location.href='index.php?page=quanlyDM'</script>";
                             }else {
-                                echo "<script>alert('Them that bai'); window.location.href='index.php?page=quanlyDM'</script>";
+                                echo "<script>alert('Thêm danh mục thất bại'); window.location.href='index.php?page=quanlyDM'</script>";
                             }
                         }
                     }

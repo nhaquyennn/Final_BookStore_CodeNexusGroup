@@ -44,7 +44,7 @@
                                         }
                                         $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', database: 'final_nexus');
                                         if($conn){
-                                            $str = "select * from anpham as a INNER JOIN dauap as d on a.madauAP = d.madauAP;";
+                                            $str = "select * from anpham as a LEFT JOIN dauap as d on a.madauAP = d.madauAP;";
                                             $result = $conn->query(query: $str);
                                             if ($result->num_rows > 0) {
                                                 while ($row = mysqli_fetch_assoc($result)) {
@@ -55,10 +55,12 @@
                                                     echo "<td>".$row['Tacgia']. "</td>";
                                                     echo "<td>".$row['Giathue']. "</td>";
                                                     echo "<td>".$row['tinhTrang']. "</td>";
-                                                    echo "<td>".$row['madauAP']. "</td>";
+                                                    $maDAP = isset($row['madauAP']) ? $row['madauAP'] : '<i>(Chưa phân loại)</i>';
+                                                    echo "<td>".$maDAP ."</td>";
+                                                    
                                                     echo "<td>  <button class='btn btn-warning btn-sm'><a href='index.php?page=suaAP&maAP={$row["maAnPham"]}'><i class='fa fa-pencil ' aria-hidden='true'></i></a></button>
                                                                     <button class='btn btn-danger btn-sm'>
-                                                                        <a href='index.php?page=guiYeuCauXoaDanhMuc.php'><i class='fa fa-trash-o' aria-hidden='true'></i></a></button>
+                                                                        <a href='index.php?page=xoaAP&maAP={$row["maAnPham"]}'><i class='fa fa-trash-o' aria-hidden='true'></i></a></button>
                                                         </td>";
                                                     echo "</tr>";
                                                 }

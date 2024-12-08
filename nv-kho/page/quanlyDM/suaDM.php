@@ -35,17 +35,17 @@ if($result->num_rows > 0){
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Tên danh mục</label>
-                            <input type="text" class="form-control" id="tenDanhMuc" value="<?php echo $tenDM ?>" name="tenDM">
+                            <input type="text" class="form-control" id="tenDanhMuc" value="<?php echo $tenDM ?>" name="tenDM" required>
                         </div>
 
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Mô tả</label>
-                            <input type="text" class="form-control" id="moTa" value="<?php echo $moTa?>" name="moTa"></input>
+                            <input type="text" class="form-control" id="moTa" value="<?php echo $moTa?>" name="moTa" required></input>
                         </div>
 
                         <div class="mt-4">
-                            <a href="index.php?page=quanlyDM"><button type="submit" class="btn btn-primary" name="suaDM">Lưu</button></a>
+                            <input type="submit" class="btn btn-primary" name="suaDM" value="Lưu"></input></a>
                             <a href="index.php?page=quanlyDM" class="btn btn-secondary" name="huy">Hủy</a>
                         </div>
 
@@ -57,9 +57,9 @@ if($result->num_rows > 0){
                         if($conn){
                             $str= "update danhmucap set TenDanhMuc = '$tenDM' , MoTa = '$moTa' where MaDanhMuc = '$maDM'";
                             if($conn->query($str)){
-                                echo "<script>alert('Sửa thành công'); window.location.href='index.php?page=quanlyDM'</script>";
+                                echo "<script>alert('Sửa danh mục thành công'); window.location.href='index.php?page=quanlyDM'</script>";
                             }else {
-                                echo "<script>alert('Sửa thất bại'); window.location.href='index.php?page=quanlyDM'</script>";
+                                echo "<script>alert('Sửa danh mục thất bại'); window.location.href='index.php?page=quanlyDM'</script>";
                             }
                         }
                     }

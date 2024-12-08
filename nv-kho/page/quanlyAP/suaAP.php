@@ -68,7 +68,7 @@ if($result->num_rows > 0){
                        
                         <div class="mt-4 ml-3">
                             <input type="submit" class="btn btn-primary" name="suaAP" value="Lưu"></input>
-                            <input type="submit" class="btn btn-secondary" name="huy" value="Hủy"></input>
+                            <a href="index.php?page=quanlyAP" class="btn btn-secondary" name="huy">Hủy</a>
                         </div>
 
                     </form>

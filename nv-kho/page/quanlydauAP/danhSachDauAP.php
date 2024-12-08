@@ -48,7 +48,7 @@
                                         }
                                         $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', database: 'final_nexus');
                                         if($conn){
-                                            $str = "select * from dauap as a INNER JOIN danhmucap as m on a.MaDanhMuc = m.MaDanhMuc;";
+                                            $str = "select * from dauap as a LEFT JOIN danhmucap as m on a.MaDanhMuc = m.MaDanhMuc;";
                                             $result = $conn->query(query: $str);
                                             if ($result->num_rows > 0) {
                                                 while ($row = mysqli_fetch_assoc(result: $result)) {
@@ -59,11 +59,12 @@
                                                     echo "<td>".$row['Tacgia']. "</td>";
                                                     echo "<td>".$row['NXB']. "</td>";
                                                     echo "<td>".$row['Tongsoluong']. "</td>";
-                                                    echo "<td>".$row['TenDanhMuc']. "</td>";
+                                                    $tenDanhMuc = isset($row['TenDanhMuc']) ? $row['TenDanhMuc'] : '<i>(Chưa phân loại)</i>';
+                                                    echo "<td>".$tenDanhMuc. "</td>";
                                                     echo "<td> 
                                                                 <button class='btn btn-warning btn-sm'><a href='index.php?page=suaDAP&maDAP={$row["madauAP"]}'><i class='fa fa-pencil ' aria-hidden='true'></i></a></button>
                                                                     <button class='btn btn-danger btn-sm'>
-                                                                        <a href='index.php?page=guiYeuCauXoaDanhMuc.php'><i class='fa fa-trash-o' aria-hidden='true'></i></a></button>
+                                                                        <a href='index.php?page=xoaDAP&maDAP={$row["madauAP"]}'><i class='fa fa-trash-o' aria-hidden='true'></i></a></button>
                                                         </td>";
                                                     echo "</tr>";
                                                 }
