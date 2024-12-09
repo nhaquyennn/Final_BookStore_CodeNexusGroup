@@ -16,9 +16,9 @@ class BaoCaoModel
     $query = "
       SELECT 
     DATE(p.NgayTao) AS Ngay,
-    SUM(ct.SoLuong * (ct.DonGia - ct.GiamGia)) AS TongDoanhThu, 
-    MAX(a.TenAnPham) AS SanPhamBanChay,  -- Display the product name
-    SUM(ct.SoLuong * (ct.DonGia - ct.GiamGia)) AS DoanhThuSanPham  -- Calculate total revenue for the best-selling product
+    SUM(ct.SoLuong * (ct.DonGia - IFNULL(ct.GiamGia, 0))) AS TongDoanhThu, 
+    a.TenAnPham AS SanPhamBanChay,  -- Sản phẩm có doanh thu cao nhất trong ngày
+    MAX(ct.SoLuong * (ct.DonGia - IFNULL(ct.GiamGia, 0))) AS DoanhThuSanPhamBanChay
 FROM 
     phieumuon AS p
 JOIN 
@@ -26,11 +26,11 @@ JOIN
 JOIN 
     anpham AS a ON ct.MaAnPham = a.MaAnPham
 WHERE 
-    p.NgayTao BETWEEN ? AND ?  -- Filtering by date range
+    p.NgayTao BETWEEN ? AND ?  -- Lọc theo khoảng ngày
 GROUP BY 
-    DATE(p.NgayTao)
+    DATE(p.NgayTao), a.TenAnPham
 ORDER BY 
-    TongDoanhThu DESC;  -- Order by total revenue
+    Ngay ASC, TongDoanhThu DESC;  -- Sắp xếp theo ngày và tổng doanh thu
 
 
     ";
