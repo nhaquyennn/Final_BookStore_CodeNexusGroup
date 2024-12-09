@@ -16,15 +16,22 @@ class ThongKeModel
   {
     $query = "
     SELECT 
-        DATE(pm.NgayTao) AS Ngay,
-        SUM(ctpm.SoLuong) AS TongSoLuong,
-        MAX(ap.TenAnPham) AS TenSanPhamBanChay
-    FROM phieumuon pm
-    JOIN chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
-    JOIN anpham ap ON ctpm.maAnPham = ap.maAnPham
-    WHERE pm.NgayTao BETWEEN ? AND ?
-    GROUP BY DATE(pm.NgayTao)
-    ORDER BY Ngay;
+        DATE(pm.NgayTao) AS Ngay, -- Ngày tạo của phiếu mượn
+        SUM(ctpm.SoLuong) AS TongSoLuong, -- Tổng số lượng sản phẩm trong ngày
+        ap.TenAnPham AS TenSanPhamBanChay, -- Tên sản phẩm bán chạy nhất
+        (SUM(ctpm.SoLuong) * ap.Gia) AS DoanhThuSanPhamBanChay -- Doanh thu của sản phẩm bán chạy nhất
+    FROM 
+        phieumuon pm
+    JOIN 
+        chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
+    JOIN 
+        anpham ap ON ctpm.maAnPham = ap.maAnPham
+    WHERE 
+        pm.NgayTao BETWEEN ? AND ? -- Lọc dữ liệu theo khoảng ngày
+    GROUP BY 
+        DATE(pm.NgayTao), ap.TenAnPham, ap.Gia -- Nhóm theo ngày, sản phẩm và giá
+    ORDER BY 
+        Ngay, TongSoLuong DESC;
 ";
 
 
@@ -58,29 +65,26 @@ class ThongKeModel
 
   public function thongKeSanPhamTheoThang($thangBatDau, $thangKetThuc, $nam)
   {
-    // Câu truy vấn sửa lại
+    // Câu truy vấn đã sửa
     $query = "
-    SELECT 
-        MONTH(pm.NgayTao) AS Thang,
-        SUM(ctpm.SoLuong) AS TongSoLuong,
-        ap.TenAnPham AS TenSanPhamBanChay  -- Lấy tên sản phẩm bán chạy
-    FROM 
-        phieumuon pm
-    JOIN 
-        chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
-    JOIN 
-        anpham ap ON ctpm.maAnPham = ap.maAnPham
-    WHERE 
-        YEAR(pm.NgayTao) = ?  -- Năm
-        AND MONTH(pm.NgayTao) BETWEEN ? AND ?  -- Tháng bắt đầu và tháng kết thúc
-    GROUP BY 
-        MONTH(pm.NgayTao), ap.TenAnPham  -- Nhóm theo tháng và sản phẩm
-    ORDER BY 
-        TongSoLuong DESC;
-";
-
-
-
+      SELECT 
+          MONTH(pm.NgayTao) AS Thang,
+          SUM(ctpm.SoLuong) AS TongSoLuong,
+          ap.TenAnPham AS TenSanPhamBanChay
+      FROM 
+          phieumuon pm
+      JOIN 
+          chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
+      JOIN 
+          anpham ap ON ctpm.maAnPham = ap.maAnPham
+      WHERE 
+          YEAR(pm.NgayTao) = ? 
+          AND MONTH(pm.NgayTao) BETWEEN ? AND ?
+      GROUP BY 
+          MONTH(pm.NgayTao), ap.TenAnPham
+      ORDER BY 
+          Thang, TongSoLuong DESC;
+      ";
 
     // Chuẩn bị câu truy vấn
     $stmt = $this->conn->prepare($query);
@@ -89,7 +93,7 @@ class ThongKeModel
       return [];
     }
 
-    // Truyền tham số vào câu truy vấn
+    // Truyền tham số (năm, tháng bắt đầu, tháng kết thúc)
     $stmt->bind_param("iii", $nam, $thangBatDau, $thangKetThuc);
     if (!$stmt->execute()) {
       error_log("Execution failed: " . $stmt->error);
@@ -103,16 +107,12 @@ class ThongKeModel
       return [];
     }
 
-    // Lấy dữ liệu
+    // Lấy dữ liệu từ kết quả
     $data = $result->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
 
     return $data;
   }
-
-
-
-
 
   // Thống kê sản phẩm theo năm
   public function thongKeSanPhamTheoNam($namBatDau, $namKetThuc)
@@ -135,11 +135,6 @@ class ThongKeModel
     ORDER BY 
         TongSoLuong DESC;
 ";
-
-
-
-
-
 
 
 
