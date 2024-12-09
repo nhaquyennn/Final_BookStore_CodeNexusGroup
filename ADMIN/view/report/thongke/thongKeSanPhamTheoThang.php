@@ -5,8 +5,8 @@ error_reporting(E_ALL);
 
 // Kiểm tra nếu session 'user' không tồn tại
 if (!isset($_SESSION['user'])) {
-    header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
-    exit();
+  header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
+  exit();
 }
 
 // Khởi tạo biến cho lỗi và dữ liệu
@@ -24,7 +24,7 @@ $error = $controller->getError();
 
 // Kiểm tra nếu không có dữ liệu
 if (empty($data)) {
-    $error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
+  $error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
 }
 ?>
 
@@ -49,7 +49,7 @@ if (empty($data)) {
         <div class="card mt-3">
           <div class="card-body">
             <?php if (!empty($error)): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+              <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
             <!-- Form chọn tháng -->
@@ -59,7 +59,7 @@ if (empty($data)) {
                   <label for="thangBatDau" class="text-white">Tháng bắt đầu:</label>
                   <select name="thangBatDau" id="thangBatDau" class="form-control" required>
                     <?php for ($i = 1; $i <= 12; $i++): ?>
-                    <option value="<?= $i ?>" <?= ($thangBatDau == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= ($thangBatDau == $i) ? 'selected' : '' ?>><?= $i ?></option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -67,7 +67,7 @@ if (empty($data)) {
                   <label for="thangKetThuc" class="text-white">Tháng kết thúc:</label>
                   <select name="thangKetThuc" id="thangKetThuc" class="form-control" required>
                     <?php for ($i = 1; $i <= 12; $i++): ?>
-                    <option value="<?= $i ?>" <?= ($thangKetThuc == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= ($thangKetThuc == $i) ? 'selected' : '' ?>><?= $i ?></option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -75,7 +75,7 @@ if (empty($data)) {
                   <label for="nam" class="text-white">Năm:</label>
                   <select name="nam" id="nam" class="form-control" required>
                     <?php for ($i = 2021; $i <= 2024; $i++): ?>
-                    <option value="<?= $i ?>" <?= ($nam == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= ($nam == $i) ? 'selected' : '' ?>><?= $i ?></option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -87,69 +87,69 @@ if (empty($data)) {
 
         <!-- Hiển thị biểu đồ -->
         <?php if (!empty($data)): ?>
-        <div class="card mt-3">
-          <div class="card-body">
-            <canvas id="chartThongKe" height="300"></canvas>
+          <div class="card mt-3">
+            <div class="card-body">
+              <canvas id="chartThongKe" height="300"></canvas>
+            </div>
           </div>
-        </div>
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          // Lấy dữ liệu từ PHP
-          const labels = [...new Set(
-            <?= json_encode(array_column($data, 'Thang')) ?>)]; // Dùng Set để loại bỏ trùng lặp
-          const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
-          const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
+          <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              // Lấy dữ liệu từ PHP
+              const labels = [...new Set(
+                <?= json_encode(array_column($data, 'Thang')) ?>)]; // Dùng Set để loại bỏ trùng lặp
+              const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
+              const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
 
-          // Kiểm tra nếu phần tử canvas tồn tại
-          const ctx = document.getElementById('chartThongKe')?.getContext('2d');
-          if (ctx) {
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: labels.map(month => `Tháng ${month}`), // Hiển thị tháng đầy đủ
-                datasets: [{
-                  label: 'Tổng số lượng sản phẩm',
-                  data: values,
-                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                responsive: true,
-                plugins: {
-                  tooltip: {
-                    callbacks: {
-                      label: function(context) {
-                        const index = context.dataIndex;
-                        return `Tháng: ${labels[index]} - Sản phẩm bán chạy: ${products[index]} - Số lượng: ${values[index]}`;
+              // Kiểm tra nếu phần tử canvas tồn tại
+              const ctx = document.getElementById('chartThongKe')?.getContext('2d');
+              if (ctx) {
+                new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: labels.map(month => `Tháng ${month}`), // Hiển thị tháng đầy đủ
+                    datasets: [{
+                      label: 'Tổng số lượng sản phẩm',
+                      data: values,
+                      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                      borderColor: 'rgba(75, 192, 192, 1)',
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    responsive: true,
+                    plugins: {
+                      tooltip: {
+                        callbacks: {
+                          label: function(context) {
+                            const index = context.dataIndex;
+                            return `Tháng: ${labels[index]} - Sản phẩm bán chạy: ${products[index]} `;
+                          }
+                        }
+                      }
+                    },
+                    scales: {
+                      x: {
+                        title: {
+                          display: true,
+                          text: 'Tháng'
+                        }
+                      },
+                      y: {
+                        title: {
+                          display: true,
+                          text: 'Số lượng'
+                        }
                       }
                     }
                   }
-                },
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: 'Tháng'
-                    }
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: 'Số lượng'
-                    }
-                  }
-                }
+                });
               }
             });
-          }
-        });
-        </script>
+          </script>
 
 
         <?php else: ?>
-        <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
+          <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
         <?php endif; ?>
       </div>
     </div>

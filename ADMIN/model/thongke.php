@@ -15,25 +15,23 @@ class ThongKeModel
   public function thongKeSanPhamTheoNgay($ngayBatDau, $ngayKetThuc)
   {
     $query = "
-    SELECT 
-        DATE(pm.NgayTao) AS Ngay, -- Ngày tạo của phiếu mượn
-        SUM(ctpm.SoLuong) AS TongSoLuong, -- Tổng số lượng sản phẩm trong ngày
-        ap.TenAnPham AS TenSanPhamBanChay, -- Tên sản phẩm bán chạy nhất
-        (SUM(ctpm.SoLuong) * ap.Gia) AS DoanhThuSanPhamBanChay -- Doanh thu của sản phẩm bán chạy nhất
-    FROM 
-        phieumuon pm
-    JOIN 
-        chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
-    JOIN 
-        anpham ap ON ctpm.maAnPham = ap.maAnPham
-    WHERE 
-        pm.NgayTao BETWEEN ? AND ? -- Lọc dữ liệu theo khoảng ngày
-    GROUP BY 
-        DATE(pm.NgayTao), ap.TenAnPham, ap.Gia -- Nhóm theo ngày, sản phẩm và giá
-    ORDER BY 
-        Ngay, TongSoLuong DESC;
+SELECT 
+    DATE(pm.NgayTao) AS Ngay, -- Lấy ngày
+    SUM(ctpm.SoLuong) AS TongSoLuong, -- Tổng số lượng của tất cả sản phẩm trong ngày
+    MAX(ap.TenAnPham) AS TenSanPhamBanChay -- Sản phẩm bán chạy nhất (chỉ là một sản phẩm)
+FROM 
+    phieumuon pm
+JOIN 
+    chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
+JOIN 
+    anpham ap ON ctpm.maAnPham = ap.maAnPham
+WHERE 
+    pm.NgayTao BETWEEN ? AND ? -- Lọc theo khoảng thời gian
+GROUP BY 
+    DATE(pm.NgayTao) -- Nhóm theo ngày
+ORDER BY 
+    Ngay;
 ";
-
 
     // Chuẩn bị câu lệnh SQL
     $stmt = $this->conn->prepare($query);
@@ -65,26 +63,28 @@ class ThongKeModel
 
   public function thongKeSanPhamTheoThang($thangBatDau, $thangKetThuc, $nam)
   {
-    // Câu truy vấn đã sửa
     $query = "
-      SELECT 
-          MONTH(pm.NgayTao) AS Thang,
-          SUM(ctpm.SoLuong) AS TongSoLuong,
-          ap.TenAnPham AS TenSanPhamBanChay
-      FROM 
-          phieumuon pm
-      JOIN 
-          chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
-      JOIN 
-          anpham ap ON ctpm.maAnPham = ap.maAnPham
-      WHERE 
-          YEAR(pm.NgayTao) = ? 
-          AND MONTH(pm.NgayTao) BETWEEN ? AND ?
-      GROUP BY 
-          MONTH(pm.NgayTao), ap.TenAnPham
-      ORDER BY 
-          Thang, TongSoLuong DESC;
-      ";
+SELECT 
+    MONTH(pm.NgayTao) AS Thang, -- Lấy tháng từ ngày tạo
+    SUM(ctpm.SoLuong) AS TongSoLuong, -- Tổng số lượng của tất cả sản phẩm trong tháng
+    ap.TenAnPham AS TenSanPhamBanChay -- Tên sản phẩm bán chạy nhất
+FROM 
+    phieumuon pm
+JOIN 
+    chitietpm ctpm ON pm.MaPhieuMuon = ctpm.MaPhieuMuon
+JOIN 
+    anpham ap ON ctpm.maAnPham = ap.maAnPham
+WHERE 
+    YEAR(pm.NgayTao) = ? 
+    AND MONTH(pm.NgayTao) BETWEEN ? AND ? -- Lọc theo khoảng tháng và năm
+GROUP BY 
+    MONTH(pm.NgayTao), ap.TenAnPham -- Nhóm theo tháng và sản phẩm
+HAVING 
+    MAX(ctpm.SoLuong) -- Lấy sản phẩm có số lượng lớn nhất trong tháng
+ORDER BY 
+    Thang;
+";
+
 
     // Chuẩn bị câu truy vấn
     $stmt = $this->conn->prepare($query);
