@@ -86,4 +86,27 @@ class PhieuMuonModel
       throw new Exception("Lỗi khi cập nhật trạng thái: " . $e->getMessage());
     }
   }
+
+
+  /**
+   * Tìm kiếm phiếu mượn theo ID.
+   * @param int $maPhieuMuon
+   * @return array|null
+   * @throws Exception
+   */
+  public function searchByID($id)
+  {
+    $query = "SELECT pm.MaPhieuMuon, pm.NgayTao, pm.TongTien, pm.GiamGia, pm.tinhTrang, kh.tenKH, MIN(ctp.hinhAnh) AS hinhAnh 
+              FROM phieumuon pm
+              JOIN khachhang kh ON pm.maKH = kh.maKH
+              JOIN chitietpm ctp ON pm.MaPhieuMuon = ctp.MaPhieuMuon
+              WHERE pm.MaPhieuMuon = ?
+              GROUP BY pm.MaPhieuMuon, pm.NgayTao, pm.TongTien, pm.GiamGia, pm.tinhTrang, kh.tenKH";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+  }
 }

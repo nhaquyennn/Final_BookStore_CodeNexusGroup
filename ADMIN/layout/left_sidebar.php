@@ -39,8 +39,8 @@
       <ul id="orderForm" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
         <li class="list-group-item"><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/order/formTimKiem.php">Tìm kiếm
             Đơn Hàng</a></li>
-        <li class="list-group-item"><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/order/danhSachDonHang.php">Danh
-            Sách Đơn Hàng</a></li>
+        <li class="list-group-item"><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/order/danhSachDonHang.php">Duyệt
+            đơn hàng</a></li>
       </ul>
     </li>
 
@@ -102,64 +102,64 @@
 </div>
 
 <script>
-// Gán sự kiện click cho các liên kết trong sidebar
-document.querySelectorAll('.sidebar-link').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault(); // Ngăn chặn hành động mặc định
+  // Gán sự kiện click cho các liên kết trong sidebar
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault(); // Ngăn chặn hành động mặc định
 
 
-    // Lấy ID của danh sách cần hiển thị
-    let targetId = null;
-    let arrow = link.querySelector('.arrow');
+      // Lấy ID của danh sách cần hiển thị
+      let targetId = null;
+      let arrow = link.querySelector('.arrow');
 
-    switch (link.getAttribute('id')) {
-      case 'statsLinkPublications':
-        targetId = 'dateListPublications';
-        break;
-      case 'statsLinkRevenue':
-        targetId = 'dateListRevenue';
-        break;
-      case 'order':
-        targetId = 'orderForm';
-        break;
-      case 'request':
-        targetId = 'requestForm';
-        break;
-      default:
-        targetId = null; // Nếu không khớp với bất kỳ trường hợp nào
-        break;
-    }
+      switch (link.getAttribute('id')) {
+        case 'statsLinkPublications':
+          targetId = 'dateListPublications';
+          break;
+        case 'statsLinkRevenue':
+          targetId = 'dateListRevenue';
+          break;
+        case 'order':
+          targetId = 'orderForm';
+          break;
+        case 'request':
+          targetId = 'requestForm';
+          break;
+        default:
+          targetId = null; // Nếu không khớp với bất kỳ trường hợp nào
+          break;
+      }
 
-    // Nếu không có danh sách con liên quan, bỏ qua
-    if (!targetId) return;
+      // Nếu không có danh sách con liên quan, bỏ qua
+      if (!targetId) return;
 
-    // Lấy danh sách cần hiển thị
-    const targetList = document.getElementById(targetId);
+      // Lấy danh sách cần hiển thị
+      const targetList = document.getElementById(targetId);
 
-    // Đóng tất cả các danh sách con khác
-    document.querySelectorAll('.list-group').forEach(list => {
-      if (list !== targetList) {
-        list.style.display = 'none'; // Ẩn các danh sách không liên quan
+      // Đóng tất cả các danh sách con khác
+      document.querySelectorAll('.list-group').forEach(list => {
+        if (list !== targetList) {
+          list.style.display = 'none'; // Ẩn các danh sách không liên quan
+        }
+      });
+
+
+      // Đặt mũi tên cho danh sách hiện tại
+      document.querySelectorAll('.arrow').forEach(arw => {
+        if (arw !== arrow) {
+          arw.innerHTML = '&#9654;'; // Mũi tên phải
+        }
+      });
+
+      // Chuyển đổi hiển thị danh sách hiện tại
+      // Toggle danh sách con hiện tại và đổi mũi tên
+      if (targetList.style.display === 'none' || targetList.style.display === '') {
+        targetList.style.display = 'block';
+        arrow.innerHTML = '&#9660;'; // Mũi tên xuống
+      } else {
+        targetList.style.display = 'none';
+        arrow.innerHTML = '&#9654;'; // Mũi tên phải
       }
     });
-
-
-    // Đặt mũi tên cho danh sách hiện tại
-    document.querySelectorAll('.arrow').forEach(arw => {
-      if (arw !== arrow) {
-        arw.innerHTML = '&#9654;'; // Mũi tên phải
-      }
-    });
-
-    // Chuyển đổi hiển thị danh sách hiện tại
-    // Toggle danh sách con hiện tại và đổi mũi tên
-    if (targetList.style.display === 'none' || targetList.style.display === '') {
-      targetList.style.display = 'block';
-      arrow.innerHTML = '&#9660;'; // Mũi tên xuống
-    } else {
-      targetList.style.display = 'none';
-      arrow.innerHTML = '&#9654;'; // Mũi tên phải
-    }
   });
-});
 </script>

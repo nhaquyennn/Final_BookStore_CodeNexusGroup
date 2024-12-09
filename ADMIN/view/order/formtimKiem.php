@@ -7,14 +7,17 @@ if (!isset($_SESSION['user'])) {
   exit();
 }
 
-// include file controller
+// Include file controller
 require_once __DIR__ . '/../../controller/phieuMuonController.php';
 
+// Khởi tạo Controller
+$controller = new PhieuMuonController();
+$searchResult = null;
 
-// Khởi tạo Controller và xử lý yêu cầu
-$controller = new PhieuMuonController($conn);
-if (isset($_GET['action']) && $_GET['action'] === 'searchPM') {
-  $controller->searchPM();
+// Xử lý dữ liệu từ form tìm kiếm
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPM'])) {
+  $searchID = $_POST['idPM'];
+  $searchResult = $controller->search($searchID);
 }
 ?>
 <!DOCTYPE html>
@@ -28,68 +31,92 @@ if (isset($_GET['action']) && $_GET['action'] === 'searchPM') {
 </head>
 
 <body class="bg-theme bg-theme9">
-  <!-- Start wrapper-->
   <div id="wrapper">
 
-    <!--Start sidebar-wrapper-->
+    <!-- Start sidebar -->
     <?php require_once "../../layout/left_sidebar.php"; ?>
-    <!--End sidebar-wrapper-->
+    <!-- End sidebar -->
 
-    <!--Start topbar header-->
+    <!-- Start topbar -->
     <header class="topbar-nav">
       <?php require_once "../../layout/topbar.php"; ?>
     </header>
-    <!--End topbar header-->
+    <!-- End topbar -->
 
     <div class="clearfix"></div>
 
-    <!--Start content-wrapper-->
+    <!-- Start content -->
     <div class="content-wrapper">
       <div class="container-fluid">
         <!-- Card Tìm Kiếm -->
         <div class="card mt-4 shadow border-0">
-          <div class="card-header bg-light text-dark text-center">
+          <div class="card-header bg-dark text-white text-center">
             <h4 class="fw-semibold">Tìm kiếm Phiếu Mượn</h4>
           </div>
           <div class="card-body">
-            <form action="../../controller/phieuMuonController.php?action=searchPM" method="POST">
+            <form action="./formtimKiem.php" method="POST">
               <div class="row justify-content-center">
                 <div class="col-md-8">
-                  <div class="input-group">
-                    <input type="text" name="idPM" class="form-control form-control-lg shadow-sm"
-                      placeholder="Nhập mã phiếu mượn" required>
-                    <button class="btn btn-primary btn-lg px-4 shadow-sm" type="submit">
-                      <i class="fas fa-magnifying-glass me-2"></i>Tìm kiếm
+                  <div class="input-group shadow-sm">
+                    <input type="text" name="idPM" class="form-control form-control-lg" placeholder="Nhập mã phiếu mượn"
+                      required>
+                    <button class="btn btn-primary btn-lg px-4" type="submit">
+                      <i class="fas fa-search me-2"></i>Tìm kiếm
                     </button>
                   </div>
                 </div>
               </div>
             </form>
 
-            <!-- Hiển thị thông báo lỗi -->
+            <hr class="my-4">
+
+            <!-- Kết quả tìm kiếm -->
+            <?php if ($searchResult): ?>
+            <h2 class="text-center">Kết quả tìm kiếm:</h2>
+            <table class="table table-bordered mt-4">
+              <thead>
+                <tr>
+                  <th>Mã Phiếu Mượn</th>
+                  <th>Ngày Tạo</th>
+                  <th>Tổng Tiền</th>
+                  <th>Giảm Giá</th>
+                  <th>Tình Trạng</th>
+                  <th>Khách Hàng</th>
+                  <th>Hình Ảnh</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><?= $searchResult['MaPhieuMuon'] ?></td>
+                  <td><?= $searchResult['NgayTao'] ?></td>
+                  <td><?= number_format($searchResult['TongTien']) ?> VND</td>
+                  <td><?= $searchResult['GiamGia'] ?>%</td>
+                  <td><?= $searchResult['tinhTrang'] ?></td>
+                  <td><?= $searchResult['tenKH'] ?></td>
+                  <td><img src="<?= $searchResult['hinhAnh'] ?>" alt="Hình Ảnh" width="100"></td>
+                </tr>
+              </tbody>
+            </table>
+            <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+            <div class="alert alert-warning text-center">Không tìm thấy phiếu mượn với ID:
+              <?= htmlspecialchars($searchID) ?></div>
+            <?php endif; ?>
+
+            <!-- Thông báo lỗi -->
             <?php if (isset($_GET['error'])): ?>
-              <div class="alert alert-danger mt-4 text-center shadow-sm">
-                <?php echo htmlspecialchars($_GET['error']); ?>
-              </div>
+            <div class="alert alert-danger mt-4 text-center">
+              <?= htmlspecialchars($_GET['error']) ?>
+            </div>
             <?php endif; ?>
           </div>
         </div>
       </div>
     </div>
+    <!-- End content -->
 
-
-    <!--End content-wrapper-->
-
-    <!--Start Back To Top Button-->
-    <a href="javascript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
-    <!--End Back To Top Button-->
-
-    <!--Start footer-->
+    <!-- Footer -->
     <?php require_once "../../layout/script.php"; ?>
-    <!--End footer-->
-
   </div>
-  <!--End wrapper-->
 </body>
 
 </html>

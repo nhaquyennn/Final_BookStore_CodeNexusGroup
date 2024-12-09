@@ -102,6 +102,22 @@ class PhieuMuonController
   }
 
 
+  public function search($id)
+  {
+    try {
+      $data = $this->model->searchByID($id);
+      if ($data) {
+        return $data;
+      } else {
+        return null; // Không tìm thấy
+      }
+    } catch (Exception $e) {
+      // Trả về null nếu có lỗi xảy ra
+      return null;
+    }
+  }
+
+
 
   /**
    * Lấy lỗi hiện tại.
