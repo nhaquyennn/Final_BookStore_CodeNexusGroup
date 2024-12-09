@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="card mt-3">
           <div class="card-body">
             <?php if (!empty($error)): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+              <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
             <form method="POST" action="">
@@ -71,99 +71,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Biểu đồ -->
         <?php if (!empty($data) && count($data) > 0): ?>
-        <div class="card mt-3">
-          <div class="card-body">
-            <canvas id="thongKeChart" height="300"></canvas>
+          <div class="card mt-3">
+            <div class="card-body">
+              <canvas id="thongKeChart" height="300"></canvas>
+            </div>
           </div>
-        </div>
 
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          // Lấy dữ liệu từ PHP
-          const labels = <?= json_encode(array_column($data, 'Ngay')) ?>; // Trục X: Ngày
-          const totalValues = <?= json_encode(array_column($data, 'TongSoLuong')) ?>; // Tổng số lượng sản phẩm
-          const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>; // Sản phẩm bán chạy nhất
+          <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              // Lấy dữ liệu từ PHP
+              const labels = <?= json_encode(array_column($data, 'Ngay')) ?>; // Trục X: Ngày
+              const totalValues = <?= json_encode(array_column($data, 'TongSoLuong')) ?>; // Tổng số lượng sản phẩm
+              const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>; // Sản phẩm bán chạy nhất
 
-          // Kiểm tra nếu phần tử canvas tồn tại
-          const ctx = document.getElementById('thongKeChart')?.getContext('2d');
-          if (ctx) {
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: labels, // Nhãn trục X là các ngày
-                datasets: [{
-                  label: 'Tổng số lượng sản phẩm',
-                  data: totalValues, // Dữ liệu trục Y
-                  backgroundColor: 'rgba(75, 192, 192, 0.5)', // Màu nền nhạt
-                  borderColor: 'rgba(75, 192, 192, 1)', // Màu viền
-                  borderWidth: 1.5, // Độ dày viền
-                }, ],
-              },
-              options: {
-                responsive: true,
-                plugins: {
-                  tooltip: {
-                    callbacks: {
-                      label: function(context) {
-                        const index = context.dataIndex;
-                        const product = products[index] || 'Không xác định';
+              // Kiểm tra nếu phần tử canvas tồn tại
+              const ctx = document.getElementById('thongKeChart')?.getContext('2d');
+              if (ctx) {
+                new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: labels, // Nhãn trục X là các ngày
+                    datasets: [{
+                      label: 'Tổng số lượng sản phẩm',
+                      data: totalValues, // Dữ liệu trục Y
+                      backgroundColor: 'rgba(75, 192, 192, 0.5)', // Màu nền nhạt
+                      borderColor: 'rgba(75, 192, 192, 1)', // Màu viền
+                      borderWidth: 1.5, // Độ dày viền
+                    }, ],
+                  },
+                  options: {
+                    responsive: true,
+                    plugins: {
+                      tooltip: {
+                        callbacks: {
+                          label: function(context) {
+                            const index = context.dataIndex;
+                            const product = products[index] || 'Không xác định';
 
-                        // Hiển thị tooltip
-                        return `Ngày: ${labels[index]} - Sản phẩm bán chạy: ${product} - Tổng số lượng: ${totalValues[index]}`;
+                            // Hiển thị tooltip
+                            return `Ngày: ${labels[index]} - Sản phẩm bán chạy: ${product} - Tổng số lượng: ${totalValues[index]}`;
+                          },
+                        },
+                      },
+                    },
+                    scales: {
+                      x: {
+                        title: {
+                          display: true,
+                          text: 'Ngày',
+                          font: {
+                            size: 16,
+                            weight: 'bold',
+                          },
+                        },
+                        ticks: {
+                          color: '#333',
+                          font: {
+                            size: 14,
+                            weight: 'bold',
+                          },
+                        },
+                      },
+                      y: {
+                        title: {
+                          display: true,
+                          text: 'Số lượng',
+                          font: {
+                            size: 16,
+                            weight: 'bold',
+                          },
+                        },
+                        ticks: {
+                          beginAtZero: true,
+                          color: '#333',
+                          font: {
+                            size: 14,
+                            weight: 'bold',
+                          },
+                        },
                       },
                     },
                   },
-                },
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: 'Ngày',
-                      font: {
-                        size: 16,
-                        weight: 'bold',
-                      },
-                    },
-                    ticks: {
-                      color: '#333',
-                      font: {
-                        size: 14,
-                        weight: 'bold',
-                      },
-                    },
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: 'Số lượng',
-                      font: {
-                        size: 16,
-                        weight: 'bold',
-                      },
-                    },
-                    ticks: {
-                      beginAtZero: true,
-                      color: '#333',
-                      font: {
-                        size: 14,
-                        weight: 'bold',
-                      },
-                    },
-                  },
-                },
-              },
+                });
+              } else {
+                console.error("Không tìm thấy phần tử canvas với id 'thongKeChart'.");
+              }
             });
-          } else {
-            console.error("Không tìm thấy phần tử canvas với id 'thongKeChart'.");
-          }
-        });
-        </script>
+          </script>
 
 
 
 
         <?php else: ?>
-        <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
+          <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
         <?php endif; ?>
       </div>
     </div>
