@@ -10,7 +10,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $query = "SELECT 
                 phieumuon.MaPhieuMuon, 
                 khachhang.tenKH, 
-                phieumuon.NgayTao, 
+                phieumuon.NgayMuon,
+                phieumuon.NgayTra, 
                 phieumuon.TongTien, 
                 phieumuon.tinhTrang 
               FROM phieumuon
@@ -66,7 +67,11 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                         </div>
                         <div class="mb-3">
                             <label for="date" class="text-white">Ngày tạo</label>
-                            <input type="datetime-local" class="form-control" id="date" name="date" value="<?php echo date('Y-m-d', strtotime($row['NgayTao'])); ?>" required>
+                            <input type="date" class="form-control" id="ngaymuon" name="ngaymuon" value="<?php echo date('Y-m-d', strtotime($row['NgayMuon'])); ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="text-white">Ngày tạo</label>
+                            <input type="date" class="form-control" id="ngaytra" name="ngaytra" value="<?php echo date('Y-m-d', strtotime($row['NgayTra'])); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="countMoney" class="form-label">Tổng tiền</label>
@@ -82,8 +87,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             </select>
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-primary">Lưu</button>
                             <a href="javascript:history.back()" class="btn btn-secondary">Quay lại</a>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -98,22 +103,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Lấy dữ liệu từ form
     $maPhieuMuon = $_POST['MaPhieuMuon']; // Mã phiếu mượn
     $customerName = $_POST['customerName']; // Tên khách hàng
-    $date = $_POST['date']; // Ngày tạo (định dạng datetime-local)
+    $ngaymuon = $_POST['ngaymuon'];
+    $ngaytra = $_POST['ngaytra'];
     $countMoney = $_POST['countMoney']; // Tổng tiền
     $tinhTrang = $_POST['tinhTrang']; // Tình trạng phiếu mượn
 
     // Kiểm tra dữ liệu
-    if (empty($maPhieuMuon) || empty($customerName) || empty($date) || empty($countMoney) || empty($tinhTrang)) {
+    if (empty($maPhieuMuon) || empty($customerName) || empty($ngaymuon) || empty($ngaytra) || empty($countMoney) || empty($tinhTrang)) {
         echo "Vui lòng điền đầy đủ thông tin!";
         exit();
     }
 
     // Câu lệnh SQL để cập nhật phiếu mượn
     $query = "UPDATE phieumuon 
-              SET NgayTao = ?, TongTien = ?, tinhTrang = ?
+              SET NgayMuon = ?, NgayTra = ?, TongTien = ?, tinhTrang = ?
               WHERE MaPhieuMuon = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("sdsi", $date, $countMoney, $tinhTrang, $maPhieuMuon);
+    $stmt->bind_param("ssssi", $ngaymuon, $ngaytra, $countMoney, $tinhTrang, $maPhieuMuon);
 
     // Thực thi câu lệnh SQL
     if ($stmt->execute()) {

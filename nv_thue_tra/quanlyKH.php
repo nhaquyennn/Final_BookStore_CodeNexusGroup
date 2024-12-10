@@ -34,38 +34,62 @@
                 <div class="row">
                     <div class="col-9 col-lg-12">
                         <div class="card">
-                            <div class="card-header">DANH SÁCH KHÁCH HÀNG</div>
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">DANH SÁCH KHÁCH HÀNG</h5>
+                                <!-- Form tìm kiếm -->
+                                <form method="GET" action="" style="display: flex; gap: 5px;">
+                                    <input type="text" id="search" name="search" class="btn btn-sm"
+                                        style="background-color: white; color: black;">
+                                    <button type="submit" class="btn btn-sm btn-warning">Tìm</button>
+                                </form>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table align-items-center table-flush table-borderless">
                                     <thead>
                                         <tr>
                                             <th>Mã khách hàng</th>
                                             <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
                                             <th>Địa chỉ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         try {
-                                            $query = "SELECT maKH, tenKH, diaChi FROM khachhang";
-                                            $result = $conn->query($query);
+                                            // Lấy giá trị tìm kiếm từ input
+                                            $search = isset($_GET['search']) ? $_GET['search'] : '';
 
+                                            // Truy vấn SQL
+                                            $query = "SELECT maKH, tenKH, SoDienThoai, diaChi
+                                                      FROM khachhang 
+                                                      WHERE tenKH LIKE ? OR SoDienThoai LIKE ?";
+
+                                            $stmt = $conn->prepare($query);
+                                            $searchTerm = "%" . $search . "%";
+                                            $stmt->bind_param("ss", $searchTerm, $searchTerm);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
+
+                                            // Hiển thị dữ liệu
                                             if ($result && $result->num_rows > 0) {
                                                 while ($row = $result->fetch_assoc()) {
                                                     echo "<tr>
                                                         <td>{$row['maKH']}</td>
                                                         <td>{$row['tenKH']}</td>
+                                                        <td>{$row['SoDienThoai']}</td>
                                                         <td>{$row['diaChi']}</td>
                                                         <td> 
-                                                            <a href='taoYCxoa.php?id={$row['maKH']}&name={$row['tenKH']}' class='btn btn-danger btn-sm text-white'><i class='fa fa-trash-o' aria-hidden='true'></i></a>
+                                                            <a href='taoYCxoa.php?id={$row['maKH']}&name={$row['tenKH']}' class='btn btn-danger btn-sm text-white'>
+                                                                <i class='fa fa-trash-o' aria-hidden='true'></i>
+                                                            </a>
                                                         </td>
                                                     </tr>";
                                                 }
                                             } else {
-                                                echo "<tr><td colspan='4'>Không có khách hàng nào</td></tr>";
+                                                echo "<tr><td colspan='5'>Không tìm thấy khách hàng</td></tr>";
                                             }
                                         } catch (Exception $e) {
-                                            echo "<tr><td colspan='4'>Lỗi: " . $e->getMessage() . "</td></tr>";
+                                            echo "<tr><td colspan='5'>Lỗi: " . $e->getMessage() . "</td></tr>";
                                         }
                                         ?>
                                     </tbody>

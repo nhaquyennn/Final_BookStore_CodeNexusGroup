@@ -27,6 +27,7 @@
                     <div class="btn-create-PM col-12">
                         <h3 class="text-center text-white">QUẢN LÝ PHIẾU MƯỢN</h3>
                         <a href="taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
+                        <a href="phieutra.php"><button class="btn btn-sm btn-success">Trả sách</button></a>
                     </div>
                 </div>
                 <div class="row">
@@ -39,10 +40,10 @@
                                         <tr>
                                             <th style="font-size: 15px;">Mã Phiếu</th>
                                             <th style="font-size: 15px;">Tên Khách Hàng</th>
-                                            <th style="font-size: 15px;">Ngày Tạo</th>
+                                            <th style="font-size: 15px;">Ngày Mượn</th>
+                                            <th style="font-size: 15px;">Ngày Trả</th>
                                             <th style="font-size: 15px;">Tổng Tiền</th>
                                             <th style="font-size: 15px;">Trạng Thái</th>
-                                            <th style="font-size: 15px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,7 +52,8 @@
                                         $query = "SELECT 
                                                       phieumuon.MaPhieuMuon, 
                                                       khachhang.tenKH, 
-                                                      phieumuon.NgayTao, 
+                                                      phieumuon.NgayMuon, 
+                                                      phieumuon.NgayTra, 
                                                       phieumuon.TongTien, 
                                                       phieumuon.tinhTrang 
                                                   FROM phieumuon
@@ -64,7 +66,8 @@
                                                 echo "<tr>
                                                     <td>{$row['MaPhieuMuon']}</td>
                                                     <td>{$row['tenKH']}</td>
-                                                    <td>{$row['NgayTao']}</td>
+                                                    <td>{$row['NgayMuon']}</td>
+                                                    <td>{$row['NgayTra']}</td>
                                                     <td>" . number_format($row['TongTien'], 0, ',', '.') . " ₫</td>
                                                     <td>{$row['tinhTrang']}</td>
                                                     <td>                                                    

@@ -98,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <!-- Nút hành động -->
                         <div>
-                            <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
                             <a href="javascript:history.back()" class="btn btn-secondary">Quay lại</a>
+                            <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
                         </div>
                     </form>
                 </div>

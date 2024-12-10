@@ -10,16 +10,18 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             // Lấy dữ liệu từ form
+            $SDT = $_POST['SoDienThoai'];
             $maKH = $_POST['maKH'];
             $TongTien = $_POST['TongTien'];
-            $ngayTao = date('Y-m-d H:i:s'); // Lấy thời gian hiện tại
+            $NgayMuon = $_POST['ngaymuon'];
+            $NgayTra = $_POST['ngaytra'];
             $tinhTrang = "Đang mượn";
 
             // Chuyển danh sách ấn phẩm từ JSON sang mảng PHP
             $selectedItems = isset($_POST['selectedItems']) ? json_decode($_POST['selectedItems'], true) : [];
 
             // Kiểm tra dữ liệu cơ bản
-            if (empty($maKH) || empty($TongTien) || empty($selectedItems)) {
+            if (empty($SDT) || empty($maKH) || empty($TongTien) || empty($selectedItems)) {
                 throw new Exception("Không đủ dữ liệu để tạo phiếu mượn!");
             }
 
@@ -27,10 +29,12 @@
             $db->beginTransaction();
 
             // 1. Lưu vào bảng `phieumuon`
-            $sqlPhieuMuon = "INSERT INTO phieumuon (ngayTao, TongTien, maKH, tinhTrang) VALUES (:ngayTao, :TongTien, :maKH, :tinhTrang)";
+            $sqlPhieuMuon = "INSERT INTO phieumuon (SoDienThoai, NgayMuon, NgayTra, TongTien, maKH, tinhTrang) VALUES (:SoDienThoai, :NgayMuon, :NgayTra, :TongTien, :maKH, :tinhTrang)";
             $stmtPhieuMuon = $db->prepare($sqlPhieuMuon);
             $stmtPhieuMuon->execute([
-                ':ngayTao' => $ngayTao,
+                ':SoDienThoai' => $SDT,
+                ':NgayMuon' => $NgayMuon,
+                ':NgayTra' => $NgayTra,
                 ':TongTien' => $TongTien,
                 ':maKH' => $maKH,
                 ':tinhTrang' => $tinhTrang
@@ -54,10 +58,6 @@
 
             // Commit transaction
             $db->commit();
-
-            // Chuyển hướng hoặc hiển thị thông báo thành công
-            // header("Location: success.php?message=Tạo phiếu mượn thành công!");
-            // exit();
             echo "<script>
                      alert('Tạo phiếu mượn thành công!');
                     window.location.href = 'dsphieumuon.php';
@@ -106,11 +106,11 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="ngaymuon">Ngày mượn</label>
-                                <input type="datetime-local" class="form-control" id="ngaymuon" name="ngaymuon">
+                                <input type="date" class="form-control" id="ngaymuon" name="ngaymuon">
                             </div>
                             <div class="col-md-6">
                                 <label for="ngaytra">Ngày trả</label>
-                                <input type="datetime-local" class="form-control" id="ngaytra" name="ngaytra">
+                                <input type="date" class="form-control" id="ngaytra" name="ngaytra">
                             </div>
                         </div>
 
@@ -212,7 +212,6 @@
                 });
         });
 
-
         //Hiển thị danh sách ấn phẩm được chọn
         function addToSelected(maAnPham, TenAnPham, giaThue) {
             const selectedList = document.getElementById("selected-anpham");
@@ -227,7 +226,6 @@
                     updateTotal();
                 }
             });
-
 
             if (!exists) {
                 const newRow = document.createElement("tr");
@@ -270,7 +268,6 @@
             });
             document.getElementById("TongTien-hidden").value = total.toFixed(2); // Lưu tổng tiền vào input hidden
         }
-
 
         // Xóa ấn phẩm không muốn khỏi danh sách
         function removeItem(button) {

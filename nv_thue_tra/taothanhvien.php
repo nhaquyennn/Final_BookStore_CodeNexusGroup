@@ -3,6 +3,7 @@
 
 <head>
     <?php require_once "layout/header.php" ?>
+    <?php require_once "db_connect.php"; ?>
 </head>
 
 <body class="bg-theme bg-theme2">
@@ -49,8 +50,8 @@
                             <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu (ít nhất 8 ký tự)" required>
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-primary">Tạo</button>
                             <a href="javascript:history.back()" class="btn btn-secondary">Quay lại</a>
+                            <button type="submit" class="btn btn-primary">Tạo</button>
                         </div>
                     </form>
                 </div>
@@ -69,6 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $diachi = isset($_POST['address']) ? $_POST['address'] : null;
     $matkhau = isset($_POST['password']) ? $_POST['password'] : null;
 
+    if (!preg_match('/^0[0-9]{9,14}$/', $SDT)) {
+        die("Lỗi: Số điện thoại không hợp lệ.");
+    }
+
     // Kiểm tra các trường bắt buộc
     if (!$tenNguoiDung || !$email || !$SDT || !$matkhau || !$diachi) {
         die("Lỗi: Vui lòng nhập đầy đủ thông tin.");
@@ -78,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hashedPassword = md5($matkhau);
 
     // 1. Thêm thông tin vào bảng nguoidung
-    $sqlNguoiDung = "INSERT INTO nguoidung (tenNguoiDung, email, SDT, diachi) VALUES (?, ?, ?, ?)";
+    $sqlNguoiDung = "INSERT INTO nguoidung (tenNguoiDung, email, SoDienThoai, diachi) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sqlNguoiDung);
     $stmt->bind_param("ssss", $tenNguoiDung, $email, $SDT, $diachi);
 
@@ -93,9 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmtTaiKhoan->execute()) {
             // 3. Thêm thông tin vào bảng khachhang
-            $sqlKhachHang = "INSERT INTO khachhang (maNguoiDung, tenKH, diachi) VALUES (?, ?, ?)";
+            $sqlKhachHang = "INSERT INTO khachhang (maNguoiDung, tenKH, SoDienThoai, diachi) VALUES (?, ?, ?, ?)";
             $stmtKhachHang = $conn->prepare($sqlKhachHang);
-            $stmtKhachHang->bind_param("iss", $maNguoiDung, $tenNguoiDung, $diachi);
+            $stmtKhachHang->bind_param("isss", $maNguoiDung, $tenNguoiDung, $SDT, $diachi);
 
             if ($stmtKhachHang->execute()) {
                 echo "<script>
