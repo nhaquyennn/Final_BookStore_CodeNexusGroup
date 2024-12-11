@@ -6,68 +6,6 @@
     // Kết nối database
     require_once "db_connect.php";
     require_once "layout/header.php";
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        try {
-            // Lấy dữ liệu từ form
-            $SDT = $_POST['SoDienThoai'];
-            $maKH = $_POST['maKH'];
-            $TongTien = $_POST['TongTien'];
-            $NgayMuon = $_POST['ngaymuon'];
-            $NgayTra = $_POST['ngaytra'];
-            $tinhTrang = "Đang mượn";
-
-            // Chuyển danh sách ấn phẩm từ JSON sang mảng PHP
-            $selectedItems = isset($_POST['selectedItems']) ? json_decode($_POST['selectedItems'], true) : [];
-
-            // Kiểm tra dữ liệu cơ bản
-            if (empty($SDT) || empty($maKH) || empty($TongTien) || empty($selectedItems)) {
-                throw new Exception("Không đủ dữ liệu để tạo phiếu mượn!");
-            }
-
-            // Bắt đầu transaction
-            $db->beginTransaction();
-
-            // 1. Lưu vào bảng `phieumuon`
-            $sqlPhieuMuon = "INSERT INTO phieumuon (SoDienThoai, NgayMuon, NgayTra, TongTien, maKH, tinhTrang) VALUES (:SoDienThoai, :NgayMuon, :NgayTra, :TongTien, :maKH, :tinhTrang)";
-            $stmtPhieuMuon = $db->prepare($sqlPhieuMuon);
-            $stmtPhieuMuon->execute([
-                ':SoDienThoai' => $SDT,
-                ':NgayMuon' => $NgayMuon,
-                ':NgayTra' => $NgayTra,
-                ':TongTien' => $TongTien,
-                ':maKH' => $maKH,
-                ':tinhTrang' => $tinhTrang
-            ]);
-
-            // Lấy `MaPhieuMuon` vừa tạo
-            $maPhieuMuon = $db->lastInsertId();
-
-            // 2. Lưu vào bảng `chitietphieumuon`
-            $sqlChiTietPhieuMuon = "INSERT INTO chitietpm (MaPhieuMuon, maAnPham, SoLuong, DonGia) VALUES (:MaPhieuMuon, :maAnPham, :SoLuong, :DonGia)";
-            $stmtChiTietPhieuMuon = $db->prepare($sqlChiTietPhieuMuon);
-
-            foreach ($selectedItems as $item) {
-                $stmtChiTietPhieuMuon->execute([
-                    ':MaPhieuMuon' => $maPhieuMuon,
-                    ':maAnPham' => $item['maAnPham'],
-                    ':SoLuong' => $item['soLuong'],
-                    ':DonGia' => $item['giaThue']
-                ]);
-            }
-
-            // Commit transaction
-            $db->commit();
-            echo "<script>
-                     alert('Tạo phiếu mượn thành công!');
-                    window.location.href = 'dsphieumuon.php';
-            </script>";
-        } catch (Exception $e) {
-            // Rollback nếu có lỗi
-            $db->rollBack();
-            die("Lỗi: " . $e->getMessage());
-        }
-    }
     ?>
 </head>
 
@@ -98,8 +36,8 @@
                                 <input type="tel" id="SoDienThoai" name="SoDienThoai" class="form-control" placeholder="Nhập số điện thoại" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="customerName">Mã khách hàng</label>
-                                <input type="text" id="maKH" name="maKH" class="form-control" placeholder="Nhập mã khách hàng" required>
+                                <label for="customerName">Tên khách hàng</label>
+                                <input type="text" id="hoTen" name="hoTen" class="form-control" placeholder="Nhập tên khách hàng" required>
                             </div>
                         </div>
 
@@ -194,10 +132,10 @@
                             <tr>
                                 <td>${item.maAnPham}</td>
                                 <td>${item.TenAnPham}</td>
-                                <td>${item.giaThue} ₫</td>                                
+                                <td>${item.PhiThue} ₫</td>                                
                                 <td>${item.tinhTrang}</td>
                                 <td>
-                                    <button class="btn btn-success btn-sm" type="button" onclick="addToSelected('${item.maAnPham}', '${item.TenAnPham}', ${item.giaThue})">Thêm</button>
+                                    <button class="btn btn-success btn-sm" type="button" onclick="addToSelected('${item.maAnPham}', '${item.TenAnPham}', ${item.PhiThue})">Thêm</button>
                                 </td>
                             </tr>`;
                         });
@@ -213,7 +151,7 @@
         });
 
         //Hiển thị danh sách ấn phẩm được chọn
-        function addToSelected(maAnPham, TenAnPham, giaThue) {
+        function addToSelected(maAnPham, TenAnPham, PhiThue) {
             const selectedList = document.getElementById("selected-anpham");
             let exists = false;
 
@@ -233,9 +171,9 @@
                     <td>${selectedList.children.length + 1}</td>
                     <td>${maAnPham}</td>
                     <td>${TenAnPham}</td>
-                    <td>${giaThue} ₫</td>
-                    <td><input type="number" class="form-control" value="1" min="1" onchange="updateTotal(this, ${giaThue})"></td>
-                    <td>${giaThue}</td>
+                    <td>${PhiThue} ₫</td>
+                    <td><input type="number" class="form-control" value="1" min="1" onchange="updateTotal(this, ${PhiThue})"></td>
+                    <td>${PhiThue}</td>
                     <td><button class="btn btn-danger btn-sm" type="button" onclick="removeItem(this)">Xóa</button></td>
                 `;
                 selectedList.appendChild(newRow);
@@ -283,7 +221,7 @@
                 return {
                     maAnPham: row.children[1].textContent.trim(),
                     TenAnPham: row.children[2].textContent.trim(),
-                    giaThue: parseFloat(row.children[3].textContent.trim()),
+                    PhiThue: parseFloat(row.children[3].textContent.trim()),
                     soLuong: parseInt(row.querySelector("input").value)
                 };
             });
@@ -298,3 +236,66 @@
 </body>
 
 </html>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        // Lấy dữ liệu từ form
+        $SDT = $_POST['SoDienThoai'];
+        $tenKH = $_POST['hoTen'];
+        $TongTien = $_POST['TongTien'];
+        $NgayMuon = $_POST['ngaymuon'];
+        $NgayTra = $_POST['ngaytra'];
+        $tinhTrang = "Đang mượn";
+
+        // Chuyển danh sách ấn phẩm từ JSON sang mảng PHP
+        $selectedItems = isset($_POST['selectedItems']) ? json_decode($_POST['selectedItems'], true) : [];
+
+        // Kiểm tra dữ liệu cơ bản
+        if (empty($SDT) || empty($tenKH) || empty($TongTien) || empty($selectedItems)) {
+            throw new Exception("Không đủ dữ liệu để tạo phiếu mượn!");
+        }
+
+        // Bắt đầu transaction
+        $db->beginTransaction();
+
+        // 1. Lưu vào bảng `phieumuon`
+        $sqlPhieuMuon = "INSERT INTO phieumuon (SoDienThoai, NgayMuon, NgayTra, TongTien, hoTen, tinhTrang) VALUES (:SoDienThoai, :NgayMuon, :NgayTra, :TongTien, :hoTen, :tinhTrang)";
+        $stmtPhieuMuon = $db->prepare($sqlPhieuMuon);
+        $stmtPhieuMuon->execute([
+            ':SoDienThoai' => $SDT,
+            ':NgayMuon' => $NgayMuon,
+            ':NgayTra' => $NgayTra,
+            ':TongTien' => $TongTien,
+            ':hoTen' => $tenKH,
+            ':tinhTrang' => $tinhTrang
+        ]);
+
+        // Lấy `MaPhieuMuon` vừa tạo
+        $maPhieuMuon = $db->lastInsertId();
+
+        // 2. Lưu vào bảng `chitietphieumuon`
+        $sqlChiTietPhieuMuon = "INSERT INTO chitietpm (MaPhieuMuon, maAnPham, SoLuong, DonGia) VALUES (:MaPhieuMuon, :maAnPham, :SoLuong, :DonGia)";
+        $stmtChiTietPhieuMuon = $db->prepare($sqlChiTietPhieuMuon);
+
+        foreach ($selectedItems as $item) {
+            $stmtChiTietPhieuMuon->execute([
+                ':MaPhieuMuon' => $maPhieuMuon,
+                ':maAnPham' => $item['maAnPham'],
+                ':SoLuong' => $item['soLuong'],
+                ':DonGia' => $item['PhiThue']
+            ]);
+        }
+
+        // Commit transaction
+        $db->commit();
+        echo "<script>
+                 alert('Tạo phiếu mượn thành công!');
+                window.location.href = 'dsphieumuon.php';
+        </script>";
+    } catch (Exception $e) {
+        // Rollback nếu có lỗi
+        $db->rollBack();
+        die("Lỗi: " . $e->getMessage());
+    }
+}
+?>

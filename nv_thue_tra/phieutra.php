@@ -34,7 +34,7 @@
                         // Truy vấn để lấy thông tin phiếu mượn
                         $query = "SELECT pm.MaPhieuMuon, pm.NgayMuon, pm.NgayTra, pm.TongTien, nd.tenNguoiDung 
                                     FROM phieumuon pm 
-                                    JOIN nguoidung nd ON pm.SoDienThoai = nd.SoDienThoai 
+                                    JOIN nguoidung nd ON pm.SoDienThoai = nd.SDT
                                     WHERE pm.SoDienThoai = ?";
                         $stmt = $conn->prepare($query);
                         $stmt->bind_param("s", $customerPhone);
@@ -90,7 +90,7 @@
                             // Tính phí phạt
                             $soNgayTre = (strtotime($ngayHienTai) - strtotime($ngayTra)) / (60 * 60 * 24);
                             $phiPhat = $soNgayTre * 5000;
-                            $tinhTrang = "Trả muộn";
+                            $tinhTrang = "";
                             $thongBao = "Khách trả muộn! Phí phạt là: " . number_format($phiPhat, 0, ',', '.') . " VNĐ";
                         } else {
                             $tinhTrang = "Đã trả";

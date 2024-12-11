@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hashedPassword = md5($matkhau);
 
     // 1. Thêm thông tin vào bảng nguoidung
-    $sqlNguoiDung = "INSERT INTO nguoidung (tenNguoiDung, email, SoDienThoai, diachi) VALUES (?, ?, ?, ?)";
+    $sqlNguoiDung = "INSERT INTO nguoidung (tenNguoiDung, email, SDT, diachi) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sqlNguoiDung);
     $stmt->bind_param("ssss", $tenNguoiDung, $email, $SDT, $diachi);
 
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmtTaiKhoan->execute()) {
             // 3. Thêm thông tin vào bảng khachhang
-            $sqlKhachHang = "INSERT INTO khachhang (maNguoiDung, tenKH, SoDienThoai, diachi) VALUES (?, ?, ?, ?)";
+            $sqlKhachHang = "INSERT INTO khachhang (maNguoiDung, tenKH, SDT, diachi) VALUES (?, ?, ?, ?)";
             $stmtKhachHang = $conn->prepare($sqlKhachHang);
             $stmtKhachHang->bind_param("isss", $maNguoiDung, $tenNguoiDung, $SDT, $diachi);
 

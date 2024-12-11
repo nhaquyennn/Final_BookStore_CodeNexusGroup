@@ -51,13 +51,12 @@
                                         // Truy vấn lấy danh sách phiếu mượn
                                         $query = "SELECT 
                                                       phieumuon.MaPhieuMuon, 
-                                                      khachhang.tenKH, 
+                                                      phieumuon.hoTen, 
                                                       phieumuon.NgayMuon, 
                                                       phieumuon.NgayTra, 
                                                       phieumuon.TongTien, 
                                                       phieumuon.tinhTrang 
-                                                  FROM phieumuon
-                                                  JOIN khachhang ON phieumuon.maKH = khachhang.maKH";
+                                                  FROM phieumuon";
                                         $result = $conn->query($query);
 
                                         // Kiểm tra và hiển thị dữ liệu
@@ -65,14 +64,13 @@
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr>
                                                     <td>{$row['MaPhieuMuon']}</td>
-                                                    <td>{$row['tenKH']}</td>
+                                                    <td>{$row['hoTen']}</td>
                                                     <td>{$row['NgayMuon']}</td>
                                                     <td>{$row['NgayTra']}</td>
                                                     <td>" . number_format($row['TongTien'], 0, ',', '.') . " ₫</td>
                                                     <td>{$row['tinhTrang']}</td>
                                                     <td>                                                    
                                                         <a href='chitietphieumuon.php?id={$row['MaPhieuMuon']} class='btn btn-sm text-white'><i class='fa fa-eye-slash' aria-hidden='true'></i></a>
-                                                        <a href='suaphieumuon.php?id={$row['MaPhieuMuon']}' class='btn btn-link btn-sm text-white'><i class='fa fa-pencil' aria-hidden='true'></i></a>
                                                     </td>
                                                 </tr>";
                                             }

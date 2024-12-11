@@ -60,9 +60,9 @@
                                             $search = isset($_GET['search']) ? $_GET['search'] : '';
 
                                             // Truy vấn SQL
-                                            $query = "SELECT maKH, tenKH, SoDienThoai, diaChi
+                                            $query = "SELECT maKH, tenKH, SDT, diaChi
                                                       FROM khachhang 
-                                                      WHERE tenKH LIKE ? OR SoDienThoai LIKE ?";
+                                                      WHERE tenKH LIKE ? OR SDT LIKE ?";
 
                                             $stmt = $conn->prepare($query);
                                             $searchTerm = "%" . $search . "%";
@@ -76,7 +76,7 @@
                                                     echo "<tr>
                                                         <td>{$row['maKH']}</td>
                                                         <td>{$row['tenKH']}</td>
-                                                        <td>{$row['SoDienThoai']}</td>
+                                                        <td>{$row['SDT']}</td>
                                                         <td>{$row['diaChi']}</td>
                                                         <td> 
                                                             <a href='taoYCxoa.php?id={$row['maKH']}&name={$row['tenKH']}' class='btn btn-danger btn-sm text-white'>

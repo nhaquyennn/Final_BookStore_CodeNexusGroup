@@ -43,7 +43,6 @@
                                             <th>Tên ấn phẩm</th>
                                             <th>Số lượng</th>
                                             <th>Đơn giá</th>
-                                            <th>Hình ảnh</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -53,7 +52,7 @@
                                             $MaPhieuMuon = isset($_GET['id']) ? $_GET['id'] : 0;
 
                                             // Truy vấn dữ liệu từ bảng chitietpm
-                                            $query = "SELECT ctp.maCTPM, ctp.maAnPham, ap.TenAnPham, ctp.SoLuong, ctp.DonGia, ctp.hinhAnh
+                                            $query = "SELECT ctp.maCTPM, ctp.maAnPham, ap.TenAnPham, ctp.SoLuong, ctp.DonGia
                                                       FROM chitietpm ctp
                                                       JOIN anpham ap ON ctp.maAnPham = ap.maAnPham
                                                       WHERE ctp.MaPhieuMuon = ?";
@@ -69,8 +68,7 @@
                                                         <td>{$row['maAnPham']}</td>
                                                         <td>{$row['TenAnPham']}</td>
                                                         <td>{$row['SoLuong']}</td>
-                                                        <td>" . number_format($row['DonGia'], 0, ',', '.') . " ₫</td>
-                                                        <td><img src='img/{$row['hinhAnh']}' alt='Hình ảnh' style='width: 65px; height: auto;'></td>                                                    
+                                                        <td>" . number_format($row['DonGia'], 0, ',', '.') . " ₫</td>                                                  
                                                     </tr>";
                                                 }
                                             } else {

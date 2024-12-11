@@ -3,7 +3,7 @@ require_once "db_connect.php";
 
 if (isset($_GET['query'])) {
     $query = $_GET['query'];
-    $sql = "SELECT maAnPham, TenAnPham, giaThue, tinhTrang 
+    $sql = "SELECT maAnPham, TenAnPham, PhiThue, tinhTrang 
             FROM anpham 
             WHERE TenAnPham LIKE ?";
     $stmt = $conn->prepare($sql);
