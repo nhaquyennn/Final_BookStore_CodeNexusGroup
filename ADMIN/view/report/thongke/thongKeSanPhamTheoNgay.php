@@ -94,24 +94,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     datasets: [{
                       label: 'Tổng số lượng sản phẩm',
                       data: totalValues, // Dữ liệu trục Y
-                      backgroundColor: 'rgba(75, 192, 192, 0.5)', // Màu nền nhạt
-                      borderColor: 'rgba(75, 192, 192, 1)', // Màu viền
+                      backgroundColor: 'rgba(45, 62, 80, 0.9)', // Màu cột tối hơn
+                      borderColor: 'rgba(45, 62, 80, 1)', // Viền cột
                       borderWidth: 1.5, // Độ dày viền
+                      borderRadius: 5, // Bo góc cột
                     }, ],
                   },
                   options: {
                     responsive: true,
+                    maintainAspectRatio: false, // Đảm bảo co giãn tốt
                     plugins: {
                       tooltip: {
                         callbacks: {
                           label: function(context) {
                             const index = context.dataIndex;
                             const product = products[index] || 'Không xác định';
-
                             // Hiển thị tooltip
-                            return `Ngày: ${labels[index]} - Sản phẩm bán chạy: ${product} - Tổng số lượng: ${totalValues[index]}`;
+                            return `Ngày: ${labels[index]} - Sản phẩm bán chạy: ${product} `;
                           },
                         },
+                      },
+                    },
+                    layout: {
+                      padding: {
+                        top: 20,
+                        left: 15,
+                        right: 15,
+                        bottom: 15,
                       },
                     },
                     scales: {
@@ -123,9 +132,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             size: 16,
                             weight: 'bold',
                           },
+                          color: '#FFFFFF', // Màu chữ sáng cho trục X
                         },
                         ticks: {
-                          color: '#333',
+                          color: '#FFFFFF', // Màu nhãn sáng
                           font: {
                             size: 14,
                             weight: 'bold',
@@ -140,10 +150,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             size: 16,
                             weight: 'bold',
                           },
+                          color: '#FFFFFF', // Màu chữ sáng cho trục Y
                         },
                         ticks: {
                           beginAtZero: true,
-                          color: '#333',
+                          color: '#FFFFFF', // Màu nhãn sáng
                           font: {
                             size: 14,
                             weight: 'bold',
@@ -158,8 +169,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               }
             });
           </script>
-
-
 
 
         <?php else: ?>

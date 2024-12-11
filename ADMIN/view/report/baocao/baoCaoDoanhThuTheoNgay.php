@@ -92,59 +92,108 @@ $error = $controller->getError();
           </div>
           <script>
             // Get data from PHP
-            const labels = <?= json_encode(array_column($data, 'Ngay')) ?>;
-            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>;
-            const products = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>;
-            const productRevenues = <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>;
+            const labels = <?= json_encode(array_column($data, 'Ngay')) ?>; // Lấy ngày từ dữ liệu
+            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>; // Tổng doanh thu
+            const products = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>; // Sản phẩm bán chạy
+            const productRevenues =
+              <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>; // Doanh thu sản phẩm bán chạy
 
             // Initialize the Chart.js chart
             const ctx = document.getElementById('thongKeChart').getContext('2d');
             new Chart(ctx, {
               type: 'bar',
               data: {
-                labels: labels,
+                labels: labels.map((date) => `Ngày ${date}`), // Hiển thị ngày đầy đủ
                 datasets: [{
-                  label: 'Tổng doanh thu',
+                  label: 'Tổng doanh thu (VND)',
                   data: values,
-                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-                }]
+                  backgroundColor: 'rgba(45, 62, 80, 0.8)', // Màu nền cột tối hơn
+                  borderColor: 'rgba(45, 62, 80, 1)', // Màu viền cột
+                  borderWidth: 1.5,
+                  borderRadius: 5, // Bo góc cột
+                }, ],
               },
               options: {
+                responsive: true,
+                maintainAspectRatio: false, // Đảm bảo biểu đồ tự động co giãn
                 plugins: {
                   tooltip: {
                     callbacks: {
                       label: function(context) {
                         const index = context.dataIndex;
-                        return `
-                                                Ngày: ${labels[index]}\n
-                                                Sản phẩm bán chạy: ${products[index]}\n
-                                                Doanh thu sản phẩm: ${parseInt(productRevenues[index]).toLocaleString()} VND\n
-                                                Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND
-                                              `;
-                      }
-                    }
-                  }
+                        const productRevenue = productRevenues[index] ?
+                          parseInt(productRevenues[index]).toLocaleString() :
+                          '0';
+                        return [
+                          `Ngày: ${labels[index]}`,
+                          `Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND`,
+                          `Sản phẩm bán chạy: ${products[index]}`,
+                          `Doanh thu sản phẩm: ${productRevenue} VND`
+
+                        ];
+                      },
+                    },
+                  },
+                  legend: {
+                    position: 'top', // Đưa legend lên trên
+                    labels: {
+                      color: '#FFFFFF', // Màu sáng cho chữ trong legend
+                      font: {
+                        size: 14,
+                        weight: 'bold',
+                      },
+                    },
+                  },
+                },
+                layout: {
+                  padding: {
+                    top: 20,
+                    bottom: 20,
+                  },
                 },
                 scales: {
                   x: {
                     title: {
                       display: true,
-                      text: 'Ngày'
-                    }
+                      text: 'Ngày',
+                      color: '#FFFFFF', // Màu sáng cho tiêu đề trục X
+                      font: {
+                        size: 16,
+                        weight: 'bold',
+                      },
+                    },
+                    ticks: {
+                      color: '#FFFFFF', // Màu sáng cho nhãn trục X
+                      font: {
+                        size: 14,
+                        weight: 'bold',
+                      },
+                    },
                   },
                   y: {
                     title: {
                       display: true,
-                      text: 'Doanh thu (VND)'
+                      text: 'Doanh thu (VND)',
+                      color: '#FFFFFF', // Màu sáng cho tiêu đề trục Y
+                      font: {
+                        size: 16,
+                        weight: 'bold',
+                      },
                     },
-                    beginAtZero: true
-                  }
-                }
-              }
+                    ticks: {
+                      color: '#FFFFFF', // Màu sáng cho nhãn trục Y
+                      font: {
+                        size: 14,
+                        weight: 'bold',
+                      },
+                      beginAtZero: true,
+                    },
+                  },
+                },
+              },
             });
           </script>
+
 
         <?php else: ?>
           <!-- Display message if no data available -->

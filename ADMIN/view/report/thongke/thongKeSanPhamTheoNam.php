@@ -83,10 +83,10 @@ $error = $controller->getError();
                             // Lấy dữ liệu từ PHP
                             const labels = <?= json_encode(array_column($data, 'Nam')) ?>; // Lấy các năm từ dữ liệu
                             const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>; // Tổng số lượng sản phẩm
-                            const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
+                            const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>; // Sản phẩm bán chạy nhất
 
-                            // Chúng ta cần chỉ lấy duy nhất 1 năm cho labels, nếu dữ liệu chỉ chứa 1 năm
-                            const uniqueLabels = [...new Set(labels)]; // Giữ lại những năm duy nhất
+                            // Chỉ giữ lại những năm duy nhất cho nhãn
+                            const uniqueLabels = [...new Set(labels)];
 
                             // Tạo biểu đồ
                             const ctx = document.getElementById('chartThongKe')?.getContext('2d');
@@ -94,46 +94,91 @@ $error = $controller->getError();
                                 new Chart(ctx, {
                                     type: 'bar',
                                     data: {
-                                        labels: uniqueLabels, // Nhãn cho biểu đồ (năm duy nhất)
+                                        labels: uniqueLabels.map((year) => `Năm ${year}`), // Hiển thị nhãn trục X với "Năm"
                                         datasets: [{
                                             label: 'Tổng số lượng sản phẩm',
-                                            data: values, // Dữ liệu tổng số lượng sản phẩm theo năm
-                                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                            borderColor: 'rgba(75, 192, 192, 1)',
-                                            borderWidth: 1
-                                        }]
+                                            data: values,
+                                            backgroundColor: 'rgba(45, 62, 80, 0.8)', // Màu nền cột tối hơn
+                                            borderColor: 'rgba(45, 62, 80, 1)', // Màu viền cột
+                                            borderWidth: 1.5, // Độ dày viền
+                                            borderRadius: 5, // Bo góc cột
+                                        }, ],
                                     },
                                     options: {
                                         responsive: true,
+                                        maintainAspectRatio: false, // Cho phép biểu đồ tự động co giãn
                                         plugins: {
                                             tooltip: {
                                                 callbacks: {
                                                     label: function(context) {
                                                         const index = context.dataIndex;
                                                         return `Sản phẩm bán chạy: ${products[index]} - Số lượng: ${values[index]}`;
-                                                    }
-                                                }
-                                            }
+                                                    },
+                                                },
+                                            },
+                                            legend: {
+                                                position: 'top', // Đưa legend lên trên
+                                                labels: {
+                                                    color: '#FFFFFF', // Màu sáng cho chữ trong legend
+                                                    font: {
+                                                        size: 14,
+                                                        weight: 'bold',
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        layout: {
+                                            padding: {
+                                                top: 20,
+                                                bottom: 20,
+                                            },
                                         },
                                         scales: {
                                             x: {
                                                 title: {
                                                     display: true,
-                                                    text: 'Năm'
-                                                }
+                                                    text: 'Năm',
+                                                    color: '#FFFFFF', // Màu chữ sáng cho trục X
+                                                    font: {
+                                                        size: 16,
+                                                        weight: 'bold',
+                                                    },
+                                                },
+                                                ticks: {
+                                                    color: '#FFFFFF', // Màu nhãn sáng cho trục X
+                                                    font: {
+                                                        size: 14,
+                                                        weight: 'bold',
+                                                    },
+                                                },
                                             },
                                             y: {
                                                 title: {
                                                     display: true,
-                                                    text: 'Số lượng'
-                                                }
-                                            }
-                                        }
-                                    }
+                                                    text: 'Số lượng',
+                                                    color: '#FFFFFF', // Màu chữ sáng cho trục Y
+                                                    font: {
+                                                        size: 16,
+                                                        weight: 'bold',
+                                                    },
+                                                },
+                                                ticks: {
+                                                    color: '#FFFFFF', // Màu nhãn sáng cho trục Y
+                                                    font: {
+                                                        size: 14,
+                                                        weight: 'bold',
+                                                    },
+                                                    beginAtZero: true, // Đảm bảo trục Y bắt đầu từ 0
+                                                },
+                                            },
+                                        },
+                                    },
                                 });
                             }
                         });
                     </script>
+
+
 
                 <?php else: ?>
                     <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>

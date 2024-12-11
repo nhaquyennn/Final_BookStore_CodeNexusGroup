@@ -95,8 +95,7 @@ if (empty($data)) {
           <script>
             document.addEventListener("DOMContentLoaded", function() {
               // Lấy dữ liệu từ PHP
-              const labels = [...new Set(
-                <?= json_encode(array_column($data, 'Thang')) ?>)]; // Dùng Set để loại bỏ trùng lặp
+              const labels = [...new Set(<?= json_encode(array_column($data, 'Thang')) ?>)]; // Loại bỏ trùng lặp
               const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
               const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
 
@@ -106,42 +105,78 @@ if (empty($data)) {
                 new Chart(ctx, {
                   type: 'bar',
                   data: {
-                    labels: labels.map(month => `Tháng ${month}`), // Hiển thị tháng đầy đủ
+                    labels: labels.map((month) => `Tháng ${month}`), // Hiển thị tháng đầy đủ
                     datasets: [{
                       label: 'Tổng số lượng sản phẩm',
                       data: values,
                       backgroundColor: 'rgba(75, 192, 192, 0.2)',
                       borderColor: 'rgba(75, 192, 192, 1)',
-                      borderWidth: 1
-                    }]
+                      borderWidth: 1,
+                    }, ],
                   },
                   options: {
                     responsive: true,
+                    maintainAspectRatio: false, // Cho phép điều chỉnh kích thước biểu đồ
                     plugins: {
                       tooltip: {
                         callbacks: {
                           label: function(context) {
                             const index = context.dataIndex;
                             return `Tháng: ${labels[index]} - Sản phẩm bán chạy: ${products[index]} `;
-                          }
-                        }
-                      }
+                          },
+                        },
+                      },
+                    },
+                    layout: {
+                      padding: {
+                        top: 20,
+                        bottom: 30,
+                      },
                     },
                     scales: {
                       x: {
                         title: {
                           display: true,
-                          text: 'Tháng'
-                        }
+                          text: 'Tháng',
+                          font: {
+                            size: 16,
+                            weight: 'bold',
+                          },
+                          color: '#FFFFFF', // Màu trắng sáng cho trục X
+                        },
+                        ticks: {
+                          color: '#FFFFFF', // Màu nhãn sáng cho trục X
+                          font: {
+                            size: 14,
+                            weight: 'bold',
+                          },
+                          maxRotation: 45, // Xoay nhãn trục X
+                          minRotation: 0, // Đặt mức xoay tối thiểu
+                        },
                       },
                       y: {
                         title: {
                           display: true,
-                          text: 'Số lượng'
-                        }
-                      }
-                    }
-                  }
+                          text: 'Số lượng',
+                          font: {
+                            size: 16,
+                            weight: 'bold',
+                          },
+                          color: '#FFFFFF', // Màu trắng sáng cho trục Y
+                        },
+                        ticks: {
+                          callback: function(value) {
+                            return `${value}`; // Hiển thị 'Số' trước giá trị trục Y
+                          },
+                          color: '#FFFFFF', // Màu nhãn sáng cho trục Y
+                          font: {
+                            size: 14,
+                            weight: 'bold',
+                          },
+                        },
+                      },
+                    },
+                  },
                 });
               }
             });
