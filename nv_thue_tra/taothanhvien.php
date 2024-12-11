@@ -35,7 +35,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="customerPhone" class="text-white">Số điện thoại</label>
-                            <input type="text" class="form-control" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại" required>
+                            <input type="number" class="form-control" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Mật khẩu</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu (ít nhất 8 ký tự)" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu " required>
                         </div>
                         <div>
                             <a href="javascript:history.back()" class="btn btn-secondary">Quay lại</a>

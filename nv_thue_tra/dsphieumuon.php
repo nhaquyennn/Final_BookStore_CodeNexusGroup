@@ -27,7 +27,7 @@
                     <div class="btn-create-PM col-12">
                         <h3 class="text-center text-white">QUẢN LÝ PHIẾU MƯỢN</h3>
                         <a href="taoPM.php"><button class="btn btn-sm btn-success">Tạo phiếu mượn</button></a>
-                        <a href="phieutra.php"><button class="btn btn-sm btn-success">Trả sách</button></a>
+                        <a href="phieutra.php"><button class="btn btn-sm btn-success">Trả ấn phẩm</button></a>
                     </div>
                 </div>
                 <div class="row">

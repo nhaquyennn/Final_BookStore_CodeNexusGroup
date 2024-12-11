@@ -106,11 +106,11 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="ngaymuon">Ngày mượn</label>
-                                <input type="date" class="form-control" id="ngaymuon" name="ngaymuon">
+                                <input type="date" class="form-control" id="ngaymuon" name="ngaymuon" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="ngaytra">Ngày trả</label>
-                                <input type="date" class="form-control" id="ngaytra" name="ngaytra">
+                                <input type="date" class="form-control" id="ngaytra" name="ngaytra" required>
                             </div>
                         </div>
 
