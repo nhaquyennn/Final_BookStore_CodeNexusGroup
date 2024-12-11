@@ -109,8 +109,8 @@ if (empty($data)) {
                     datasets: [{
                       label: 'Tổng số lượng sản phẩm',
                       data: values,
-                      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                      borderColor: 'rgba(75, 192, 192, 1)',
+                      backgroundColor: '#FFFFFF',
+                      borderColor: '#FFFFFF)',
                       borderWidth: 1,
                     }, ],
                   },

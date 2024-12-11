@@ -106,16 +106,11 @@ $error = $controller->getError();
           </div>
           <script>
             // Lấy dữ liệu từ PHP
-            const labels = <?= json_encode(array_column($data, 'Nam')) ?>;
-            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>;
-            const bestProducts = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>;
-            const productRevenues = <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>;
-
-            // Kiểm tra dữ liệu trả về từ PHP
-            console.log('Labels:', labels);
-            console.log('Values:', values);
-            console.log('Best Products:', bestProducts);
-            console.log('Product Revenues:', productRevenues);
+            const labels = <?= json_encode(array_column($data, 'Nam')) ?>; // Lấy các năm từ dữ liệu
+            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>; // Tổng doanh thu
+            const bestProducts = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>; // Sản phẩm bán chạy
+            const productRevenues =
+              <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>; // Doanh thu sản phẩm bán chạy
 
             // Khởi tạo biểu đồ
             const ctx = document.getElementById('thongKeChart');
@@ -128,8 +123,8 @@ $error = $controller->getError();
                   datasets: [{
                     label: 'Tổng doanh thu (VND)',
                     data: values,
-                    backgroundColor: 'rgba(45, 62, 80, 0.8)', // Màu nền cột tối hơn
-                    borderColor: 'rgba(45, 62, 80, 1)', // Màu viền cột
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Màu nền cột trắng
+                    borderColor: 'rgba(255, 255, 255, 1)', // Màu viền cột trắng
                     borderWidth: 1.5,
                     borderRadius: 5, // Bo góc cột
                   }, ],
@@ -150,7 +145,7 @@ $error = $controller->getError();
                             `Năm: ${labels[index]}`,
                             `Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND`,
                             `Sản phẩm bán chạy: ${productName}`,
-                            `Doanh thu sản phẩm bán chạy : ${productRevenue} VND`,
+                            `Doanh thu sản phẩm bán chạy: ${productRevenue} VND`,
                           ];
                         },
                       },
@@ -158,7 +153,7 @@ $error = $controller->getError();
                     legend: {
                       position: 'top', // Đưa legend lên trên
                       labels: {
-                        color: '#FFFFFF', // Màu sáng cho chữ trong legend
+                        color: '#FFFFFF', // Màu trắng sáng cho chữ trong legend
                         font: {
                           size: 14,
                           weight: 'bold',
@@ -217,6 +212,7 @@ $error = $controller->getError();
               console.error('Không tìm thấy phần tử canvas cho biểu đồ!');
             }
           </script>
+
 
         <?php else: ?>
           <!-- Hiển thị thông báo nếu không có dữ liệu -->

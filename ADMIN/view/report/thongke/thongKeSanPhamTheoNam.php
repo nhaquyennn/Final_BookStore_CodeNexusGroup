@@ -98,8 +98,8 @@ $error = $controller->getError();
                                         datasets: [{
                                             label: 'Tổng số lượng sản phẩm',
                                             data: values,
-                                            backgroundColor: 'rgba(45, 62, 80, 0.8)', // Màu nền cột tối hơn
-                                            borderColor: 'rgba(45, 62, 80, 1)', // Màu viền cột
+                                            backgroundColor: '#FFFFFF', // Màu nền cột tối hơn
+                                            borderColor: '#FFFFFF', // Màu viền cột
                                             borderWidth: 1.5, // Độ dày viền
                                             borderRadius: 5, // Bo góc cột
                                         }, ],

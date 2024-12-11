@@ -51,7 +51,7 @@ $error = $controller->getError();
           <div class="card-body">
             <!-- Display error if there is any -->
             <?php if (!empty($error)): ?>
-              <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
             <!-- Form for inputting date range -->
@@ -84,120 +84,120 @@ $error = $controller->getError();
 
         <!-- Display chart if data is available -->
         <?php if (!empty($data)): ?>
-          <div class="card mt-3">
-            <div class="card-body">
-              <!-- Canvas for the chart -->
-              <canvas id="thongKeChart" height="200"></canvas>
-            </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <!-- Canvas for the chart -->
+            <canvas id="thongKeChart" height="200"></canvas>
           </div>
-          <script>
-            // Get data from PHP
-            const labels = <?= json_encode(array_column($data, 'Ngay')) ?>; // Lấy ngày từ dữ liệu
-            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>; // Tổng doanh thu
-            const products = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>; // Sản phẩm bán chạy
-            const productRevenues =
-              <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>; // Doanh thu sản phẩm bán chạy
+        </div>
+        <script>
+        // Get data from PHP
+        const labels = <?= json_encode(array_column($data, 'Ngay')) ?>; // Lấy ngày từ dữ liệu
+        const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>; // Tổng doanh thu
+        const products = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>; // Sản phẩm bán chạy
+        const productRevenues =
+          <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>; // Doanh thu sản phẩm bán chạy
 
-            // Initialize the Chart.js chart
-            const ctx = document.getElementById('thongKeChart').getContext('2d');
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: labels.map((date) => `Ngày ${date}`), // Hiển thị ngày đầy đủ
-                datasets: [{
-                  label: 'Tổng doanh thu (VND)',
-                  data: values,
-                  backgroundColor: 'rgba(45, 62, 80, 0.8)', // Màu nền cột tối hơn
-                  borderColor: 'rgba(45, 62, 80, 1)', // Màu viền cột
-                  borderWidth: 1.5,
-                  borderRadius: 5, // Bo góc cột
-                }, ],
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false, // Đảm bảo biểu đồ tự động co giãn
-                plugins: {
-                  tooltip: {
-                    callbacks: {
-                      label: function(context) {
-                        const index = context.dataIndex;
-                        const productRevenue = productRevenues[index] ?
-                          parseInt(productRevenues[index]).toLocaleString() :
-                          '0';
-                        return [
-                          `Ngày: ${labels[index]}`,
-                          `Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND`,
-                          `Sản phẩm bán chạy: ${products[index]}`,
-                          `Doanh thu sản phẩm: ${productRevenue} VND`
-
-                        ];
-                      },
-                    },
-                  },
-                  legend: {
-                    position: 'top', // Đưa legend lên trên
-                    labels: {
-                      color: '#FFFFFF', // Màu sáng cho chữ trong legend
-                      font: {
-                        size: 14,
-                        weight: 'bold',
-                      },
-                    },
-                  },
-                },
-                layout: {
-                  padding: {
-                    top: 20,
-                    bottom: 20,
-                  },
-                },
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: 'Ngày',
-                      color: '#FFFFFF', // Màu sáng cho tiêu đề trục X
-                      font: {
-                        size: 16,
-                        weight: 'bold',
-                      },
-                    },
-                    ticks: {
-                      color: '#FFFFFF', // Màu sáng cho nhãn trục X
-                      font: {
-                        size: 14,
-                        weight: 'bold',
-                      },
-                    },
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: 'Doanh thu (VND)',
-                      color: '#FFFFFF', // Màu sáng cho tiêu đề trục Y
-                      font: {
-                        size: 16,
-                        weight: 'bold',
-                      },
-                    },
-                    ticks: {
-                      color: '#FFFFFF', // Màu sáng cho nhãn trục Y
-                      font: {
-                        size: 14,
-                        weight: 'bold',
-                      },
-                      beginAtZero: true,
-                    },
+        // Initialize the Chart.js chart
+        const ctx = document.getElementById('thongKeChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels.map((date) => `Ngày ${date}`), // Hiển thị ngày đầy đủ
+            datasets: [{
+              label: 'Tổng doanh thu (VND)',
+              data: values,
+              backgroundColor: 'rgba(255, 255, 255, 0.8)', // Màu nền cột trắng
+              borderColor: 'rgba(255, 255, 255, 1)', // Màu viền cột trắng
+              borderWidth: 1.5,
+              borderRadius: 5, // Bo góc cột
+            }, ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false, // Đảm bảo biểu đồ tự động co giãn
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    const index = context.dataIndex;
+                    const productRevenue = productRevenues[index] ?
+                      parseInt(productRevenues[index]).toLocaleString() :
+                      '0';
+                    return [
+                      `Ngày: ${labels[index]}`,
+                      `Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND`,
+                      `Sản phẩm bán chạy: ${products[index]}`,
+                      `Doanh thu sản phẩm: ${productRevenue} VND`,
+                    ];
                   },
                 },
               },
-            });
-          </script>
+              legend: {
+                position: 'top', // Đưa legend lên trên
+                labels: {
+                  color: '#FFFFFF', // Màu trắng cho chữ trong legend
+                  font: {
+                    size: 14,
+                    weight: 'bold',
+                  },
+                },
+              },
+            },
+            layout: {
+              padding: {
+                top: 20,
+                bottom: 20,
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Ngày',
+                  color: '#FFFFFF', // Màu sáng cho tiêu đề trục X
+                  font: {
+                    size: 16,
+                    weight: 'bold',
+                  },
+                },
+                ticks: {
+                  color: '#FFFFFF', // Màu sáng cho nhãn trục X
+                  font: {
+                    size: 14,
+                    weight: 'bold',
+                  },
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Doanh thu (VND)',
+                  color: '#FFFFFF', // Màu sáng cho tiêu đề trục Y
+                  font: {
+                    size: 16,
+                    weight: 'bold',
+                  },
+                },
+                ticks: {
+                  color: '#FFFFFF', // Màu sáng cho nhãn trục Y
+                  font: {
+                    size: 14,
+                    weight: 'bold',
+                  },
+                  beginAtZero: true,
+                },
+              },
+            },
+          },
+        });
+        </script>
+
 
 
         <?php else: ?>
-          <!-- Display message if no data available -->
-          <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
+        <!-- Display message if no data available -->
+        <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
         <?php endif; ?>
       </div>
       <!--End Charts-->

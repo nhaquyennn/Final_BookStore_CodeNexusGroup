@@ -94,8 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     datasets: [{
                       label: 'Tổng số lượng sản phẩm',
                       data: totalValues, // Dữ liệu trục Y
-                      backgroundColor: 'rgba(45, 62, 80, 0.9)', // Màu cột tối hơn
-                      borderColor: 'rgba(45, 62, 80, 1)', // Viền cột
+                      backgroundColor: '#FFFFFF', // Màu cột tối hơn
+                      borderColor: '#FFFFFF', // Viền cột
                       borderWidth: 1.5, // Độ dày viền
                       borderRadius: 5, // Bo góc cột
                     }, ],
