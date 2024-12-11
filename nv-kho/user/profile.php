@@ -81,7 +81,8 @@ require_once '../controlUser/controlProfile.php';
 
                 <div class="tab-content p-3">
                   <!-- Thông tin cá nhân -->
-                  <div class="tab-pane <?php echo (!isset($error) && !isset($error_edit)) ? 'active' : ''; ?>" id="profile">
+                  <div class="tab-pane <?php echo (!isset($error) && !isset($error_edit)) ? 'active' : ''; ?>"
+                    id="profile">
                     <div class="row">
                       <div class="col-md-12">
                         <h4 class="text-center mt-2 mb-3">THÔNG TIN CÁ NHÂN</h4>

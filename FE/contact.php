@@ -47,36 +47,6 @@
         </iframe>
     </div>
     <!-- Map End -->
-    <!-- Contact Form Begin -->
-    <div class="contact-form spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="contact__form__title">
-                        <h2>Form liên hệ</h2>
-                    </div>
-                </div>
-            </div>
-            <form action="#">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <input type="text" placeholder="Nhập họ và tên" />
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <input type="text" placeholder="Nhập email" />
-                    </div>
-                    <div class="col-lg-12 text-center">
-                        <input type="text" name="" id="" placeholder="Nhập số điện thoại">
-                    </div>
-                    <div class="col-lg-12 text-center">
-                        <textarea placeholder="Nội dung"></textarea>
-                        <button type="submit" class="site-btn">Gửi tin nhắn</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!-- Contact Form End -->
 </body>
 
 <footer>

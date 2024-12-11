@@ -18,51 +18,46 @@ class BaoCaoController
     return $this->error;
   }
 
-  public function thongKeSanPhamTheoNgay()
+  public function baoCaoDoanhThuTheoNgay()
   {
     $data = []; // Biến lưu dữ liệu kết quả
 
-    // Kiểm tra xem người dùng có submit form hay không
+    // Kiểm tra nếu người dùng gửi form
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Lấy dữ liệu từ request
-      $ngayBatDau = isset($_POST['ngayBatDau']) ? $_POST['ngayBatDau'] : null;
-      $ngayKetThuc = isset($_POST['ngayKetThuc']) ? $_POST['ngayKetThuc'] : null;
+      $ngayBatDau = $_POST['ngayBatDau'] ?? null;
+      $ngayKetThuc = $_POST['ngayKetThuc'] ?? null;
 
-      // Kiểm tra dữ liệu nhập vào
+      // Kiểm tra input
       if (!$ngayBatDau || !$ngayKetThuc) {
-        $this->error = "Vui lòng nhập đầy đủ thông tin ngày bắt đầu và ngày kết thúc.";
+        $this->error = "Vui lòng nhập đầy đủ ngày bắt đầu và ngày kết thúc.";
       } else {
         try {
+          // Đảm bảo định dạng ngày hợp lệ
           $startDate = new DateTime($ngayBatDau);
           $endDate = new DateTime($ngayKetThuc);
 
           if ($startDate > $endDate) {
             $this->error = "Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.";
           } else {
-            $interval = $startDate->diff($endDate);
-            $monthsDifference = ($interval->y * 12) + $interval->m;
+            // Lấy dữ liệu từ Model
+            $data = $this->model->baoCaoDoanhThuTheoNgay($ngayBatDau, $ngayKetThuc);
 
-            if ($monthsDifference > 3) {
-              $this->error = "Chỉ được chọn tối đa 4 tháng liên tiếp.";
-            } else {
-              // Lấy dữ liệu từ model
-              $data = $this->model->thongKeSanPhamTheoNgay($ngayBatDau, $ngayKetThuc);
-              if (empty($data)) {
-                $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
-              }
+            if (empty($data)) {
+              $this->error = "Không có dữ liệu doanh thu trong khoảng thời gian này.";
             }
           }
         } catch (Exception $e) {
-          $this->error = "Định dạng ngày không hợp lệ.";
+          $this->error = "Định dạng ngày không hợp lệ: " . $e->getMessage();
         }
       }
     }
 
-    // Trả về dữ liệu
-    return $data;
+    return is_array($data) ? $data : [];
   }
 
-  public function thongKeSanPhamTheoThang()
+
+  public function baoCaoDoanhThuTheoThang()
   {
     $data = []; // Biến lưu dữ liệu kết quả
 
@@ -78,18 +73,18 @@ class BaoCaoController
         $this->error = "Tháng bắt đầu phải nhỏ hơn hoặc bằng tháng kết thúc.";
       } else {
         // Lấy dữ liệu từ model
-        $data = $this->model->thongKeSanPhamTheoThang($thangBatDau, $thangKetThuc, $nam);
+        $data = $this->model->baoCaoDoanhThuTheoThang($thangBatDau, $thangKetThuc, $nam);
         if (empty($data)) {
           $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
         }
       }
     }
 
-    return $data;
+    return is_array($data) ? $data : [];
   }
 
   // Thống kê sản phẩm theo năm
-  public function thongKeSanPhamTheoNam()
+  public function baoCaoDoanhThuTheoNam()
   {
     $data = []; // Biến lưu dữ liệu kết quả
 
@@ -104,7 +99,7 @@ class BaoCaoController
         $this->error = "Năm bắt đầu phải nhỏ hơn hoặc bằng năm kết thúc.";
       } else {
         // Lấy dữ liệu từ model
-        $data = $this->model->thongKeSanPhamTheoNam($namBatDau, $namKetThuc);
+        $data = $this->model->baoCaoDoanhThuTheoNam($namBatDau, $namKetThuc);
         if (empty($data)) {
           $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
         }

@@ -1,6 +1,16 @@
 <?php 
 error_reporting(E_ALL & ~E_NOTICE);
 session_start(); 
+include_once 'cart_functions.php';
+// Lấy giỏ hàng hiện tại
+$maNguoiDung = $_SESSION['maNguoiDung'] ?? null;
+if ($maNguoiDung) {
+    $cart = get_cart_from_db($maNguoiDung);
+} else {
+    $cart = get_cart();
+}
+$total_price = calculate_total($cart);
+
 ?>
 <head>
     <meta charset="UTF-8">
@@ -88,8 +98,8 @@ session_start();
                         <li><a href="./shop-grid.php">Sản phẩm</a></li>
                         <li><a href="#">Giỏ hàng</a>
                             <ul class="header__menu__dropdown">
-                                <li><a href="./shopping_cart.php">Shoping Cart</a></li>
-                                <li><a href="./checkout.php">Check Out</a></li>
+                                <li><a href="./shopping_cart.php">Giỏ hàng</a></li>
+                                <li><a href="./checkout.php">Thanh toán</a></li>
                             </ul>
                         </li>
                         <li><a href="./contact.php">Liên hệ</a></li>
@@ -108,7 +118,7 @@ session_start();
             </div>
             <div class="col-lg-2">
                 <div class="header__cart">
-                    <div class="header__cart__price">Giỏ hàng: <span>$10.00</span></div>
+                    <div class="header__cart__price">Giỏ hàng: <span><?php echo number_format($total_price, 0, ',', '.'); ?> VND</span></div>
                 </div>
                 <div class="hero__search__phone">
                     <div class="hero__search__phone__text">

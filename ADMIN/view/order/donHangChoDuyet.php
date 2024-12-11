@@ -18,16 +18,6 @@ if (!isset($_SESSION['user'])) {
   <!-- Start wrapper-->
   <div id="wrapper">
 
-    <!--Start sidebar-wrapper-->
-    <?php require_once "../../layout/left_sidebar.php"; ?>
-    <!--End sidebar-wrapper-->
-
-    <!--Start topbar header-->
-    <header class="topbar-nav">
-      <?php require_once "../../layout/topbar.php"; ?>
-    </header>
-    <!--End topbar header-->
-
     <div class="clearfix"></div>
 
     <!--Start content-wrapper-->
@@ -35,7 +25,15 @@ if (!isset($_SESSION['user'])) {
 
       <!--Start container-fluid-->
       <div class="container-fluid">
+        <!--Start sidebar-wrapper-->
+        <?php require_once "../../layout/left_sidebar.php"; ?>
+        <!--End sidebar-wrapper-->
 
+        <!--Start topbar header-->
+        <header class="topbar-nav">
+          <?php require_once "../../layout/topbar.php"; ?>
+        </header>
+        <!--End topbar header-->
         <!--Start Dashboard Content-->
         <div class="card mt-3">
           <div class="card-content">

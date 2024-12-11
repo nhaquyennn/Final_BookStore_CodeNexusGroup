@@ -1,5 +1,11 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
+
 // Kiểm tra nếu session 'user' không tồn tại
 if (!isset($_SESSION['user'])) {
   header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
@@ -7,9 +13,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 // Gọi Controller để lấy dữ liệu
-require_once "../../../controller/thongKeController.php";
-$controller = new ThongKeController();
-$data = $controller->thongKeSanPhamTheoThang(); // Gọi hàm từ Controller
+require_once "../../../controller/baoCaoController.php";
+$controller = new BaoCaoController();
+$data = $controller->baoCaoDoanhThuTheoThang(); // Gọi hàm từ Controller
 $error = $controller->getError();
 ?>
 <!DOCTYPE html>
@@ -17,22 +23,12 @@ $error = $controller->getError();
 
 <head>
   <?php require_once "../../../layout/header.php"; ?>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Thêm thư viện Chart.js -->
 </head>
 
 <body class="bg-theme bg-theme9">
   <!-- Start wrapper-->
   <div id="wrapper">
-
-    <!--Start sidebar-wrapper-->
-    <?php require_once "../../../layout/left_sidebar.php"; ?>
-    <!--End sidebar-wrapper-->
-
-    <!--Start topbar header-->
-    <header class="topbar-nav">
-      <?php require_once "../../../layout/topbar.php"; ?>
-    </header>
-    <!--End topbar header-->
-
     <div class="clearfix"></div>
 
     <!--Start content-wrapper-->
@@ -40,13 +36,23 @@ $error = $controller->getError();
 
       <!--Start container-fluid-->
       <div class="container-fluid">
+        <!--Start sidebar-wrapper-->
+        <?php require_once "../../../layout/left_sidebar.php"; ?>
+        <!-- Import sidebar -->
+        <!--End sidebar-wrapper-->
 
+        <!--Start topbar header-->
+        <header class="topbar-nav">
+          <?php require_once "../../../layout/topbar.php"; ?>
+          <!-- Import topbar -->
+        </header>
+        <!--End topbar header-->
         <!--Start Dashboard Content-->
         <div class="card mt-3">
           <div class="card-body">
             <!-- Hiển thị lỗi nếu có -->
             <?php if (!empty($error)): ?>
-              <div class="alert alert-danger"><?= $error ?></div>
+              <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
             <!-- Form nhập liệu cho thống kê -->
@@ -57,7 +63,8 @@ $error = $controller->getError();
                   <label for="thangBatDau" class="text-white">Tháng bắt đầu:</label>
                   <select name="thangBatDau" id="thangBatDau" class="form-control" required>
                     <?php for ($i = 1; $i <= 12; $i++): ?>
-                      <option value="<?= $i ?>" <?= (isset($thangBatDau) && $thangBatDau == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= (isset($_POST['thangBatDau']) && $_POST['thangBatDau'] == $i) ? 'selected' : '' ?>><?= $i ?>
+                      </option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -67,7 +74,8 @@ $error = $controller->getError();
                   <label for="thangKetThuc" class="text-white">Tháng kết thúc:</label>
                   <select name="thangKetThuc" id="thangKetThuc" class="form-control" required>
                     <?php for ($i = 1; $i <= 12; $i++): ?>
-                      <option value="<?= $i ?>" <?= (isset($thangKetThuc) && $thangKetThuc == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= (isset($_POST['thangKetThuc']) && $_POST['thangKetThuc'] == $i) ? 'selected' : '' ?>><?= $i ?>
+                      </option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -77,7 +85,9 @@ $error = $controller->getError();
                   <label for="nam" class="text-white">Năm:</label>
                   <select name="nam" id="nam" class="form-control" required>
                     <?php for ($i = 2021; $i <= 2024; $i++): ?>
-                      <option value="<?= $i ?>" <?= (isset($nam) && $nam == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                      <option value="<?= $i ?>" <?= (isset($_POST['nam']) && $_POST['nam'] == $i) ? 'selected' : '' ?>>
+                        <?= $i ?>
+                      </option>
                     <?php endfor; ?>
                   </select>
                 </div>
@@ -102,42 +112,109 @@ $error = $controller->getError();
             </div>
           </div>
           <script>
-            // Lấy dữ liệu từ PHP cho biểu đồ
-            const labels = <?= json_encode(array_column($data, 'Thang')) ?>;
-            const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
+            // Lấy dữ liệu từ PHP
+            const labels = <?= json_encode(array_column($data, 'Thang')) ?>; // Lấy các tháng từ dữ liệu
+            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>; // Tổng doanh thu
+            const products = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>; // Sản phẩm bán chạy
+            const productRevenues =
+              <?= json_encode(array_column($data, 'DoanhThuSanPham')) ?>; // Doanh thu sản phẩm bán chạy
 
             // Khởi tạo biểu đồ với Chart.js
             const ctx = document.getElementById('thongKeChart').getContext('2d');
             new Chart(ctx, {
               type: 'bar',
               data: {
-                labels: labels,
+                labels: labels.map((month) => `Tháng ${month}`), // Hiển thị tháng đầy đủ
                 datasets: [{
-                  label: 'Tổng số lượng sản phẩm',
+                  label: 'Tổng doanh thu (VND)',
                   data: values,
-                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-                }]
+                  backgroundColor: '#FFFFFF', // Màu nền cột tối hơn
+                  borderColor: '#FFFFFF', // Màu viền cột
+                  borderWidth: 1.5,
+                  borderRadius: 5, // Bo góc cột
+                },],
               },
               options: {
+                responsive: true,
+                maintainAspectRatio: false, // Đảm bảo biểu đồ tự động co giãn
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      label: function (context) {
+                        const index = context.dataIndex;
+                        const productRevenue = productRevenues[index] ?
+                          parseInt(productRevenues[index]).toLocaleString() :
+                          '0';
+                        return [
+                          `Tháng: ${labels[index]}`,
+                          `Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND`,
+                          `Sản phẩm bán chạy: ${products[index]}`,
+                          `Doanh thu sản phẩm bán chạy: ${productRevenue} VND`
+                        ];
+                      },
+                    },
+                  },
+                  legend: {
+                    position: 'top', // Đưa legend lên trên
+                    labels: {
+                      color: '#FFFFFF', // Màu sáng cho chữ trong legend
+                      font: {
+                        size: 14,
+                        weight: 'bold',
+                      },
+                    },
+                  },
+                },
+                layout: {
+                  padding: {
+                    top: 20,
+                    bottom: 20,
+                  },
+                },
                 scales: {
                   x: {
                     title: {
                       display: true,
-                      text: 'Tháng'
-                    }
+                      text: 'Tháng',
+                      color: '#FFFFFF', // Màu sáng cho tiêu đề trục X
+                      font: {
+                        size: 16,
+                        weight: 'bold',
+                      },
+                    },
+                    ticks: {
+                      color: '#FFFFFF', // Màu sáng cho nhãn trục X
+                      font: {
+                        size: 14,
+                        weight: 'bold',
+                      },
+                    },
                   },
                   y: {
                     title: {
                       display: true,
-                      text: 'Số lượng'
-                    }
-                  }
-                }
-              }
+                      text: 'Doanh thu (VND)',
+                      color: '#FFFFFF', // Màu sáng cho tiêu đề trục Y
+                      font: {
+                        size: 16,
+                        weight: 'bold',
+                      },
+                    },
+                    ticks: {
+                      color: '#FFFFFF', // Màu sáng cho nhãn trục Y
+                      font: {
+                        size: 14,
+                        weight: 'bold',
+                      },
+                      beginAtZero: true,
+                    },
+                  },
+                },
+              },
             });
           </script>
+
+
         <?php else: ?>
           <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
         <?php endif; ?>

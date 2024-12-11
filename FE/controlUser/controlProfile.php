@@ -31,40 +31,50 @@ if ($result->num_rows === 1) {
 
 // Xử lý khi người dùng nhấn nút "Lưu thay đổi thông tin"
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
-    $newName = $_POST['tenNguoiDung'] ?? '';  // Tên người dùng mới
-    $newEmail = $_POST['email'] ?? '';  // Email mới
+    $newName = $_POST['tenNguoiDung'] ?? '';
+    $newEmail = $_POST['email'] ?? '';
+    $currentEmail = $_SESSION['user']; // Email hiện tại từ session
 
     if (empty($newName) || empty($newEmail)) {
-        $error = "Vui lòng điền đầy đủ thông tin.";
+        $error_edit = "Vui lòng điền đầy đủ thông tin.";
     } else {
-        // Cập nhật thông tin người dùng, khách hàng và tài khoản
-        $updateSql = "UPDATE nguoidung
-                    INNER JOIN taikhoan ON nguoidung.maNguoiDung = taikhoan.maNguoiDung
-                    INNER JOIN khachhang ON khachhang.maNguoiDung = nguoidung.maNguoiDung
-                    SET nguoidung.tenNguoiDung = ?, taikhoan.email = ?, khachhang.tenKH = ?, nguoidung.email = ?
-                    WHERE taikhoan.email = ?";
+        // Kiểm tra xem email mới đã tồn tại trong database hay chưa
+        $checkEmailSql = "SELECT email FROM taikhoan WHERE email = ? AND email != ?";
+        $stmt = $conn->prepare($checkEmailSql);
+        $stmt->bind_param('ss', $newEmail, $currentEmail);
+        $stmt->execute();
+        $stmt->store_result();
 
-        // Chuẩn bị câu lệnh SQL
-        $stmt = $conn->prepare($updateSql);
-
-        // Bind tham số: tên người dùng mới, email mới, tên khách hàng mới, email mới, email hiện tại
-        $stmt->bind_param('sssss', $newName, $newEmail, $newName, $newEmail, $email);
-
-        // Thực thi câu lệnh SQL
-        if ($stmt->execute()) {
-            $_SESSION['user'] = $newEmail; // Cập nhật email trong session
-            echo "<script>
-                    alert('Thay đổi thông tin thành công!');
-                    window.location.href = 'profile.php';
-                </script>";
-            exit();
+        if ($stmt->num_rows > 0) {
+            $error_edit = "Email này đã được sử dụng. Vui lòng chọn email khác.";
         } else {
-            $error = "Lỗi khi cập nhật thông tin.";
+            // Email không trùng, thực hiện cập nhật
+            $updateSql = "UPDATE nguoidung 
+                        INNER JOIN taikhoan ON nguoidung.maNguoiDung = taikhoan.maNguoiDung 
+                        INNER JOIN khachhang ON khachhang.maNguoiDung = nguoidung.maNguoiDung
+                        SET nguoidung.tenNguoiDung = ?, taikhoan.email = ?, khachhang.tenKH = ?, nguoidung.email = ?
+                        WHERE taikhoan.email = ?";
+
+            // Chuẩn bị câu lệnh SQL
+            $stmt = $conn->prepare($updateSql);
+
+            // Bind tham số: tên người dùng mới, email mới, tên khách hàng mới, email mới, email hiện tại
+            $stmt->bind_param('sssss', $newName, $newEmail, $newName, $newEmail, $currentEmail);
+
+            // Thực thi câu lệnh SQL
+            if ($stmt->execute()) {
+                $_SESSION['user'] = $newEmail; // Cập nhật email trong session
+                echo "<script>
+                        alert('Thay đổi thông tin thành công!');
+                        window.location.href = 'profile.php';
+                    </script>";
+                exit();
+            } else {
+                $error_edit = "Lỗi khi cập nhật thông tin.";
+            }
         }
     }
 }
-
-
 
 // Xử lý đổi mật khẩu
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {

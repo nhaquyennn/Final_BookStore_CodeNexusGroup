@@ -32,7 +32,7 @@ if (isset($_POST['coupon_code'])) {
 
     // Kiểm tra nếu khách hàng đã thuê >= 10 cuốn sách trong tháng, áp dụng khuyến mãi
     if ($totalBooks >= 10) {
-        $couponCode = 5; // Mã khuyến mãi 5% (ví dụ)
+        $couponCode = 4; // Mã khuyến mãi 10%
     }
 
     // Tính giá sau khi áp dụng mã giảm giá
@@ -41,16 +41,22 @@ if (isset($_POST['coupon_code'])) {
     // Tính số tiền giảm giá
     $discountAmount = $totalAmount - $discountedPrice;
 
+    // Định nghĩa phí giao hàng mặc định
+    $shippingFee = 20000;
+
+    // Tính giá trị sau khi giảm giá và cộng phí giao hàng
+    $finalPrice = $discountedPrice + $shippingFee;
+
     // Trả về JSON
     echo json_encode([
         'discountText' => number_format($discountAmount, 0, '', '.') . ' VND',
-        'totalPrice' => number_format($discountedPrice, 0, '', '.') . ' VND',
-        'coupon_code' => $couponCode // Trả mã khuyến mãi áp dụng
+        'totalPrice' => number_format($finalPrice, 0, '', '.') . ' VND',
+        'coupon_code' => $couponCode, // Trả mã khuyến mãi áp dụng
+        'totalBooks' => $totalBooks // Trả số lượng sách đã thuê
     ]);
     exit; // Đảm bảo không xuất thêm dữ liệu
 } else {
     echo json_encode(['error' => 'Coupon code not provided']);
     exit;
 }
-
 ?>

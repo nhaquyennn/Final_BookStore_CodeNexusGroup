@@ -1,39 +1,30 @@
 <?php
 session_start();
-// Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
+
+// Check if the 'user' session exists
 if (!isset($_SESSION['user'])) {
-  // Nếu chưa đăng nhập, chuyển hướng về trang login
   header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
   exit();
 }
 
-// Gọi Controller để lấy dữ liệu
-require_once "../../../controller/thongKeController.php";
-$controller = new ThongKeController();
-$data = $controller->thongKeSanPhamTheoNgay(); // Gọi hàm từ Controller
+// Call the controller to get data
+require_once "../../../controller/baoCaoController.php";
+$controller = new BaoCaoController();
+$data = $controller->baoCaoDoanhThuTheoNgay(); // Call the method from Controller
 $error = $controller->getError();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <?php require_once "../../../layout/header.php"; ?> <!-- Import layout header -->
+  <?php require_once "../../../layout/header.php"; ?>
+  <!-- Import layout header -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Ensure Chart.js library is loaded -->
 </head>
 
 <body class="bg-theme bg-theme9">
   <!-- Start wrapper-->
   <div id="wrapper">
-
-    <!--Start sidebar-wrapper-->
-    <?php require_once "../../../layout/left_sidebar.php"; ?> <!-- Import sidebar -->
-    <!--End sidebar-wrapper-->
-
-    <!--Start topbar header-->
-    <header class="topbar-nav">
-      <?php require_once "../../../layout/topbar.php"; ?> <!-- Import topbar -->
-    </header>
-    <!--End topbar header-->
-
     <div class="clearfix"></div>
 
     <!--Start content-wrapper-->
@@ -41,31 +32,43 @@ $error = $controller->getError();
 
       <!--Start container-fluid-->
       <div class="container-fluid">
+        <!--Start sidebar-wrapper-->
+        <?php require_once "../../../layout/left_sidebar.php"; ?>
+        <!-- Import sidebar -->
+        <!--End sidebar-wrapper-->
 
+        <!--Start topbar header-->
+        <header class="topbar-nav">
+          <?php require_once "../../../layout/topbar.php"; ?>
+          <!-- Import topbar -->
+        </header>
+        <!--End topbar header-->
         <!--Start Dashboard Content-->
         <div class="card mt-3">
           <div class="card-body">
-            <!-- Hiển thị lỗi nếu có -->
+            <!-- Display error if there is any -->
             <?php if (!empty($error)): ?>
-              <div class="alert alert-danger"><?= $error ?></div>
+              <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
 
-            <!-- Form nhập liệu cho thống kê -->
+            <!-- Form for inputting date range -->
             <form method="POST" action="">
               <div class="form-row">
-                <!-- Ngày bắt đầu -->
+                <!-- Start Date -->
                 <div class="form-group col-md-4">
                   <label for="ngayBatDau" class="text-white">Ngày bắt đầu:</label>
-                  <input type="date" name="ngayBatDau" id="ngayBatDau" class="form-control" required min="2021-01-01" max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayBatDau'] ?? '') ?>">
+                  <input type="date" name="ngayBatDau" id="ngayBatDau" class="form-control" required min="2021-01-01"
+                    max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayBatDau'] ?? '') ?>">
                 </div>
 
-                <!-- Ngày kết thúc -->
+                <!-- End Date -->
                 <div class="form-group col-md-4">
                   <label for="ngayKetThuc" class="text-white">Ngày kết thúc:</label>
-                  <input type="date" name="ngayKetThuc" id="ngayKetThuc" class="form-control" required min="2021-01-01" max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayKetThuc'] ?? '') ?>">
+                  <input type="date" name="ngayKetThuc" id="ngayKetThuc" class="form-control" required min="2021-01-01"
+                    max="2024-12-31" value="<?= htmlspecialchars($_POST['ngayKetThuc'] ?? '') ?>">
                 </div>
               </div>
-              <!-- Nút xem thống kê -->
+              <!-- Button to view stats -->
               <button type="submit" class="btn btn-primary">Xem thống kê</button>
             </form>
           </div>
@@ -76,64 +79,121 @@ $error = $controller->getError();
         <div class="overlay toggle-menu"></div>
         <!--end overlay-->
 
-        <!-- Hiển thị biểu đồ nếu có dữ liệu -->
-        <?php if (isset($data) && count($data) > 0): ?>
+        <!-- Display chart if data is available -->
+        <?php if (!empty($data)): ?>
           <div class="card mt-3">
             <div class="card-body">
-              <!-- Canvas chứa biểu đồ -->
+              <!-- Canvas for the chart -->
               <canvas id="thongKeChart" height="200"></canvas>
             </div>
           </div>
           <script>
-            // Lấy dữ liệu từ PHP cho biểu đồ
-            const labels = <?= json_encode(array_column($data, 'Ngay')) ?>;
-            const values = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
-            const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
+            // Get data from PHP
+            const labels = <?= json_encode(array_column($data, 'Ngay')) ?>; // Lấy ngày từ dữ liệu
+            const values = <?= json_encode(array_column($data, 'TongDoanhThu')) ?>; // Tổng doanh thu
+            const products = <?= json_encode(array_column($data, 'SanPhamBanChay')) ?>; // Sản phẩm bán chạy
+            const productRevenues =
+              <?= json_encode(array_column($data, 'DoanhThuSanPhamBanChay')) ?>; // Doanh thu sản phẩm bán chạy
 
-            // Khởi tạo biểu đồ với Chart.js
+            // Initialize the Chart.js chart
             const ctx = document.getElementById('thongKeChart').getContext('2d');
             new Chart(ctx, {
               type: 'bar',
               data: {
-                labels: labels,
+                labels: labels.map((date) => `Ngày ${date}`), // Hiển thị ngày đầy đủ
                 datasets: [{
-                  label: 'Tổng số lượng sản phẩm',
+                  label: 'Tổng doanh thu (VND)',
                   data: values,
-                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-                }]
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)', // Màu nền cột trắng
+                  borderColor: 'rgba(255, 255, 255, 1)', // Màu viền cột trắng
+                  borderWidth: 1.5,
+                  borderRadius: 5, // Bo góc cột
+                },],
               },
               options: {
+                responsive: true,
+                maintainAspectRatio: false, // Đảm bảo biểu đồ tự động co giãn
                 plugins: {
                   tooltip: {
                     callbacks: {
-                      label: function(context) {
+                      label: function (context) {
                         const index = context.dataIndex;
-                        return 'Sản phẩm bán chạy: ' + products[index];
-                      }
-                    }
-                  }
+                        const productRevenue = productRevenues[index] ?
+                          parseInt(productRevenues[index]).toLocaleString() :
+                          '0';
+                        return [
+                          `Ngày: ${labels[index]}`,
+                          `Tổng doanh thu: ${parseInt(values[index]).toLocaleString()} VND`,
+                          `Sản phẩm bán chạy: ${products[index]}`,
+                          `Doanh thu sản phẩm: ${productRevenue} VND`,
+                        ];
+                      },
+                    },
+                  },
+                  legend: {
+                    position: 'top', // Đưa legend lên trên
+                    labels: {
+                      color: '#FFFFFF', // Màu trắng cho chữ trong legend
+                      font: {
+                        size: 14,
+                        weight: 'bold',
+                      },
+                    },
+                  },
+                },
+                layout: {
+                  padding: {
+                    top: 20,
+                    bottom: 20,
+                  },
                 },
                 scales: {
                   x: {
                     title: {
                       display: true,
-                      text: 'Ngày'
-                    }
+                      text: 'Ngày',
+                      color: '#FFFFFF', // Màu sáng cho tiêu đề trục X
+                      font: {
+                        size: 16,
+                        weight: 'bold',
+                      },
+                    },
+                    ticks: {
+                      color: '#FFFFFF', // Màu sáng cho nhãn trục X
+                      font: {
+                        size: 14,
+                        weight: 'bold',
+                      },
+                    },
                   },
                   y: {
                     title: {
                       display: true,
-                      text: 'Số lượng'
-                    }
-                  }
-                }
-              }
+                      text: 'Doanh thu (VND)',
+                      color: '#FFFFFF', // Màu sáng cho tiêu đề trục Y
+                      font: {
+                        size: 16,
+                        weight: 'bold',
+                      },
+                    },
+                    ticks: {
+                      color: '#FFFFFF', // Màu sáng cho nhãn trục Y
+                      font: {
+                        size: 14,
+                        weight: 'bold',
+                      },
+                      beginAtZero: true,
+                    },
+                  },
+                },
+              },
             });
           </script>
+
+
+
         <?php else: ?>
-          <!-- Hiển thị thông báo nếu không có dữ liệu -->
+          <!-- Display message if no data available -->
           <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
         <?php endif; ?>
       </div>
@@ -149,14 +209,16 @@ $error = $controller->getError();
   <!--End Back To Top Button-->
 
   <!--Start right sidebar-->
-  <?php require_once "../../../layout/right_sidebar.php"; ?> <!-- Import right sidebar -->
+  <?php require_once "../../../layout/right_sidebar.php"; ?>
+  <!-- Import right sidebar -->
   <!--End right sidebar-->
 
   </div>
   <!--End wrapper-->
 
   <!--Start footer-->
-  <?php require_once "../../../layout/script.php"; ?> <!-- Import footer scripts -->
+  <?php require_once "../../../layout/script.php"; ?>
+  <!-- Import footer scripts -->
   <!--End footer-->
 
 </body>

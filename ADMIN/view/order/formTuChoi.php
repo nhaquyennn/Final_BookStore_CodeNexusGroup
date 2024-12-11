@@ -1,10 +1,51 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Bắt đầu session
 session_start();
-// Kiểm tra nếu session 'user' không tồn tại (nghĩa là người dùng chưa đăng nhập)
+
+// Kiểm tra nếu người dùng chưa đăng nhập
 if (!isset($_SESSION['user'])) {
-  // Nếu chưa đăng nhập, chuyển hướng về trang login
   header("Location: ../../user/login.php?error=Vui lòng đăng nhập.");
   exit();
+}
+
+// Gọi Controller
+require_once "../../controller/phieuMuonController.php";
+
+// Nhận mã phiếu mượn từ GET
+$maPhieuMuon = $_GET['MaPhieuMuon'] ?? null;
+
+if (!$maPhieuMuon) {
+  $_SESSION['error'] = "Mã phiếu mượn không hợp lệ.";
+  header("Location: danhSachDonHang.php");
+  exit();
+}
+
+// Xử lý các hành động từ form
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $action = $_POST['action'] ?? null;
+
+  if (!$action || !$maPhieuMuon) {
+    $_SESSION['error'] = "Dữ liệu không hợp lệ.";
+    header("Location: danhSachDonHang.php");
+    exit();
+  }
+
+  $controller = new PhieuMuonController();
+
+  switch ($action) {
+    case 'xacNhanTuChoi':
+      $controller->tuChoiDonHang($maPhieuMuon); // Gọi hàm xử lý từ chối
+      break;
+
+    default:
+      $_SESSION['error'] = "Hành động không hợp lệ.";
+      header("Location: danhSachDonHang.php");
+      exit();
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -15,92 +56,39 @@ if (!isset($_SESSION['user'])) {
 </head>
 
 <body class="bg-theme bg-theme9">
-  <!-- Start wrapper-->
   <div id="wrapper">
-
-    <!--Start sidebar-wrapper-->
     <?php require_once "../../layout/left_sidebar.php"; ?>
-    <!--End sidebar-wrapper-->
-
-    <!--Start topbar header-->
     <header class="topbar-nav">
       <?php require_once "../../layout/topbar.php"; ?>
     </header>
-    <!--End topbar header-->
 
     <div class="clearfix"></div>
 
-    <!--Start content-wrapper-->
-    <div class="content-wrapper">
-
-      <!--Start container-fluid-->
-      <div class="container-fluid">
-
-        <!--Start Dashboard Content-->
-        <div class="card mt-3">
-          <div class="card-content">
-            <div class="row row-group m-0">
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">22 <span class="float-right"><i class="fa fa-shopping-cart"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Tổng đơn hàng hôm nay</p>
-                </div>
-              </div>
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">100.000.000 <span class="float-right"><i class="fa fa-usd"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Tổng doanh thu hôm nay</p>
-                </div>
-              </div>
-              <div class="col-12 col-lg-6 col-xl-4 border-light">
-                <div class="card-body">
-                  <h5 class="text-white mb-0">3 <span class="float-right"><i class="zmdi zmdi-assignment"></i></span>
-                  </h5>
-                  <div class="progress my-3" style="height:3px;">
-                    <div class="progress-bar" style="width:55%"></div>
-                  </div>
-                  <p class="mb-0 text-white small-font">Yêu cầu</p>
-                </div>
-              </div>
-            </div>
+    <!-- Nội dung chính -->
+    <div class="content-wrapper d-flex justify-content-center align-items-center vh-100">
+      <div class="custom-card text-center">
+        <h4 class="mb-4">Bạn có chắc chắn muốn từ chối đơn hàng với mã:
+          <strong><?= htmlspecialchars($maPhieuMuon) ?></strong>?
+        </h4>
+        <form method="POST" action="">
+          <input type="hidden" name="action" value="xacNhanTuChoi"> <!-- Gửi action 'xacNhanTuChoi' -->
+          <input type="hidden" name="MaPhieuMuon" value="<?= htmlspecialchars($maPhieuMuon) ?>"> <!-- Mã phiếu mượn -->
+          <div class="d-flex justify-content-center mt-4">
+            <!-- Nút xác nhận từ chối -->
+            <button type="submit" class="btn btn-danger me-3 px-4">Xác nhận từ chối</button>
+            <!-- Nút hủy -->
+            <a href="danhSachDonHang.php" class="btn btn-secondary px-4">Hủy</a>
           </div>
-        </div>
-        <!--End Dashboard Content-->
-
-        <!--start overlay-->
-        <div class="overlay toggle-menu"></div>
-        <!--end overlay-->
-
-
+        </form>
       </div>
-      <!-- End container-fluid-->
-
     </div>
-    <!--End content-wrapper-->
 
-    <!--Start Back To Top Button-->
-    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-    <!--End Back To Top Button-->
-
-    <!--Start right sidebar-->
+    <!-- Nút quay lại đầu trang -->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
     <?php require_once "../../layout/right_sidebar.php"; ?>
-    <!--End right sidebar-->
-
   </div>
-  <!--End wrapper-->
 
-  <!--Start footer-->
   <?php require_once "../../layout/script.php"; ?>
-  <!--End footer-->
-
 </body>
 
 </html>

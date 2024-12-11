@@ -27,7 +27,7 @@ if (isset($_GET['search']) && isset($_GET['query'])) {
         }
     }
     // Chuyển hướng lại shop-grid.php
-    header("Location: ../shop-grid.php");
+    header("Location: shop-grid.php");
     exit();
 }
 ?>

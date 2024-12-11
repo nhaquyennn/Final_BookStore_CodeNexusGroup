@@ -205,7 +205,7 @@
     list-style: none;
     padding-right: 5px;
     margin: 0 1px;
-    background: #2c3b41;
+    background: red;
 }
 
 .sidebar-menu-rtl .sidebar-submenu .sidebar-submenu {
@@ -235,32 +235,75 @@
 
 /*Gia Hi*/
 /* Định dạng mũi tên */
+/* Mũi tên dropdown */
 .dropdown-toggle .arrow {
     margin-left: 5px;
     font-size: 12px;
     color: white;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
+    /* Thêm hiệu ứng chuyển màu */
 }
 
 /* Khi menu mở, xoay mũi tên */
 .dropdown.open .arrow {
     transform: rotate(180deg);
+    color: #f39c12;
+    /* Màu sắc của mũi tên khi menu mở */
 }
 
-/* Ẩn menu dropdown mặc định */
+/* Menu dropdown ẩn mặc định */
 .sidebar-menu .dropdown-menu {
     display: none;
-    padding-left: 20px;
+    padding-left: 13px;
     list-style: none;
     background-color: #3b4e50;
+    /* Màu nền của menu */
     margin-left: 10px;
+    border-radius: 5px;
+    /* Bo góc cho menu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Thêm bóng đổ cho menu */
+    opacity: 0;
+    /* Ẩn menu khi chưa mở */
+    transition: opacity 0.3s ease;
+    /* Thêm hiệu ứng mờ */
+}
+
+/* Khi dropdown mở, hiển thị menu */
+.sidebar-menu .dropdown.open .dropdown-menu {
+    display: block;
+    opacity: 1;
+    /* Hiển thị menu khi mở */
+}
+
+/* Thay đổi màu khi hover vào các mục trong menu */
+.sidebar-menu .dropdown-menu li a {
+    color: white;
+    /* Màu chữ mặc định */
+    padding: 5px 15px;
+    text-decoration: none;
+    display: block;
+    border-radius: 3px;
+    /* Bo góc cho các mục */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Thêm hiệu ứng chuyển màu */
 }
 
 /* Thay đổi màu khi hover */
 .sidebar-menu .dropdown-menu li a:hover {
     background-color: rgba(217, 214, 214, 0.701);
+    /* Màu nền khi hover */
+    color: black;
+    /* Màu chữ khi hover */
     border-radius: 5px;
+    /* Bo góc đẹp khi hover */
 }
 
+/* Thêm hiệu ứng khi mở menu */
+.sidebar-menu .dropdown-menu li a:focus {
+    outline: none;
+    background-color: rgba(217, 214, 214, 0.7);
+    /* Màu nền khi focus */
+}
 
 /*Gia Hi*/

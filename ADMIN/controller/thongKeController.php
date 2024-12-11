@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../model/thongke.php'; // Import model với đường dẫn tuyệt đối
 
-#chưa test
 class ThongKeController
 {
   private $model;
@@ -22,21 +21,23 @@ class ThongKeController
   {
     $data = []; // Biến lưu dữ liệu kết quả
 
-    // Kiểm tra xem người dùng có submit form hay không
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // Lấy dữ liệu từ request
-      $ngayBatDau = isset($_POST['ngayBatDau']) ? $_POST['ngayBatDau'] : null;
-      $ngayKetThuc = isset($_POST['ngayKetThuc']) ? $_POST['ngayKetThuc'] : null;
+      // Lấy dữ liệu từ form
+      $ngayBatDau = $_POST['ngayBatDau'] ?? null;
+      $ngayKetThuc = $_POST['ngayKetThuc'] ?? null;
 
       // Kiểm tra dữ liệu nhập vào
       if (!$ngayBatDau || !$ngayKetThuc) {
-        $this->error = "Vui lòng nhập đầy đủ thông tin ngày bắt đầu và ngày kết thúc.";
+        $this->error = "Vui lòng nhập đầy đủ ngày bắt đầu và ngày kết thúc.";
       } else {
         try {
-          $startDate = new DateTime($ngayBatDau);
-          $endDate = new DateTime($ngayKetThuc);
+          // Chuyển định dạng ngày nếu cần
+          $startDate = DateTime::createFromFormat('Y-m-d', $ngayBatDau);
+          $endDate = DateTime::createFromFormat('Y-m-d', $ngayKetThuc);
 
-          if ($startDate > $endDate) {
+          if (!$startDate || !$endDate) {
+            $this->error = "Định dạng ngày không hợp lệ.";
+          } elseif ($startDate > $endDate) {
             $this->error = "Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.";
           } else {
             $interval = $startDate->diff($endDate);
@@ -45,68 +46,78 @@ class ThongKeController
             if ($monthsDifference > 3) {
               $this->error = "Chỉ được chọn tối đa 4 tháng liên tiếp.";
             } else {
-              // Lấy dữ liệu từ model
-              $data = $this->model->thongKeSanPhamTheoNgay($ngayBatDau, $ngayKetThuc);
-              if (empty($data)) {
+              // Gọi model để lấy dữ liệu
+              $data = $this->model->thongKeSanPhamTheoNgay($startDate->format('Y-m-d'), $endDate->format('Y-m-d'));
+
+              // Nếu dữ liệu rỗng, gán lỗi
+              if (!is_array($data) || empty($data)) {
                 $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
               }
             }
           }
         } catch (Exception $e) {
-          $this->error = "Định dạng ngày không hợp lệ.";
+          $this->error = "Đã xảy ra lỗi: " . htmlspecialchars($e->getMessage());
         }
       }
     }
 
-    // Trả về dữ liệu
-    return $data;
+    // Trả về dữ liệu hoặc mảng trống để tránh lỗi
+    return is_array($data) ? $data : [];
   }
 
-  public function thongKeSanPhamTheoThang()
+
+  public function thongKeSanPhamTheoThang($thangBatDau, $thangKetThuc, $nam)
   {
-    $data = []; // Biến lưu dữ liệu kết quả
+    $data = []; // Biến lưu kết quả thống kê
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // Lấy dữ liệu từ request
-      $thangBatDau = isset($_POST['thangBatDau']) ? (int)$_POST['thangBatDau'] : null;
-      $thangKetThuc = isset($_POST['thangKetThuc']) ? (int)$_POST['thangKetThuc'] : null;
-      $nam = isset($_POST['nam']) ? (int)$_POST['nam'] : null;
+    // Kiểm tra nếu tháng bắt đầu và tháng kết thúc hợp lệ
+    if (empty($thangBatDau) || empty($thangKetThuc) || empty($nam)) {
+      $this->error = "Vui lòng nhập đầy đủ tháng bắt đầu, tháng kết thúc và năm.";
+    } elseif ($thangBatDau > $thangKetThuc) {
+      $this->error = "Tháng bắt đầu phải nhỏ hơn hoặc bằng tháng kết thúc.";
+    } else {
+      try {
+        // Gọi model để lấy dữ liệu thống kê sản phẩm theo tháng
+        $data = $this->model->thongKeSanPhamTheoThang((int)$thangBatDau, (int)$thangKetThuc, (int)$nam);
 
-      if (!$thangBatDau || !$thangKetThuc || !$nam) {
-        $this->error = "Vui lòng nhập đầy đủ thông tin tháng bắt đầu, tháng kết thúc và năm.";
-      } elseif ($thangBatDau > $thangKetThuc) {
-        $this->error = "Tháng bắt đầu phải nhỏ hơn hoặc bằng tháng kết thúc.";
-      } else {
-        // Lấy dữ liệu từ model
-        $data = $this->model->thongKeSanPhamTheoThang($thangBatDau, $thangKetThuc, $nam);
+        // Kiểm tra nếu không có dữ liệu
         if (empty($data)) {
           $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
         }
+      } catch (Exception $e) {
+        // Xử lý lỗi trong trường hợp xảy ra lỗi khi truy vấn
+        $this->error = "Đã xảy ra lỗi khi truy vấn dữ liệu: " . htmlspecialchars($e->getMessage());
+        // Log chi tiết lỗi để phục vụ gỡ lỗi
+        error_log("Lỗi truy vấn: " . $e->getMessage());
       }
     }
 
-    return $data;
+    // Trả về dữ liệu hoặc lỗi
+    return is_array($data) ? $data : [];
   }
 
-  // Thống kê sản phẩm theo năm
   public function thongKeSanPhamTheoNam()
   {
-    $data = []; // Biến lưu dữ liệu kết quả
+    $data = [];
+    $this->error = '';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // Lấy dữ liệu từ request
-      $namBatDau = isset($_POST['namBatDau']) ? (int)$_POST['namBatDau'] : null;
-      $namKetThuc = isset($_POST['namKetThuc']) ? (int)$_POST['namKetThuc'] : null;
+      $namBatDau = $_POST['namBatDau'] ?? null;
+      $namKetThuc = $_POST['namKetThuc'] ?? null;
 
       if (!$namBatDau || !$namKetThuc) {
-        $this->error = "Vui lòng nhập đầy đủ thông tin năm bắt đầu và năm kết thúc.";
+        $this->error = "Vui lòng nhập đầy đủ năm bắt đầu và năm kết thúc.";
       } elseif ($namBatDau > $namKetThuc) {
         $this->error = "Năm bắt đầu phải nhỏ hơn hoặc bằng năm kết thúc.";
       } else {
-        // Lấy dữ liệu từ model
-        $data = $this->model->thongKeSanPhamTheoNam($namBatDau, $namKetThuc);
-        if (empty($data)) {
-          $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
+        try {
+          $data = $this->model->thongKeSanPhamTheoNam((int)$namBatDau, (int)$namKetThuc);
+
+          if (empty($data)) {
+            $this->error = "Không có dữ liệu thống kê cho khoảng thời gian này.";
+          }
+        } catch (Exception $e) {
+          $this->error = "Đã xảy ra lỗi: " . htmlspecialchars($e->getMessage());
         }
       }
     }

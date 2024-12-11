@@ -92,7 +92,7 @@ if ($result && $result->num_rows > 0) {
 }
 //code của phúc
 // Truy vấn lấy danh mục từ bảng danhmucap
-$sql = "SELECT MaDanhMuc, TenDanhMuc, MoTa, image 
+$sql = "SELECT MaDanhMuc, TenDanhMuc, MoTa, hinhAnh 
         FROM danhmucap";
 
 $result = $conn->query($sql);

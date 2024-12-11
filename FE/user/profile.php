@@ -81,7 +81,8 @@ require_once '../controlUser/controlProfile.php';
 
                 <div class="tab-content p-3">
                   <!-- Thông tin cá nhân -->
-                  <div class="tab-pane <?php echo (!isset($error)) ? 'active' : ''; ?>" id="profile">
+                  <div class="tab-pane <?php echo (!isset($error) && !isset($error_edit)) ? 'active' : ''; ?>"
+                    id="profile">
                     <div class="row">
                       <div class="col-md-12">
                         <h4 class="text-center mt-2 mb-3">THÔNG TIN CÁ NHÂN</h4>
@@ -116,8 +117,11 @@ require_once '../controlUser/controlProfile.php';
                   </div>
 
                   <!-- Sửa thông tin -->
-                  <div class="tab-pane" id="edit">
+                  <div class="tab-pane <?php echo isset($error_edit) ? 'active' : ''; ?>" id="edit">
                     <form method="POST" action="">
+                      <?php if (!empty($error_edit)): ?>
+                        <div class="alert alert-danger"><?php echo htmlspecialchars($error_edit); ?></div>
+                      <?php endif; ?>
                       <input type="hidden" name="update_profile" value="1">
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label">Tên khách hàng</label>

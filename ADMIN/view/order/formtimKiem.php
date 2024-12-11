@@ -7,93 +7,116 @@ if (!isset($_SESSION['user'])) {
   exit();
 }
 
-require_once "../../controller/OrderController.php";
-require_once "../../database/db_connect.php";
+// Include file controller
+require_once __DIR__ . '/../../controller/phieuMuonController.php';
 
-// Xử lý yêu cầu POST từ form
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['idPM'])) {
-  $controller = new OrderController($GLOBALS['conn']);
-  $controller->searchDH($_POST['idPM']);
+// Khởi tạo Controller
+$controller = new PhieuMuonController();
+$searchResult = null;
+
+// Xử lý dữ liệu từ form tìm kiếm
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPM'])) {
+  $searchID = $_POST['idPM'];
+  $searchResult = $controller->search($searchID);
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tìm kiếm Phiếu Mượn</title>
   <?php require_once "../../layout/header.php"; ?>
 </head>
 
 <body class="bg-theme bg-theme9">
-  <!-- Start wrapper-->
   <div id="wrapper">
-
-    <!--Start sidebar-wrapper-->
-    <?php require_once "../../layout/left_sidebar.php"; ?>
-    <!--End sidebar-wrapper-->
-
-    <!--Start topbar header-->
-    <header class="topbar-nav">
-      <?php require_once "../../layout/topbar.php"; ?>
-    </header>
-    <!--End topbar header-->
 
     <div class="clearfix"></div>
 
-    <!--Start content-wrapper-->
+    <!-- Start content -->
     <div class="content-wrapper">
-
-      <!--Start container-fluid-->
       <div class="container-fluid">
+        <!-- Start sidebar -->
+        <?php require_once "../../layout/left_sidebar.php"; ?>
+        <!-- End sidebar -->
 
-        <!-- Form nhập liệu -->
-        <div class="card mt-3">
+        <!-- Start topbar -->
+        <header class="topbar-nav">
+          <?php require_once "../../layout/topbar.php"; ?>
+        </header>
+        <!-- End topbar -->
+        <!-- Card Tìm Kiếm -->
+        <div class="card mt-4 shadow border-0">
+          <div class="card-header bg-dark text-white text-center">
+            <h4 class="fw-semibold">Tìm kiếm Phiếu Mượn</h4>
+          </div>
           <div class="card-body">
-            <h4 class="text-white">Tìm kiếm phiếu mượn</h4>
-            <!-- Form tìm kiếm -->
-            <form method="POST" action="">
-              <div class="form-group">
-                <label for="idPM" class="text-white">Nhập mã phiếu mượn:</label>
-                <input type="text" id="idPM" name="idPM" class="form-control"
-                  placeholder="Nhập mã phiếu mượn..." required>
+            <form action="./formtimKiem.php" method="POST">
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <div class="input-group shadow-sm">
+                    <input type="text" name="idPM" class="form-control form-control-lg" placeholder="Nhập mã phiếu mượn"
+                      required>
+                    <button class="btn btn-primary btn-lg px-4" type="submit">
+                      <i class="fas fa-search me-2"></i>Tìm kiếm
+                    </button>
+                  </div>
+                </div>
               </div>
-              <button type="submit" class="btn btn-primary mt-3">Tìm Kiếm</button>
             </form>
+
+            <hr class="my-4">
+
+            <!-- Kết quả tìm kiếm -->
+            <?php if ($searchResult): ?>
+              <h2 class="text-center">Kết quả tìm kiếm:</h2>
+              <table class="table table-bordered mt-4">
+                <thead>
+                  <tr>
+                    <th>Mã Phiếu Mượn</th>
+                    <th>Ngày Tạo</th>
+                    <th>Tổng Tiền</th>
+                    <th>Giảm Giá</th>
+                    <th>Tình Trạng</th>
+                    <th>Khách Hàng</th>
+                    <th>Hình Ảnh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><?= $searchResult['MaPhieuMuon'] ?></td>
+                    <td><?= $searchResult['NgayTao'] ?></td>
+                    <td><?= number_format($searchResult['TongTien']) ?> VND</td>
+                    <td><?= $searchResult['GiamGia'] ?>%</td>
+                    <td><?= $searchResult['tinhTrang'] ?></td>
+                    <td><?= $searchResult['tenKH'] ?></td>
+                    <td><img src="<?= $searchResult['hinhAnh'] ?>" alt="Hình Ảnh" width="100"></td>
+                  </tr>
+                </tbody>
+              </table>
+            <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+              <div class="alert alert-warning text-center">Không tìm thấy phiếu mượn với ID:
+                <?= htmlspecialchars($searchID) ?>
+              </div>
+            <?php endif; ?>
+
+            <!-- Thông báo lỗi -->
+            <?php if (isset($_GET['error'])): ?>
+              <div class="alert alert-danger mt-4 text-center">
+                <?= htmlspecialchars($_GET['error']) ?>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
-        <!--End Form kiểm tra cú pháp-->
-
-        <!--Start Kết quả kiểm tra-->
-        <?php if (!empty($result)): ?>
-          <div class="card mt-3">
-            <div class="card-body">
-              <h4 class="text-white">Kết quả kiểm tra cú pháp</h4>
-              <p class="text-success"><?= htmlspecialchars($result) ?></p>
-            </div>
-          </div>
-        <?php endif; ?>
-        <!--End Kết quả kiểm tra-->
-
       </div>
-      <!-- End container-fluid-->
-
     </div>
-    <!--End content-wrapper-->
+    <!-- End content -->
 
-    <!--Start Back To Top Button-->
-    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-    <!--End Back To Top Button-->
-
-    <!--Start right sidebar-->
-    <?php require_once "../../layout/right_sidebar.php"; ?>
-    <!--End right sidebar-->
-
+    <!-- Footer -->
+    <?php require_once "../../layout/script.php"; ?>
   </div>
-  <!--End wrapper-->
-
-  <!--Start footer-->
-  <?php require_once "../../layout/script.php"; ?>
-  <!--End footer-->
-
 </body>
 
 </html>

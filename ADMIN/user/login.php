@@ -29,9 +29,11 @@
           <div class="card-title text-uppercase text-center py-3">ĐĂNG NHẬP ADMIN</div>
 
           <?php
+          session_start();
           // Hiển thị lỗi nếu có
-          if (isset($_GET['error'])) {
-            echo "<p style='color: red;'>" . htmlspecialchars($_GET['error']) . "</p>";
+          if (isset($_SESSION['error'])) {
+            echo "<p style='color: red;'>" . htmlspecialchars($_SESSION['error']) . "</p>";
+            unset($_SESSION['error']);
           }
           ?>
 
