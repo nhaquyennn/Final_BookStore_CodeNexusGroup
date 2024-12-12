@@ -10,10 +10,3 @@ $conn = mysqli_connect($host, $username, $password, $dbname);
 if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
 }
-try {
-    // Khởi tạo kết nối PDO
-    $db = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Bật chế độ thông báo lỗi
-} catch (PDOException $e) {
-    die("Lỗi kết nối cơ sở dữ liệu: " . $e->getMessage());
-}

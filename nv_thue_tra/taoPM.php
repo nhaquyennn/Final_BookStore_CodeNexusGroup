@@ -116,28 +116,28 @@
                         listContainer.innerHTML = "<p class='text-white'>Không tìm thấy ấn phẩm phù hợp.</p>";
                     } else {
                         let htmlContent = `<table class="table table-light table-striped">
-                        <thead>
-                            <tr>
-                                <th>Mã ấn phẩm</th>
-                                <th>Tên ấn phẩm</th>
-                                <th>Giá thuê</th>
-                                <th>Tình trạng</th>
-                                <th>Thêm</th>
-                            </tr>
-                        </thead>
-                        <tbody>`;
+                <thead>
+                    <tr>
+                        <th>Mã ấn phẩm</th>
+                        <th>Tên ấn phẩm</th>
+                        <th>Giá thuê</th>
+                        <th>Tình trạng</th>
+                        <th>Thêm</th>
+                    </tr>
+                </thead>
+                <tbody>`;
 
                         data.forEach(item => {
                             htmlContent += `
-                            <tr>
-                                <td>${item.maAnPham}</td>
-                                <td>${item.TenAnPham}</td>
-                                <td>${item.PhiThue} ₫</td>                                
-                                <td>${item.tinhTrang}</td>
-                                <td>
-                                    <button class="btn btn-success btn-sm" type="button" onclick="addToSelected('${item.maAnPham}', '${item.TenAnPham}', ${item.PhiThue})">Thêm</button>
-                                </td>
-                            </tr>`;
+                    <tr>
+                        <td>${item.maAnPham}</td>
+                        <td>${item.TenAnPham}</td>
+                        <td>${item.PhiThue} ₫</td>                                
+                        <td>${item.tinhTrang}</td>
+                        <td>
+                            <button class="btn btn-success btn-sm" type="button" onclick="addToSelected('${item.maAnPham}', '${item.TenAnPham}', ${item.PhiThue})">Thêm</button>
+                        </td>
+                    </tr>`;
                         });
 
                         htmlContent += `</tbody></table>`;
@@ -238,64 +238,46 @@
 </html>
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        // Lấy dữ liệu từ form
-        $SDT = $_POST['SoDienThoai'];
-        $tenKH = $_POST['hoTen'];
-        $TongTien = $_POST['TongTien'];
-        $NgayMuon = $_POST['ngaymuon'];
-        $NgayTra = $_POST['ngaytra'];
-        $tinhTrang = "Đang mượn";
+    // Lấy dữ liệu từ form
+    $SDT = $_POST['SoDienThoai'];
+    $tenKH = $_POST['hoTen'];
+    $TongTien = $_POST['TongTien'];
+    $NgayMuon = $_POST['ngaymuon'];
+    $NgayTra = $_POST['ngaytra'];
+    $tinhTrang = "Đang mượn";
+    $selectedItems = isset($_POST['selectedItems']) ? json_decode($_POST['selectedItems'], true) : [];
 
-        // Chuyển danh sách ấn phẩm từ JSON sang mảng PHP
-        $selectedItems = isset($_POST['selectedItems']) ? json_decode($_POST['selectedItems'], true) : [];
-
-        // Kiểm tra dữ liệu cơ bản
-        if (empty($SDT) || empty($tenKH) || empty($TongTien) || empty($selectedItems)) {
-            throw new Exception("Không đủ dữ liệu để tạo phiếu mượn!");
-        }
-
-        // Bắt đầu transaction
-        $db->beginTransaction();
-
-        // 1. Lưu vào bảng `phieumuon`
-        $sqlPhieuMuon = "INSERT INTO phieumuon (SoDienThoai, NgayMuon, NgayTra, TongTien, hoTen, tinhTrang) VALUES (:SoDienThoai, :NgayMuon, :NgayTra, :TongTien, :hoTen, :tinhTrang)";
-        $stmtPhieuMuon = $db->prepare($sqlPhieuMuon);
-        $stmtPhieuMuon->execute([
-            ':SoDienThoai' => $SDT,
-            ':NgayMuon' => $NgayMuon,
-            ':NgayTra' => $NgayTra,
-            ':TongTien' => $TongTien,
-            ':hoTen' => $tenKH,
-            ':tinhTrang' => $tinhTrang
-        ]);
-
-        // Lấy `MaPhieuMuon` vừa tạo
-        $maPhieuMuon = $db->lastInsertId();
-
-        // 2. Lưu vào bảng `chitietphieumuon`
-        $sqlChiTietPhieuMuon = "INSERT INTO chitietpm (MaPhieuMuon, maAnPham, SoLuong, DonGia) VALUES (:MaPhieuMuon, :maAnPham, :SoLuong, :DonGia)";
-        $stmtChiTietPhieuMuon = $db->prepare($sqlChiTietPhieuMuon);
-
-        foreach ($selectedItems as $item) {
-            $stmtChiTietPhieuMuon->execute([
-                ':MaPhieuMuon' => $maPhieuMuon,
-                ':maAnPham' => $item['maAnPham'],
-                ':SoLuong' => $item['soLuong'],
-                ':DonGia' => $item['PhiThue']
-            ]);
-        }
-
-        // Commit transaction
-        $db->commit();
-        echo "<script>
-                 alert('Tạo phiếu mượn thành công!');
-                window.location.href = 'dsphieumuon.php';
-        </script>";
-    } catch (Exception $e) {
-        // Rollback nếu có lỗi
-        $db->rollBack();
-        die("Lỗi: " . $e->getMessage());
+    // Kiểm tra dữ liệu cơ bản
+    if (empty($SDT) || empty($tenKH) || empty($TongTien) || empty($selectedItems)) {
+        die("Không đủ dữ liệu để tạo phiếu mượn!");
     }
+
+    // Bắt đầu transaction
+    mysqli_begin_transaction($conn);
+
+    // 1. Lưu vào bảng `phieumuon`
+    $sqlPhieuMuon = "INSERT INTO phieumuon (SoDienThoai, NgayMuon, NgayTra, TongTien, hoTen, tinhTrang) VALUES (?, ?, ?, ?, ?, ?)";
+    $stmtPhieuMuon = mysqli_prepare($conn, $sqlPhieuMuon);
+    mysqli_stmt_bind_param($stmtPhieuMuon, 'ssssss', $SDT, $NgayMuon, $NgayTra, $TongTien, $tenKH, $tinhTrang);
+    mysqli_stmt_execute($stmtPhieuMuon);
+
+    // Lấy `MaPhieuMuon` vừa tạo
+    $maPhieuMuon = mysqli_insert_id($conn);
+
+    // 2. Lưu vào bảng `chitietpm`
+    $sqlChiTietPhieuMuon = "INSERT INTO chitietpm (MaPhieuMuon, maAnPham, SoLuong, DonGia) VALUES (?, ?, ?, ?)";
+    $stmtChiTietPhieuMuon = mysqli_prepare($conn, $sqlChiTietPhieuMuon);
+
+    foreach ($selectedItems as $item) {
+        mysqli_stmt_bind_param($stmtChiTietPhieuMuon, 'isid', $maPhieuMuon, $item['maAnPham'], $item['soLuong'], $item['PhiThue']);
+        mysqli_stmt_execute($stmtChiTietPhieuMuon);
+    }
+
+    // Commit transaction
+    mysqli_commit($conn);
+    echo "<script>
+             alert('Tạo phiếu mượn thành công!');
+            window.location.href = 'dsphieumuon.php';
+    </script>";
 }
 ?>
