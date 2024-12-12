@@ -82,13 +82,13 @@
     </li>
 
     <!-- Hóa đơn -->
-    <li><a href="bill.html" class="sidebar-link"><span>Hóa đơn</span></a></li>
+    <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/bill.php" class="sidebar-link"><span>Hóa đơn</span></a></li>
 
     <!-- Nhân viên -->
-    <li><a href="employees.php" class="sidebar-link"><span>Nhân viên</span></a></li>
+    <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/employees.php" class="sidebar-link"><span>Nhân viên</span></a></li>
 
     <!-- Khách hàng -->
-    <li><a href="customers.php" class="sidebar-link"><span>Khách hàng</span></a></li>
+    <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/customers.php" class="sidebar-link"><span>Khách hàng</span></a></li>
     <li>
       <hr>
     </li>
