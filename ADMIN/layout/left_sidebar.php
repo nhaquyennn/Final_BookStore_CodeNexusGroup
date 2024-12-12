@@ -1,7 +1,7 @@
 <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
   <div class="brand-logo">
     <a href="index.html">
-      <img src="/Final_BookStore_CodeNexusGroup/ADMIN/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+      <img src="/Final_BookStore_CodeNexus/ADMIN/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
       <h5 class="logo-text">Admin</h5>
     </a>
   </div>
@@ -37,9 +37,9 @@
 
       <!-- Danh sách ngày tháng năm -->
       <ul id="orderForm" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
-        <li class="list-group-item"><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/order/formTimKiem.php">Tìm kiếm
+        <li class="list-group-item"><a href="/Final_BookStore_CodeNexus/ADMIN/view/order/formTimKiem.php">Tìm kiếm
             Đơn Hàng</a></li>
-        <li class="list-group-item"><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/order/danhSachDonHang.php">Duyệt
+        <li class="list-group-item"><a href="/Final_BookStore_CodeNexus/ADMIN/view/order/danhSachDonHang.php">Duyệt
             đơn hàng</a></li>
       </ul>
     </li>
@@ -56,11 +56,11 @@
       <!-- Danh sách ngày tháng năm -->
       <ul id="dateListPublications" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
         <li class="list-group-item"><a
-            href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/thongke/thongKeSanPhamTheoNgay.php">Ngày</a></li>
+            href="/Final_BookStore_CodeNexus/ADMIN/view/report/thongke/thongKeSanPhamTheoNgay.php">Ngày</a></li>
         <li class="list-group-item"><a
-            href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/thongke/thongKeSanPhamTheoThang.php">Tháng</a></li>
+            href="/Final_BookStore_CodeNexus/ADMIN/view/report/thongke/thongKeSanPhamTheoThang.php">Tháng</a></li>
         <li class="list-group-item"><a
-            href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/thongke/thongKeSanPhamTheoNam.php">Năm</a></li>
+            href="/Final_BookStore_CodeNexus/ADMIN/view/report/thongke/thongKeSanPhamTheoNam.php">Năm</a></li>
       </ul>
     </li>
 
@@ -73,11 +73,11 @@
       <!-- Danh sách ngày tháng năm -->
       <ul id="dateListRevenue" class="list-group" style="display: none; padding-left: 20px; font-size: 14px;">
         <li class="list-group-item"><a
-            href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a></li>
+            href="/Final_BookStore_CodeNexus/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a></li>
         <li class="list-group-item"><a
-            href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/baocao/baoCaoDoanhThuTheoThang.php">Tháng</a></li>
+            href="/Final_BookStore_CodeNexus/ADMIN/view/report/baocao/baoCaoDoanhThuTheoThang.php">Tháng</a></li>
         <li class="list-group-item"><a
-            href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNam.php">Năm</a></li>
+            href="/Final_BookStore_CodeNexus/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNam.php">Năm</a></li>
       </ul>
     </li>
 
