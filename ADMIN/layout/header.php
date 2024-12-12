@@ -6,32 +6,32 @@
 <title>Dashboard</title>
 
 <!-- Favicon -->
-<link rel="icon" href="/Final_BookStore_CodeNexus/ADMIN/assets/images/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="/Final_BookStore_CodeNexusGroup/ADMIN/assets/images/favicon.ico" type="image/x-icon" />
 
 <!-- Loader -->
-<link href="/Final_BookStore_CodeNexus/ADMIN/assets/css/pace.min.css" rel="stylesheet" />
-<script src="/Final_BookStore_CodeNexus/ADMIN/assets/js/pace.min.js"></script>
+<link href="/Final_BookStore_CodeNexusGroup/ADMIN/assets/css/pace.min.css" rel="stylesheet" />
+<script src="/Final_BookStore_CodeNexusGroup/ADMIN/assets/js/pace.min.js"></script>
 
 <!-- Vector Map CSS -->
 <link href="https://cdn.jsdelivr.net/npm/jvectormap@2.0.5/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
 
 <!-- Simplebar CSS -->
-<link href="/Final_BookStore_CodeNexus/ADMIN/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+<link href="/Final_BookStore_CodeNexusGroup/ADMIN/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
 
 <!-- Bootstrap core CSS -->
-<link href="/Final_BookStore_CodeNexus/ADMIN/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/Final_BookStore_CodeNexusGroup/ADMIN/assets/css/bootstrap.min.css" rel="stylesheet" />
 
 <!-- Animate CSS -->
-<link href="/Final_BookStore_CodeNexus/ADMIN/assets/css/animate.css" rel="stylesheet" type="text/css" />
+<link href="/Final_BookStore_CodeNexusGroup/ADMIN/assets/css/animate.css" rel="stylesheet" type="text/css" />
 
 <!-- Icons CSS -->
-<link href="/Final_BookStore_CodeNexus/ADMIN/assets/css/icons.css" rel="stylesheet" type="text/css" />
+<link href="/Final_BookStore_CodeNexusGroup/ADMIN/assets/css/icons.css" rel="stylesheet" type="text/css" />
 
 <!-- Sidebar CSS -->
-<link href="/Final_BookStore_CodeNexus/ADMIN/assets/css/sidebar-menu.css" rel="stylesheet" />
+<link href="/Final_BookStore_CodeNexusGroup/ADMIN/assets/css/sidebar-menu.css" rel="stylesheet" />
 
 <!-- Custom Style -->
-<link href="/Final_BookStore_CodeNexus/ADMIN/assets/css/mainSTYLE1.css" rel="stylesheet" />
+<link href="/Final_BookStore_CodeNexusGroup/ADMIN/assets/css/mainSTYLE1.css" rel="stylesheet" />
 
 <!-- Font Awesome (nếu cần sử dụng icon) -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
