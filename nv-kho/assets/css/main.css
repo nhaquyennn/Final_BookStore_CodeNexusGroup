@@ -1850,6 +1850,7 @@ table.grid td {
 .table.align-items-center td, .table.align-items-center th {
     vertical-align: middle;
     font-size: 15px;
+    text-align:center
 }
 .table thead th {
     font-size: .72rem;
@@ -3733,6 +3734,15 @@ table.grid td {
 }
 .btn-create{
     text-align:center
+}
+.table-HD tr th {
+    border: 1px solid white;
+    
+}
+.table-HD tr td {
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 /*Gia Hi*/
 

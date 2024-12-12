@@ -1,3 +1,12 @@
+<?php
+session_start();
+// Kiểm tra nếu session 'user' không tồn tại 
+if (!isset($_SESSION['user'])) {
+    // Nếu chưa đăng nhập, chuyển hướng về trang login
+    header("Location: user/login.php?error=Vui lòng đăng nhập.");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

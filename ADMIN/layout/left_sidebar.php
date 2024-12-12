@@ -94,10 +94,10 @@
     </li>
 
     <!-- Thông tin cá nhân -->
-    <li><a href="profile.php" class="sidebar-link"><span>Thông tin cá nhân</span></a></li>
+    <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/profile.php" class="sidebar-link"><span>Thông tin cá nhân</span></a></li>
 
     <!-- Đăng xuất -->
-    <li><a href="user/logout.php" class="sidebar-link"><span>Đăng xuất</span></a></li>
+    <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/user/logout.php" class="sidebar-link"><span>Đăng xuất</span></a></li>
   </ul>
 </div>
 

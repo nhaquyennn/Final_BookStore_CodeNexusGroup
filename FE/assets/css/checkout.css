@@ -1,0 +1,117 @@
+.checkout__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.checkout__table th,
+.checkout__table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.checkout__table th {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.checkout__table td:last-child,
+.checkout__table th:last-child {
+    text-align: right;
+    /* Canh phải cho cột Total */
+}
+
+.checkout__order__subtotal,
+.checkout__order__total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.checkout__payment__title {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: black;
+}
+
+/* Tạo kiểu dáng cho khung chứa */
+.col-lg-12 h6 {
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    /* Căn phải */
+}
+
+/* Tạo kiểu cho icon bên cạnh text */
+.icon_tag_alt {
+    font-size: 18px;
+    margin-right: 8px;
+    color: #007bff;
+
+    /* Màu icon */
+}
+
+/* Định dạng dropdown */
+select[name="coupon_code"] {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #333;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease;
+}
+
+/* Tạo hiệu ứng hover và focus */
+select[name="coupon_code"]:hover,
+select[name="coupon_code"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Định dạng cho option trong dropdown */
+select[name="coupon_code"] option {
+    padding: 10px;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Thêm padding, lề cho thẻ h6 */
+select[name="coupon_code"] {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+/* Đảm bảo .site-btn có cùng chiều rộng với .checkout__order */
+.checkout__order,
+.site-btn {
+    width: 100%; /* Cả hai phần tử đều có chiều rộng 100% */
+}
+
+/* Áp dụng cho tất cả các .site-btn, trừ khi nó nằm trong .hero__search__form */
+
+
+/* Trừ các .site-btn nằm trong .hero__search__form */
+.hero__search__form .site-btn {
+    width: auto; /* Hoặc bất kỳ thuộc tính khác mà bạn muốn áp dụng riêng */
+    /* Các kiểu khác có thể được thêm vào nếu cần */
+}
+.hero__search__form form button
+{
+    right: 15px;
+}
+
+.AAA button
+{
+    width: 100%; /* Hoặc bất kỳ thuộc tính nào bạn muốn */
+    
+}

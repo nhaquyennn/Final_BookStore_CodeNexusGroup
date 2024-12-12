@@ -1,4 +1,13 @@
 <?php
+session_start();
+// Kiểm tra nếu session 'user' không tồn tại 
+if (!isset($_SESSION['user'])) {
+  // Nếu chưa đăng nhập, chuyển hướng về trang login
+  header("Location: ../login.php?error=Vui lòng đăng nhập.");
+  exit();
+}
+?>
+<?php
 require_once 'controlUser/controlProfile.php';
 ?>
 
@@ -33,17 +42,19 @@ require_once 'controlUser/controlProfile.php';
 
                 <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
                   <li class="nav-item">
-                    <a href="#profile" data-toggle="tab" class="nav-link active">
+                    <a href="#profile" data-toggle="tab"
+                      class="nav-link <?php echo (!isset($error) && !isset($error_edit)) ? 'active' : ''; ?>">
                       <i class="icon-user"></i> <span class="hidden-xs">Thông tin</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#edit" data-toggle="tab" class="nav-link">
+                    <a href="#edit" data-toggle="tab" class="nav-link" <?php echo isset($error_edit) ? 'active' : ''; ?>">
                       <i class="icon-note"></i> <span class="hidden-xs">Sửa thông tin</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#pw_change" data-toggle="tab" class="nav-link">
+                    <a href="#pw_change" data-toggle="tab"
+                      class="nav-link <?php echo isset($error) ? 'active' : ''; ?>">
                       <i class="icon-lock"></i> <span class="hidden-xs">Đổi mật khẩu</span>
                     </a>
                   </li>
@@ -51,7 +62,8 @@ require_once 'controlUser/controlProfile.php';
 
                 <div class="tab-content p-3">
                   <!-- Thông tin cá nhân -->
-                  <div class="tab-pane active" id="profile">
+                  <div class="tab-pane <?php echo (!isset($error) && !isset($error_edit)) ? 'active' : ''; ?>"
+                    id="profile">
                     <div class="row">
                       <div class="col-md-12">
                         <h4 class="text-center mt-2 mb-3">THÔNG TIN CÁ NHÂN</h4>
@@ -82,14 +94,12 @@ require_once 'controlUser/controlProfile.php';
                   </div>
 
                   <!-- Sửa thông tin -->
-                  <?php if (!empty($error)): ?>
-                    <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
-                  <?php endif; ?>
-                  <div class="tab-pane" id="edit">
-                    <form method="POST" action="controlUser/controlProfile.php">
-                      <input type="hidden" name="maNguoiDung"
-                        value="<?php echo htmlspecialchars($user['maNhanVien']); ?>">
-
+                  <div class="tab-pane <?php echo isset($error_edit) ? 'active' : ''; ?>" id="edit">
+                    <form method="POST" action="">
+                      <?php if (!empty($error_edit)): ?>
+                        <div class="alert alert-danger"><?php echo htmlspecialchars($error_edit); ?></div>
+                      <?php endif; ?>
+                      <input type="hidden" name="update_profile" value="1">
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label">Tên nhân viên</label>
                         <div class="col-lg-9">
@@ -116,8 +126,12 @@ require_once 'controlUser/controlProfile.php';
                   </div>
 
                   <!-- Đổi mật khẩu -->
-                  <div class="tab-pane" id="pw_change">
-                    <form method="POST" action="controlChangePassword.php">
+                  <div class="tab-pane <?php echo isset($error) ? 'active' : ''; ?>" id="pw_change">
+                    <form method="POST" action="">
+                      <?php if (!empty($error)): ?>
+                        <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+                      <?php endif; ?>
+                      <input type="hidden" name="change_password" value="1">
                       <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label">Mật khẩu cũ</label>
                         <div class="col-lg-9">
@@ -131,7 +145,7 @@ require_once 'controlUser/controlProfile.php';
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label">Xác nhận mật khẩu mới</label>
+                        <label class="col-lg-3 col-form-label form-control-label">Xác nhận mật khẩu</label>
                         <div class="col-lg-9">
                           <input class="form-control" type="password" name="confirm_password" required>
                         </div>
@@ -139,7 +153,7 @@ require_once 'controlUser/controlProfile.php';
                       <div class="form-group row">
                         <div class="col-lg-9 offset-lg-3">
                           <input type="reset" class="btn btn-secondary" value="Hủy">
-                          <input type="submit" class="btn btn-primary" value="Lưu thay đổi">
+                          <input type="submit" class="btn btn-primary" value="Đổi mật khẩu">
                         </div>
                       </div>
                     </form>
@@ -152,17 +166,16 @@ require_once 'controlUser/controlProfile.php';
         </div>
         <!-- End Main Content -->
 
-        <!-- Right Sidebar -->
-        <?php require_once "layout/right_sidebar.php"; ?>
-        <!-- End Right Sidebar -->
-
-        <!-- Footer -->
-        <?php require_once "layout/script.php"; ?>
-        <!-- End Footer -->
-
       </div>
     </div>
   </div>
+
+  <!-- Footer -->
+  <?php require_once "layout/footer.php"; ?>
+  <!-- End Footer -->
+
+  <?php require_once "layout/script.php"; ?>
+
 </body>
 
 </html>

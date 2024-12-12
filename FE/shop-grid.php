@@ -1,383 +1,239 @@
+<?php
+include 'controlCustomerUI/controlShopGrid.php';
+include 'controlCustomerUI/controlFilterProduct.php';
+include 'controlCustomerUI/controlCategoryGrid.php';
+
+// Bao gồm các control files
+
+
+// Lấy các danh mục và bộ lọc
+$categories_name_only = getAllCategories($conn);
+$authors = getAllAuthors($conn);
+$publishers = getAllPublishers($conn);
+$years = getAllPublishYears($conn);
+$rentalPrices = getAllRentalPrices($conn);
+
+// Xử lý bộ lọc từ request
+$filter_params = [
+    'category' => $_GET['category'] ?? '', // Nếu không có category, mặc định là trống
+    'min_price' => $_GET['min_price'] ?? '0', // Mức giá tối thiểu mặc định là 0
+    'max_price' => $_GET['max_price'] ?? '1000000', // Mức giá tối đa mặc định là 1000000
+    'author' => $_GET['author'] ?? '',
+    'publisher' => $_GET['publisher'] ?? '',
+    'year' => $_GET['year'] ?? '',
+    'sort' => $_GET['sort'] ?? ''
+];
+
+// Lọc sản phẩm theo điều kiện
+$products = filterProducts($conn, $filter_params);
+
+// Nếu không có sản phẩm nào, có thể hiển thị thông báo không có sản phẩm nào
+if (empty($products)) {
+    echo "<p>Không có sản phẩm nào khớp với bộ lọc.</p>";
+}
+
+// Tổng số lượng ấn phẩm
+$totalQuantity_dauap = count($products);
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
     <?php require_once 'layout/header.php' ?>
-    
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <!-- <div id="preloder">
-        <div class="loader"></div>
-    </div> -->
-    <!-- Page Preloder End -->
-
-
-    <!-- Product Section Begin -->
     <section class="product spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
-                        <div class="sidebar__item">
-                            <h4>Department</h4>
-                            <ul>
-                                <li><a href="#">Fresh Meat</a></li>
-                                <li><a href="#">Vegetables</a></li>
-                                <li><a href="#">Fruit & Nut Gifts</a></li>
-                                <li><a href="#">Fresh Berries</a></li>
-                                <li><a href="#">Ocean Foods</a></li>
-                                <li><a href="#">Butter & Eggs</a></li>
-                                <li><a href="#">Fastfood</a></li>
-                                <li><a href="#">Fresh Onion</a></li>
-                                <li><a href="#">Papayaya & Crisps</a></li>
-                                <li><a href="#">Oatmeal</a></li>
-                            </ul>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Price</h4>
-                            <div class="price-range-wrap">
-                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                    data-min="10" data-max="540">
-                                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                </div>
-                                <div class="range-slider">
-                                    <div class="price-input">
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
+                        <form method="get" action="">
+                            <!-- Danh mục -->
+                            <div class="sidebar__item">
+                                <h4>DANH MỤC</h4>
+                                <ul>
+                                    <li><input type="radio" name="category" value="" checked> Tất cả</li>
+                                    <?php foreach ($categories_name_only as $category): ?>
+                                        <li>
+                                            <input type="radio" name="category"
+                                                value="<?php echo htmlspecialchars($category); ?>">
+                                            <?php echo htmlspecialchars($category); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+
+                            <!-- Khoảng giá -->
+                            <div class="sidebar__item">
+                                <h4>Giá</h4>
+                                <div class="price-range">
+                                    <input type="range" id="min_price" name="min_price" min="0" max="1000000"
+                                        step="10000" value="0" oninput="updatePriceLabels()">
+                                    <input type="range" id="max_price" name="max_price" min="0" max="1000000"
+                                        step="10000" value="1000000" oninput="updatePriceLabels()">
+                                    <div class="price-labels">
+                                        <span id="min_price_label">0 VND</span> - <span id="max_price_label">1,000,000
+                                            VND</span>
                                     </div>
                                 </div>
+                                <button type="submit" style="width: 221px; margin-top:60px ">Lọc</button>
                             </div>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Tác giả</h4>
-                            <ul>
-                                <li><a href="#">566</a></li>
-                                <li><a href="#">789</a></li>
-                                <li><a href="#">456</a></li>
-                                <li><a href="#">123</a></li>
-                            </ul>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Nhà xuất bản</h4>
-                            <ul>
-                                <li><a href="#">QTE</a></li>
-                                <li><a href="#">CDZ</a></li>
-                                <li><a href="#">ABC</a></li>
-                            </ul>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Năm xuất bản</h4>
-                            <ul>
-                                <li><a href="#">2000</a></li>
-                                <li><a href="#">1999</a></li>
-                                <li><a href="#">2010</a></li>
-                            </ul>
-                        </div>
-                        <div class="sidebar__item">
+
+
+                            <!-- Tác giả -->
+                            <div class="sidebar__item">
+                                <h4>Tác giả</h4>
+                                <ul>
+                                    <li><input type="radio" name="author" value="" checked> Tất cả</li>
+                                    <?php foreach ($authors as $author): ?>
+                                        <li>
+                                            <input type="radio" name="author"
+                                                value="<?php echo htmlspecialchars($author); ?>">
+                                            <?php echo htmlspecialchars($author); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+
+                            <!-- Nhà xuất bản -->
+                            <div class="sidebar__item">
+                                <h4>Nhà xuất bản</h4>
+                                <ul>
+                                    <li><input type="radio" name="publisher" value="" checked> Tất cả</li>
+                                    <?php foreach ($publishers as $publisher): ?>
+                                        <li>
+                                            <input type="radio" name="publisher"
+                                                value="<?php echo htmlspecialchars($publisher); ?>">
+                                            <?php echo htmlspecialchars($publisher); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+
+                            <!-- Năm xuất bản -->
+                            <div class="sidebar__item">
+                                <h4>Năm xuất bản</h4>
+                                <ul>
+                                    <li><input type="radio" name="year" value="" checked> Tất cả</li>
+                                    <?php foreach ($years as $year): ?>
+                                        <li>
+                                            <input type="radio" name="year" value="<?php echo htmlspecialchars($year); ?>">
+                                            <?php echo htmlspecialchars($year); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+
+                            <!-- Sắp xếp -->
+                            <div class="sidebar__item">
+                                <h4>Sắp xếp theo</h4>
+                                <select name="sort">
+                                    <option value="">Mặc định</option>
+                                    <option value="low_to_high">Giá từ thấp đến cao</option>
+                                    <option value="high_to_low">Giá từ cao đến thấp</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Áp dụng bộ lọc</button>
                             <div class="latest-product__text">
                                 <h4>Sản phẩm mới</h4>
                                 <div class="latest-product__slider owl-carousel">
-                                    <div class="latest-prdouct__slider__item">
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-1.jpg" alt="">
+                                    <?php if (!empty($products_new)): ?>
+                                        <?php
+                                        $chunks = array_chunk($products_new, 3); // Chia sản phẩm thành các nhóm 3 sản phẩm
+                                        foreach ($chunks as $chunk): ?>
+                                            <div class="latest-product__slider__item">
+                                                <?php foreach ($chunk as $product): ?>
+                                                    <a href="#" class="latest-product__item">
+                                                        <div class="latest-product__item__pic">
+                                                            <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
+                                                                alt="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
+                                                        </div>
+                                                        <div class="latest-product__item__text">
+                                                            <h6><?php echo htmlspecialchars($product['TenAnPham']); ?></h6>
+                                                            <span><?php echo number_format($product['Giathue'], 0, ',', '.'); ?>
+                                                                VND</span>
+                                                        </div>
+                                                    </a>
+                                                <?php endforeach; ?>
                                             </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-2.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-3.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="latest-prdouct__slider__item">
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-1.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-2.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-3.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                    </div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <p>Không có sản phẩm mới để hiển thị.</p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-7">
                     <div class="filter__item">
                         <div class="row">
-                            <div class="col-lg-4 col-md-5">
-                                <div class="filter__sort">
-                                    <span>Sort By</span>
-                                    <select>
-                                        <option value="0">Default</option>
-                                        <option value="0">Default</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4">
-                                <div class="filter__found">
-                                    <h6><span>16</span> Products found</h6>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-3">
-                                <div class="filter__option">
-                                    <span class="icon_grid-2x2"></span>
-                                    <span class="icon_ul"></span>
-                                </div>
+                            <div class="col-lg-12 col-md-12">
+                                <h5 style="text-align: left; float: left;">
+                                    <!-- Nút bỏ lọc ở góc trái -->
+                                    <a href="shop-grid.php" class="btn-reset-filter">Bỏ lọc</a>
+                                </h5>
+                                <h5 style="text-align: right;">
+                                    <!-- Số lượng ấn phẩm ở góc phải -->
+                                    <span><?php echo htmlspecialchars($totalQuantity_dauap); ?></span> ấn phẩm
+                                </h5>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-8.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
+                        <?php if (!empty($products)): ?>
+                            <?php foreach ($products as $product): ?>
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic">
+                                            <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
+                                                alt="<?php echo htmlspecialchars($product['TenDauAnPham']); ?>">
+                                            <ul class="product__item__pic__hover">
+                                                <li><a href="#" style="background-color: #E75480; border: none; color: white"><i
+                                                            class="fa fa-shopping-cart"></i></a></li>
+                                                <!-- Thêm nút xem chi tiết với biểu tượng con mắt -->
+                                                <li><a style="background-color: #E75480; border: none; color: white"
+                                                        href="shop-details.php?id=<?php echo urlencode($product['maAnPham']); ?>"><i
+                                                            class="fa fa-eye"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <h5><?php echo htmlspecialchars($product['TenAnPham']); ?></h5>
+                                            <h6 style="margin-top: 10px;">Tình trạng:
+                                                <?php echo htmlspecialchars($product['tinhTrang']); ?>
+                                            </h6>
+                                            <h6 style="margin-top: 10px;">Giá:
+                                                <?php echo number_format($product['Giathue'], 0, ',', '.'); ?> VND
+                                            </h6>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-2.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-3.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-4.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-5.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-6.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-7.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-9.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-10.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-11.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-12.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic">
-                                    <img src="img/product/book-13.jpg" alt="">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Crab Pool Security</a></h6>
-                                    <h5>$30.00</h5>
-                                </div>
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>Không có sản phẩm nào khớp với bộ lọc.</p>
+                        <?php endif; ?>
                     </div>
-                    <div class="product__pagination">
-                        <a href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-                    </div>
+
                 </div>
             </div>
         </div>
     </section>
-    <!-- Product Section End -->
 
     <footer>
         <?php require_once 'layout/footer.php' ?>
     </footer>
+    <script>
+        function updatePriceLabels() {
+            const minPrice = document.getElementById('min_price').value;
+            const maxPrice = document.getElementById('max_price').value;
+
+            document.getElementById('min_price_label').textContent = parseInt(minPrice).toLocaleString() + ' VND';
+            document.getElementById('max_price_label').textContent = parseInt(maxPrice).toLocaleString() + ' VND';
+        }
+
+    </script>
 </body>
 
 </html>

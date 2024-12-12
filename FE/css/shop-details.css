@@ -1,0 +1,38 @@
+.product-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    /* Giới hạn chiều cao */
+    object-fit: contain;
+}
+
+.product-details h2 {
+    margin-bottom: 20px;
+}
+
+.product-details p {
+    font-size: 1.1rem;
+}
+
+.product-details .btn {
+    width: 100%;
+}
+
+
+/* Hiệu ứng fade-out cho thông báo */
+
+.fade-out {
+    animation: fadeOut 5s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
