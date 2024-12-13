@@ -44,7 +44,7 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
             <!--Tổng số lượng -->
             <div class="mb-3 mt-4">
               <label for="tongSL" class="form-label fw-bold">Tổng số lượng:</label>
-              <input type="number" class="form-control" id="tongSL" name="tongSL" required>
+              <input type="number" class="form-control" id="tongSL" name="tongSL" min="1"required>
             </div>
 
 
@@ -97,7 +97,7 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                   </div>
                   <div class="col-md-4 mt-4">
                     <label for="soLuong" class="form-label fw-bold">Số Lượng:</label>
-                    <input type="number" class="form-control" name="soLuong[]" placeholder="Nhập số lượng" required>
+                    <input type="number" class="form-control" name="soLuong[]" placeholder="Nhập số lượng" min="1" required>
                   </div>
 
                 </div>

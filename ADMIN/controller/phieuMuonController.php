@@ -65,17 +65,17 @@ class PhieuMuonController
 
     if (empty($maPhieuMuon)) {
       $_SESSION['error'] = "Mã phiếu mượn không hợp lệ.";
-      header("Location: /Final_BookStore_CodeNexusGroup/ADMIN/view/order/danhSachDonHang.php");
+      header("Location: /Final_BookStore_CodeNexus/ADMIN/view/order/danhSachDonHang.php");
       exit();
     }
 
-    if ($this->capNhatTrangThai($maPhieuMuon, 'Duyệt')) {
+    if ($this->capNhatTrangThai($maPhieuMuon, 'Đã xác nhận')) {
       $_SESSION['success'] = "Chuyển thành công!";
     } else {
       $_SESSION['error'] = "Thất bại! " . $this->getError();
     }
 
-    header("Location: /Final_BookStore_CodeNexusGroup/ADMIN/view/order/danhSachDonHang.php");
+    header("Location: /Final_BookStore_CodeNexus/ADMIN/view/order/danhSachDonHang.php");
     exit();
   }
 
@@ -87,17 +87,17 @@ class PhieuMuonController
   {
     if (empty($maPhieuMuon)) {
       $_SESSION['error'] = "Mã phiếu mượn không hợp lệ.";
-      header("Location: /Final_BookStore_CodeNexusGroup/ADMIN/view/order/danhSachDonHang.php");
+      header("Location: /Final_BookStore_CodeNexus/ADMIN/view/order/danhSachDonHang.php");
       exit();
     }
 
-    if ($this->capNhatTrangThai($maPhieuMuon, 'Từ chối')) {
+    if ($this->capNhatTrangThai($maPhieuMuon, 'Đã hủy')) {
       $_SESSION['success'] = "Đơn hàng đã bị từ chối!";
     } else {
       $_SESSION['error'] = "Thất bại! " . $this->getError();
     }
 
-    header("Location: /Final_BookStore_CodeNexusGroup/ADMIN/view/order/danhSachDonHang.php");
+    header("Location: /Final_BookStore_CodeNexus/ADMIN/view/order/danhSachDonHang.php");
     exit();
   }
 

@@ -2879,3 +2879,9 @@ Sidebar
 .category-list {
     display: none;
 }
+/*Code của Phúc
+/* Sử dụng !important để ép áp dụng */
+
+.custom-dropdown-menu {
+    margin-left: -20px !important;
+}

@@ -41,7 +41,7 @@ if ($result_publishers && $result_publishers->num_rows > 0) {
 }
 
 //Lấy danh sách năm xuất bản
-$sql_years = "SELECT DISTINCT YEAR(ngayXB) AS NamXB FROM dauap";
+$sql_years = "SELECT DISTINCT YEAR(ngayXB) AS NamXB FROM anpham";
 $result_years = $conn->query($sql_years);
 
 $years = [];

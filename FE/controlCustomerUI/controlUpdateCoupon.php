@@ -1,5 +1,5 @@
 <?php
-require_once 'controlCheckout.php'; 
+require_once 'controlCheckout.php';
 
 if (isset($_POST['coupon_code'])) {
     $couponCode = $_POST['coupon_code'];
@@ -7,8 +7,13 @@ if (isset($_POST['coupon_code'])) {
 
     // Tính tổng tiền gốc từ giỏ hàng
     $totalAmount = 0;
+    $totalRentalFee = 0;
     foreach ($cartItems as $item) {
-        $totalAmount += $item['Giathue'] * $item['SoLuong'];
+        $daysDifference = (strtotime($item['NgayTra']) - strtotime($item['NgayMuon'])) / (60 * 60 * 24);
+        $daysDifference = (int) $daysDifference; // Chuyển về kiểu số nguyên (int)
+        $rentalFee = $item['PhiThue'] * $item['SoLuong'] * $daysDifference; // Convert days to seconds
+        $totalRentalFee += $rentalFee;
+        $totalAmount += ($item['Giathue'] * $item['SoLuong']) + $rentalFee;
     }
 
     // Kiểm tra số lượng sách khách hàng đã thuê trong tháng

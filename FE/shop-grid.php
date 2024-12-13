@@ -3,6 +3,7 @@ include 'controlCustomerUI/controlShopGrid.php';
 include 'controlCustomerUI/controlFilterProduct.php';
 include 'controlCustomerUI/controlCategoryGrid.php';
 
+
 // Bao gồm các control files
 
 
@@ -32,6 +33,7 @@ if (empty($products)) {
     echo "<p>Không có sản phẩm nào khớp với bộ lọc.</p>";
 }
 
+
 // Tổng số lượng ấn phẩm
 $totalQuantity_dauap = count($products);
 ?>
@@ -39,7 +41,13 @@ $totalQuantity_dauap = count($products);
 <html lang="zxx">
 
 <head>
-    <?php require_once 'layout/header.php' ?>
+    <?php require_once 'layout/header.php';
+    if (isset($_SESSION['search_results'])) {
+        $products = $_SESSION['search_results'];
+        $searchQuery = $_SESSION['search_query'];
+        unset($_SESSION['search_results']); // Xóa session để tránh hiển thị lại kết quả cũ
+        unset($_SESSION['search_query']);
+    } ?>
 </head>
 
 <body>
@@ -144,7 +152,8 @@ $totalQuantity_dauap = count($products);
                                         foreach ($chunks as $chunk): ?>
                                             <div class="latest-product__slider__item">
                                                 <?php foreach ($chunk as $product): ?>
-                                                    <a href="#" class="latest-product__item">
+                                                    <a href="shop-details.php?id=<?php echo urlencode($product['maAnPham'] ?? ''); ?>"
+                                                        class="latest-product__item">
                                                         <div class="latest-product__item__pic">
                                                             <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
                                                                 alt="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
@@ -182,39 +191,44 @@ $totalQuantity_dauap = count($products);
                         </div>
                     </div>
 
+                    <?php if (!empty($searchQuery)): ?>
+                        <h5 style="margin-bottom: 15px">Kết quả tìm kiếm cho từ khóa:
+                            "<?php echo htmlspecialchars($searchQuery, ENT_QUOTES, 'UTF-8'); ?>"</h5>
+                    <?php endif; ?>
+
                     <div class="row">
                         <?php if (!empty($products)): ?>
                             <?php foreach ($products as $product): ?>
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="product__item">
                                         <div class="product__item__pic">
-                                            <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh']); ?>"
-                                                alt="<?php echo htmlspecialchars($product['TenDauAnPham']); ?>">
+                                            <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
+                                                alt="<?php echo htmlspecialchars($product['TenAnPham'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                                             <ul class="product__item__pic__hover">
-                                                <li><a href="#" style="background-color: #E75480; border: none; color: white"><i
-                                                            class="fa fa-shopping-cart"></i></a></li>
-                                                <!-- Thêm nút xem chi tiết với biểu tượng con mắt -->
                                                 <li><a style="background-color: #E75480; border: none; color: white"
-                                                        href="shop-details.php?id=<?php echo urlencode($product['maAnPham']); ?>"><i
+                                                        href="shop-details.php?id=<?php echo urlencode($product['maAnPham'] ?? ''); ?>"><i
                                                             class="fa fa-eye"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="product__item__text">
-                                            <h5><?php echo htmlspecialchars($product['TenAnPham']); ?></h5>
+                                            <h5><?php echo htmlspecialchars($product['TenAnPham'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
+                                            </h5>
                                             <h6 style="margin-top: 10px;">Tình trạng:
-                                                <?php echo htmlspecialchars($product['tinhTrang']); ?>
+                                                <?php echo htmlspecialchars($product['tinhTrang'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
                                             </h6>
                                             <h6 style="margin-top: 10px;">Giá:
-                                                <?php echo number_format($product['Giathue'], 0, ',', '.'); ?> VND
+                                                <?php echo number_format($product['Giathue'] ?? 0, 0, ',', '.'); ?> VND
                                             </h6>
                                         </div>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>Không có sản phẩm nào khớp với bộ lọc.</p>
+                            <p><?php echo empty($searchQuery) ? 'Vui lòng nhập từ khóa tìm kiếm.' : 'Không có sản phẩm nào khớp với từ khóa tìm kiếm.'; ?>
+                            </p>
                         <?php endif; ?>
                     </div>
+
 
                 </div>
             </div>

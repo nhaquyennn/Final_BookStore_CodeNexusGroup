@@ -71,6 +71,7 @@ unset($_SESSION['success'], $_SESSION['error']);
 <body class="bg-theme bg-theme9">
   <div id="wrapper">
 
+
     <div class="clearfix"></div>
 
     <div class="content-wrapper">
@@ -91,6 +92,7 @@ unset($_SESSION['success'], $_SESSION['error']);
           <?php if (!empty($error)): ?>
             <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
           <?php endif; ?>
+
           <!-- Bảng danh sách đơn hàng -->
           <table class="table table-bordered table-striped">
             <thead>
@@ -98,7 +100,6 @@ unset($_SESSION['success'], $_SESSION['error']);
                 <th>Mã đơn hàng</th>
                 <th>Khách hàng</th>
                 <th>Ngày đặt hàng</th>
-                <th>Hình ảnh</th>
                 <th>Trạng thái</th>
                 <th>Tổng giá trị</th>
                 <th>Hành động</th>
@@ -112,17 +113,18 @@ unset($_SESSION['success'], $_SESSION['error']);
                     <td><?= htmlspecialchars($row['tenKH']) ?></td>
                     <td><?= htmlspecialchars($row['NgayTao']) ?></td>
                     <td>
-                      <img src="../../uploads/images/<?= htmlspecialchars($row['hinhAnh']) ?>" alt="Hình Ảnh"
-                        style="width: 50px; height: 50px; object-fit: cover;">
-                    </td>
-                    <td>
-                      <?php if ($row['tinhTrang'] === 'Chưa duyệt'): ?>
+                      <?php if ($row['tinhTrang'] === 'Đang xử lý'): ?>
                         <span class="badge bg-warning"><?= htmlspecialchars($row['tinhTrang']) ?></span>
-                      <?php elseif ($row['tinhTrang'] === 'Duyệt'): ?>
+                      <?php elseif ($row['tinhTrang'] === 'Đã xác nhận'): ?>
+                        <span class="badge bg-info"><?= htmlspecialchars($row['tinhTrang']) ?></span>
+                      <?php elseif ($row['tinhTrang'] === 'Đã hủy'): ?>
+                        <span class="badge bg-dark"><?= htmlspecialchars($row['tinhTrang']) ?></span>
+                      <?php elseif ($row['tinhTrang'] === 'Đang giao hàng'): ?>
+                        <span class="badge bg-primary"><?= htmlspecialchars($row['tinhTrang']) ?></span>
+                      <?php elseif ($row['tinhTrang'] === 'Đã hoàn tất'): ?>
                         <span class="badge bg-success"><?= htmlspecialchars($row['tinhTrang']) ?></span>
-                      <?php elseif ($row['tinhTrang'] === 'Từ chối'): ?>
-                        <span class="badge bg-danger"><?= htmlspecialchars($row['tinhTrang']) ?></span>
                       <?php endif; ?>
+
                     </td>
                     <td><?= htmlspecialchars(number_format($row['TongTien'] - $row['GiamGia'], 0)) ?> VND</td>
                     <td>
@@ -130,20 +132,18 @@ unset($_SESSION['success'], $_SESSION['error']);
                       <form method="POST" action="danhSachDonHang.php" style="display:inline;">
                         <input type="hidden" name="MaPhieuMuon" value="<?= htmlspecialchars($row['MaPhieuMuon']) ?>">
                         <button type="submit" name="action" value="duyet" class="btn btn-success btn-sm"
-                          <?= $row['tinhTrang'] === 'Duyệt' ? 'disabled' : '' ?>>
-                          Duyệt
+                          <?= in_array($row['tinhTrang'], ['Đã xác nhận', 'Đang giao hàng', 'Đã hoàn tất']) ? 'disabled' : '' ?>>
+                          Xác nhận
                         </button>
                       </form>
 
                       <!-- Nút Từ chối -->
                       <form method="GET" action="formTuChoi.php" style="display:inline;">
                         <input type="hidden" name="MaPhieuMuon" value="<?= htmlspecialchars($row['MaPhieuMuon']) ?>">
-                        <button type="submit" class="btn btn-danger btn-sm" <?= $row['tinhTrang'] === 'Từ chối' ? 'disabled' : '' ?>>
+                        <button type="submit" class="btn btn-danger btn-sm" <?= in_array($row['tinhTrang'], ['Đã hủy', 'Đã hoàn tất']) ? 'disabled' : '' ?>>
                           Từ chối
                         </button>
                       </form>
-
-
                     </td>
                   </tr>
                 <?php endforeach; ?>

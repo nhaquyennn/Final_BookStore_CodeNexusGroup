@@ -57,14 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body class="bg-theme bg-theme9">
   <div id="wrapper">
+    <div class="clearfix"></div>
+
+    <!-- Nội dung chính -->
     <?php require_once "../../layout/left_sidebar.php"; ?>
     <header class="topbar-nav">
       <?php require_once "../../layout/topbar.php"; ?>
     </header>
 
-    <div class="clearfix"></div>
-
-    <!-- Nội dung chính -->
     <div class="content-wrapper d-flex justify-content-center align-items-center vh-100">
       <div class="custom-card text-center">
         <h4 class="mb-4">Bạn có chắc chắn muốn từ chối đơn hàng với mã:
@@ -77,7 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Nút xác nhận từ chối -->
             <button type="submit" class="btn btn-danger me-3 px-4">Xác nhận từ chối</button>
             <!-- Nút hủy -->
-            <a href="danhSachDonHang.php" class="btn btn-secondary px-4">Hủy</a>
+            <a href="/Final_BookStore_CodeNexus/ADMIN/view/order/danhSachDonHang.php"
+              class="btn btn-secondary px-4">Hủy</a>
           </div>
         </form>
       </div>

@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.product-info img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.buttons form {
+    width: 45%;
+}
+
+.buttons button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.confirm {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+.cancel {
+    background-color: #5bc0de;
+    color: #fff;
+}
+
+.confirm:hover {
+    background-color: #c9302c;
+}
+
+.cancel:hover {
+    background-color: #31b0d5;
+}

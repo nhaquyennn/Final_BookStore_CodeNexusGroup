@@ -25,6 +25,7 @@ $error = $controller->getError();
 <body class="bg-theme bg-theme9">
   <!-- Start wrapper-->
   <div id="wrapper">
+
     <div class="clearfix"></div>
 
     <!--Start content-wrapper-->
@@ -43,6 +44,7 @@ $error = $controller->getError();
           <!-- Import topbar -->
         </header>
         <!--End topbar header-->
+
         <!--Start Dashboard Content-->
         <div class="card mt-3">
           <div class="card-body">

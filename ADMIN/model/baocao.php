@@ -105,7 +105,7 @@ ORDER BY
   }
 
 
-  // Thống kê sản phẩm theo năm
+
   public function baoCaoDoanhThuTheoNam($namBatDau, $namKetThuc)
   {
     $query = "
@@ -128,13 +128,6 @@ ORDER BY
     Nam ASC;
 
 ";
-
-
-
-
-
-
-
 
     $stmt = $this->conn->prepare($query);
     $stmt->bind_param("ii", $namBatDau, $namKetThuc);

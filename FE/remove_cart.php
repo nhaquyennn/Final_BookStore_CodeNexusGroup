@@ -15,14 +15,30 @@ if (session_status() == PHP_SESSION_NONE) {
 include_once 'database/db_connect.php';
 include_once 'cart_functions.php';
 
-// Kiểm tra phương thức yêu cầu
+// Kiểm tra nếu kết nối đã được thiết lập
+if (isset($connection_failed) && $connection_failed) {
+    // Thiết lập thông báo lỗi và chuyển hướng
+    $_SESSION['errors'][] = "Lỗi. Vui lòng thử lại sau.";
+    header("Location: shopping_cart.php");
+    exit();
+}
+
+// Tiếp tục với phần xử lý xóa sản phẩm
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $product_id = intval($_GET['id']);
     $maNguoiDung = $_SESSION['maNguoiDung'] ?? null;
 
-    // Lấy thông tin sản phẩm để hiển thị trong thông báo xác nhận
     if ($maNguoiDung) {
-        $product = get_product_info($product_id); // Sử dụng hàm hiện có
+        // Người dùng đã đăng nhập, lấy thông tin sản phẩm từ DB
+        $product = get_product_info($product_id);
+    } else {
+        // **Đã Chỉnh Sửa từ Ver2: Lấy thông tin sản phẩm trực tiếp từ session**
+        if (isset($_SESSION['shopping_cart'][$product_id])) {
+            // Không có khóa 'product_info' trong session, truy cập trực tiếp các trường thông tin sản phẩm
+            $product = $_SESSION['shopping_cart'][$product_id];
+        } else {
+            $product = null;
+        }
     }
 
     if (!$product) {
@@ -39,86 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     <head>
         <meta charset="UTF-8">
         <title>Xác Nhận Xóa Sản Phẩm</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 0;
-            }
-
-            .container {
-                max-width: 500px;
-                margin: 100px auto;
-                padding: 20px;
-                background: #fff;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                text-align: center;
-            }
-
-            .product-info {
-                display: flex;
-                align-items: center;
-                margin-bottom: 20px;
-            }
-
-            .product-info img {
-                width: 80px;
-                height: 80px;
-                object-fit: cover;
-                margin-right: 20px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-            }
-
-            .buttons {
-                display: flex;
-                justify-content: space-around;
-                margin-top: 20px;
-            }
-
-            .buttons form {
-                width: 45%;
-            }
-
-            .buttons button {
-                width: 100%;
-                padding: 10px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 16px;
-            }
-
-            .confirm {
-                background-color: #d9534f;
-                color: #fff;
-            }
-
-            .cancel {
-                background-color: #5bc0de;
-                color: #fff;
-            }
-
-            .confirm:hover {
-                background-color: #c9302c;
-            }
-
-            .cancel:hover {
-                background-color: #31b0d5;
-            }
-        </style>
+        <link rel="stylesheet" href="../FE/css/remove_cart.css">
     </head>
 
     <body>
         <div class="container">
             <h2>Xác Nhận Xóa Sản Phẩm</h2>
             <div class="product-info">
-                <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh_dauap'] ?? 'default.png'); ?>" alt="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
+                <img src="img/products/<?php echo htmlspecialchars($product['hinhAnh_dauap'] ?? 'default.png'); ?>" alt="<?php echo htmlspecialchars($product['TenAnPham'] ?? ''); ?>">
                 <div>
-                    <h4><?php echo htmlspecialchars($product['TenAnPham']); ?></h4>
-                    <p>Giá: <?php echo number_format($product['Giathue'], 0, ',', '.'); ?> VND</p>
+                    <h4><?php echo htmlspecialchars($product['TenAnPham'] ?? ''); ?></h4>
+                    <p>Giá: <?php echo number_format($product['Giathue'] ?? 0, 0, ',', '.'); ?> VND</p>
                 </div>
             </div>
             <p>Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng không?</p>
@@ -144,21 +91,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $product_id = intval($_POST['id']);
     $maNguoiDung = $_SESSION['maNguoiDung'] ?? null;
 
-    if ($maNguoiDung) {
-        // Người dùng đã đăng nhập, xóa sản phẩm khỏi DB
-        if (remove_from_cart_db($maNguoiDung, $product_id)) {
-            $_SESSION['shopping_cart'] = get_cart_from_db($maNguoiDung);
-            $_SESSION['success_remove'] = "Sản phẩm đã được xóa khỏi giỏ hàng.";
+    try {
+        if ($maNguoiDung) {
+            // Người dùng đã đăng nhập, xóa sản phẩm khỏi DB
+            $removeSuccess = remove_from_cart_db($maNguoiDung, $product_id);
+            if ($removeSuccess) {
+                $_SESSION['shopping_cart'] = get_cart_from_db($maNguoiDung);
+                $_SESSION['success_remove'] = "Sản phẩm đã được xóa khỏi giỏ hàng.";
+            } else {
+                // Nếu hàm remove_from_cart_db trả về false, giả sử có lỗi kỹ thuật
+                throw new Exception("Không thể xóa sản phẩm khỏi giỏ hàng.");
+            }
         } else {
-            $_SESSION['errors'][] = "Không thể xóa sản phẩm khỏi giỏ hàng.";
+            // ** Xóa sản phẩm từ session mà không cần 'product_info'**
+            $removeSuccess = remove_from_cart_session($product_id);
+            if ($removeSuccess) {
+                $_SESSION['success_remove'] = "Sản phẩm đã được xóa khỏi giỏ hàng.";
+            } else {
+                $_SESSION['errors'][] = "Sản phẩm không tồn tại trong giỏ hàng.";
+            }
         }
-    } else {
-        // Người dùng chưa đăng nhập, xóa sản phẩm khỏi session
-        if (remove_from_cart_session($product_id)) {
-            $_SESSION['success_remove'] = "Sản phẩm đã được xóa khỏi giỏ hàng.";
-        } else {
-            $_SESSION['errors'][] = "Sản phẩm không tồn tại trong giỏ hàng.";
-        }
+    } catch (Exception $e) {
+        // Xử lý lỗi kỹ thuật
+        $_SESSION['errors'][] = "Lỗi. Vui lòng thử lại sau.";
     }
 
     // Chuyển hướng trở lại trang giỏ hàng

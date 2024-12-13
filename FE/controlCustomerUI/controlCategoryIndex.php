@@ -24,7 +24,7 @@ if ($result_categories && $result_categories->num_rows > 0) {
 }
 
 // Truy vấn để lấy những ấn phẩm có số lượng cho thuê lớn
-$sql_high_rental_count = "SELECT a.soLuongChoThue, a.TenAnPham, a.Giathue, a.tinhTrang, a.maAnPham, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
+$sql_high_rental_count = "SELECT a.soLuongChoThue, a.TenAnPham, a.Giathue, a.tinhTrang, a.ngayXB, a.maAnPham, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, dm.TenDanhMuc
         FROM anpham a
         INNER JOIN dauap d ON a.madauAP = d.madauAP
         INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc 
@@ -48,7 +48,7 @@ if ($result_high_rental_count && $result_high_rental_count->num_rows > 0) {
 }
 
 // Truy vấn lấy dữ liệu từ các bảng và thêm trường hinhAnh từ bảng dauap
-$sql_popular = "SELECT a.TenAnPham, a.Giathue, a.maAnPham, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc, a.soLuongTonKho
+$sql_popular = "SELECT a.TenAnPham, a.Giathue, a.maAnPham, a.tinhTrang, a.ngayXB, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, dm.TenDanhMuc, a.soLuongTonKho
         FROM anpham a
         INNER JOIN dauap d ON a.madauAP = d.madauAP
         INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc

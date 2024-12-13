@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // Kiểm tra nếu session 'user' không tồn tại
 if (!isset($_SESSION['user'])) {
   header("Location: ../../../user/login.php?error=Vui lòng đăng nhập.");
@@ -30,10 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <!-- Header file -->
   <?php require_once "../../../layout/header.php"; ?>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js CDN -->
 </head>
 
 <body class="bg-theme bg-theme9">
   <div id="wrapper">
+
     <div class="clearfix"></div>
     <div class="content-wrapper">
       <div class="container-fluid">
@@ -42,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <header class="topbar-nav">
           <?php require_once "../../../layout/topbar.php"; ?>
         </header>
-
         <!-- Form nhập liệu -->
         <div class="card mt-3">
           <div class="card-body">
@@ -72,103 +74,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (!empty($data) && count($data) > 0): ?>
           <div class="card mt-3">
             <div class="card-body">
-              <canvas id="thongKeChart" height="300"></canvas>
+              <canvas id="thongKeChart" height="100"></canvas>
             </div>
           </div>
 
           <script>
             document.addEventListener("DOMContentLoaded", function () {
-              // Lấy dữ liệu từ PHP
-              const labels = <?= json_encode(array_column($data, 'Ngay')) ?>; // Trục X: Ngày
-              const totalValues = <?= json_encode(array_column($data, 'TongSoLuong')) ?>; // Tổng số lượng sản phẩm
-              const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>; // Sản phẩm bán chạy nhất
+              const labels = <?= json_encode(array_column($data, 'Ngay')) ?>;
+              const totalValues = <?= json_encode(array_column($data, 'TongSoLuong')) ?>;
+              const products = <?= json_encode(array_column($data, 'TenSanPhamBanChay')) ?>;
 
-              // Kiểm tra nếu phần tử canvas tồn tại
-              const ctx = document.getElementById('thongKeChart')?.getContext('2d');
-              if (ctx) {
-                new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                    labels: labels, // Nhãn trục X là các ngày
-                    datasets: [{
-                      label: 'Tổng số lượng sản phẩm',
-                      data: totalValues, // Dữ liệu trục Y
-                      backgroundColor: '#FFFFFF', // Màu cột tối hơn
-                      borderColor: '#FFFFFF', // Viền cột
-                      borderWidth: 1.5, // Độ dày viền
-                      borderRadius: 5, // Bo góc cột
-                    },],
-                  },
-                  options: {
-                    responsive: true,
-                    maintainAspectRatio: false, // Đảm bảo co giãn tốt
-                    plugins: {
-                      tooltip: {
-                        callbacks: {
-                          label: function (context) {
-                            const index = context.dataIndex;
-                            const product = products[index] || 'Không xác định';
-                            // Hiển thị tooltip
-                            return `Ngày: ${labels[index]} - Sản phẩm bán chạy: ${product} `;
-                          },
-                        },
-                      },
-                    },
-                    layout: {
-                      padding: {
-                        top: 20,
-                        left: 15,
-                        right: 15,
-                        bottom: 15,
-                      },
-                    },
-                    scales: {
-                      x: {
-                        title: {
-                          display: true,
-                          text: 'Ngày',
-                          font: {
-                            size: 16,
-                            weight: 'bold',
-                          },
-                          color: '#FFFFFF', // Màu chữ sáng cho trục X
-                        },
-                        ticks: {
-                          color: '#FFFFFF', // Màu nhãn sáng
-                          font: {
-                            size: 14,
-                            weight: 'bold',
-                          },
-                        },
-                      },
-                      y: {
-                        title: {
-                          display: true,
-                          text: 'Số lượng',
-                          font: {
-                            size: 16,
-                            weight: 'bold',
-                          },
-                          color: '#FFFFFF', // Màu chữ sáng cho trục Y
-                        },
-                        ticks: {
-                          beginAtZero: true,
-                          color: '#FFFFFF', // Màu nhãn sáng
-                          font: {
-                            size: 14,
-                            weight: 'bold',
-                          },
+              const ctx = document.getElementById('thongKeChart').getContext('2d');
+              new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Tổng số lượng sản phẩm',
+                    data: totalValues,
+                    backgroundColor: '#1E90FF',
+                    borderColor: '#4682B4',
+                    borderWidth: 1.5,
+                  }],
+                },
+                options: {
+                  responsive: true,
+                  plugins: {
+                    tooltip: {
+                      callbacks: {
+                        label: function (context) {
+                          const index = context.dataIndex;
+                          const product = products[index] || 'Không xác định';
+                          return `Ngày: ${labels[index]} - Sản phẩm bán chạy: ${product}`;
                         },
                       },
                     },
                   },
-                });
-              } else {
-                console.error("Không tìm thấy phần tử canvas với id 'thongKeChart'.");
-              }
+                  scales: {
+                    x: {
+                      title: {
+                        display: true,
+                        text: 'Ngày',
+                        font: {
+                          size: 14,
+                          weight: 'bold'
+                        },
+                        color: '#FFFFFF',
+                      },
+                      ticks: {
+                        color: '#FFFFFF',
+                      },
+                    },
+                    y: {
+                      title: {
+                        display: true,
+                        text: 'Số lượng',
+                        font: {
+                          size: 14,
+                          weight: 'bold'
+                        },
+                        color: '#FFFFFF',
+                      },
+                      ticks: {
+                        beginAtZero: true,
+                        color: '#FFFFFF',
+                      },
+                    },
+                  },
+                },
+              });
             });
           </script>
-
 
         <?php else: ?>
           <p class="text-white mt-3">Không có dữ liệu thống kê phù hợp.</p>
@@ -177,19 +153,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 
-  <!--Start Back To Top Button-->
-  <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+  <!-- Back To Top Button -->
+  <a href="javascript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
-  <!--Start right sidebar-->
+  <!-- Right Sidebar -->
   <?php require_once "../../../layout/right_sidebar.php"; ?>
-  <!--End right sidebar-->
 
-  </div>
-  <!--End wrapper-->
-
-  <!--Start footer-->
+  <!-- Footer -->
   <?php require_once "../../../layout/script.php"; ?>
-  <!--End footer-->
 
 </body>
 

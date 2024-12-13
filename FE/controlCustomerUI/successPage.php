@@ -7,7 +7,7 @@ if ($status == 'success') {
     echo "<div class='message-container success'>";
     echo "<h2>Giao dịch thành công!</h2>";
     echo "<p>Mời bạn đến trực tiếp cửa hàng để trả sách và hoàn cọc khi đọc xong nhé !</p>";
-    
+
     // Các nút điều hướng
     echo "<a href='../index.php' class='button home-btn'>Trở về trang chủ</a>";
     echo "<a href='orderDetails.php' class='button order-btn'>Xem đơn hàng</a>";

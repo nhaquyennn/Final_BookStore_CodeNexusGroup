@@ -18,6 +18,7 @@ if (!isset($_SESSION['user'])) {
   <!-- Start wrapper-->
   <div id="wrapper">
 
+
     <div class="clearfix"></div>
 
     <!--Start content-wrapper-->
@@ -34,6 +35,7 @@ if (!isset($_SESSION['user'])) {
           <?php require_once "../../layout/topbar.php"; ?>
         </header>
         <!--End topbar header-->
+
         <!--Start Dashboard Content-->
         <div class="card mt-3">
           <div class="card-content">

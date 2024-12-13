@@ -6,7 +6,8 @@
         </a>
     </div>
     <ul class="sidebar-menu do-nicescrol">
-        <li><a href="index.html"><i class="zmdi zmdi-view-dashboard"></i><span>Dashboard</span></a></li>
+        
+        <li><a href="index.php"><i class="zmdi zmdi-view-dashboard"></i><span>Trang chủ</span></a></li>
         <li>
             <hr>
         </li>

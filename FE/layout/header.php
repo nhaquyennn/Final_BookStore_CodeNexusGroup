@@ -1,6 +1,6 @@
-<?php 
+<?php
 error_reporting(E_ALL & ~E_NOTICE);
-session_start(); 
+session_start();
 include_once 'cart_functions.php';
 // Lấy giỏ hàng hiện tại
 $maNguoiDung = $_SESSION['maNguoiDung'] ?? null;
@@ -12,6 +12,7 @@ if ($maNguoiDung) {
 $total_price = calculate_total($cart);
 
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
@@ -65,6 +66,8 @@ $total_price = calculate_total($cart);
                                     <ul class="dropdown-menu" style="font-size: 15px;">
                                         <li><a class="dropdown-item" href="user/profile.php">Quản lý thông tin cá nhân</a>
                                         </li>
+                                        <li><a class="dropdown-item" href="rentedProducts.php">Ấn Phẩm Đã Thuê</a></li>
+                                        <li><a class="dropdown-item" href="orderView.php">Theo Dõi Đơn Hàng</a></li>
                                         <li><a class="dropdown-item" href="user/logout.php"><i class="fa fa-sign-out"></i>
                                                 Đăng xuất</a></li>
                                     </ul>
@@ -118,7 +121,8 @@ $total_price = calculate_total($cart);
             </div>
             <div class="col-lg-2">
                 <div class="header__cart">
-                    <div class="header__cart__price">Giỏ hàng: <span><?php echo number_format($total_price, 0, ',', '.'); ?> VND</span></div>
+                    <div class="header__cart__price">Giỏ hàng:
+                        <span><?php echo number_format($total_price, 0, ',', '.'); ?> VND</span></div>
                 </div>
                 <div class="hero__search__phone">
                     <div class="hero__search__phone__text">

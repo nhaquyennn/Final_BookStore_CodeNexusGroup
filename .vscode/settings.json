@@ -1,7 +1,8 @@
 {
-  "editor.formatOnSave": true,
-
-  "[php]": {
-    "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
+    "[sql]": {
+      "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+    },
+    "sql-formatter.dialect": "sql", // hoặc "mysql", "sql" tùy vào database bạn sử dụng
+    "editor.formatOnSave": true
   }
-}
+  

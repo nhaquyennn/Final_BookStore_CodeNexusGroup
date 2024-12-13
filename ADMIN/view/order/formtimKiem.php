@@ -38,15 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPM'])) {
     <!-- Start content -->
     <div class="content-wrapper">
       <div class="container-fluid">
-        <!-- Start sidebar -->
+        <!--Start sidebar-wrapper-->
         <?php require_once "../../layout/left_sidebar.php"; ?>
-        <!-- End sidebar -->
+        <!--End sidebar-wrapper-->
 
-        <!-- Start topbar -->
+        <!--Start topbar header-->
         <header class="topbar-nav">
           <?php require_once "../../layout/topbar.php"; ?>
         </header>
-        <!-- End topbar -->
+        <!--End topbar header-->
         <!-- Card Tìm Kiếm -->
         <div class="card mt-4 shadow border-0">
           <div class="card-header bg-dark text-white text-center">
@@ -81,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPM'])) {
                     <th>Giảm Giá</th>
                     <th>Tình Trạng</th>
                     <th>Khách Hàng</th>
-                    <th>Hình Ảnh</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -92,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPM'])) {
                     <td><?= $searchResult['GiamGia'] ?>%</td>
                     <td><?= $searchResult['tinhTrang'] ?></td>
                     <td><?= $searchResult['tenKH'] ?></td>
-                    <td><img src="<?= $searchResult['hinhAnh'] ?>" alt="Hình Ảnh" width="100"></td>
                   </tr>
                 </tbody>
               </table>

@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../database/db_connect.php';
 
 // Truy vấn lấy dữ liệu từ các bảng và thêm trường hinhAnh từ bảng dauap
-$sql = "SELECT a.TenAnPham, a.Giathue, a.maAnPham, a.tinhTrang, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
+$sql = "SELECT a.TenAnPham, a.Giathue, a.maAnPham, a.tinhTrang, a.ngayXB, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, dm.TenDanhMuc, d.hinhAnh
         FROM anpham a
         INNER JOIN dauap d ON a.madauAP = d.madauAP
         INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc";

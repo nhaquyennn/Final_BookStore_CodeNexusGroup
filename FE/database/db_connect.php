@@ -2,7 +2,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'phuc';
+$dbname = 'final_nexus';
 
 // Kết nối MySQLi
 $conn = mysqli_connect($host, $username, $password, $dbname);

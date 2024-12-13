@@ -2,7 +2,9 @@
     <div class="brand-logo">
         <a href="index.html">
             <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-            <h5 class="logo-text">Admin</h5>
+            <h5 class="logo-text">
+                <a href="index.php">Nhân viên cửa hàng</a>
+            </h5>
         </a>
     </div>
     <ul class="sidebar-menu do-nicescrol">
@@ -10,22 +12,22 @@
         <!-- <li>
             <hr>
         </li> -->
-        <li><a href="#"><i class="zmdi"></i><span>Quản lý khách hàng </span></a></li>
-        <li class="dropdown">
-            <a href="taophieu.php">
+        <li><a href="quanlyKH.php"><i class="zmdi"></i><span>Khách hàng </span></a></li>
+        <li><a href="dsphieumuon.php"><i class="zmdi"></i><span>Phiếu mượn </span></a></li>
+        <!-- <li class="dropdown">
+            <a href="">
                 <i class="zmdi"></i>
                 <span class="dropdown-toggle" data-toggle="dropdown">Tạo phiếu</span>
-
                 <ul class="dropdown-menu">
-                    <li><a href="page/phieumuon.php">Phiếu mượn</a></li>
-                    <li><a href="page/phieutra.php">Phiếu trả</a></li>
+                    <li><a href="dsphieumuon.php">Phiếu mượn</a></li>
+                    <li><a href="dsphieutra.php">Phiếu trả</a></li>
                 </ul>
             </a>
-        </li>
+        </li> -->
         <li>
             <hr>
         </li>
-        <li><a href="profile.html"><i class="zmdi"></i><span>Thông tin cá nhân</span></a></li>
-        <li><a href="login.html" target="_blank"><i class="zmdi"></i><span>Đăng xuất</span></a></li>
+        <li><a href="user/profile.php"><i class="zmdi"></i><span>Thông tin cá nhân</span></a></li>
+        <li><a href="user/logout.php" target="_blank"><i class="zmdi"></i><span>Đăng xuất</span></a></li>
     </ul>
 </div>

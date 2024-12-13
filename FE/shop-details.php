@@ -30,17 +30,32 @@ if ($product) {
 <html lang="vi">
 
 <head>
-    <?php require_once 'layout/header.php'; ?>
+    <meta charset="UTF-8">
+    <title>Chi tiết Sản phẩm</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/mainStyle.css" type="text/css">
     <link rel="stylesheet" href="css/shop-details.css">
     <!-- Thêm Font Awesome để sử dụng icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Thêm Bootstrap CSS từ CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Chi tiết Sản phẩm</title>
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- Bao gồm header.php bên trong body bằng đường dẫn tuyệt đối -->
+    <?php require_once 'layout/header.php'; ?>
 
     <div class="container my-5">
         <!-- Hiển thị thông báo thành công khi cập nhật giỏ hàng -->
@@ -88,28 +103,48 @@ if ($product) {
 
                     <!-- Thông tin số lượng trong kho và trong giỏ hàng -->
                     <p><strong>Số lượng trong kho:</strong> <?php echo htmlspecialchars($product['soLuongTonKho']); ?></p>
-                    <p><strong>Số lượng đã có trong giỏ hàng:</strong> <?php echo htmlspecialchars($existing_quantity_in_cart); ?></p>
-                    <p><strong>Số lượng tối đa bạn có thể thêm:</strong> <?php echo htmlspecialchars($max_addable_quantity); ?></p>
+                    <p><strong>Số lượng đã có trong giỏ hàng:</strong>
+                        <?php echo htmlspecialchars($existing_quantity_in_cart); ?></p>
+                    <p><strong>Số lượng tối đa bạn có thể thêm:</strong>
+                        <?php echo htmlspecialchars($max_addable_quantity); ?></p>
 
                     <?php if ($max_addable_quantity > 0): ?>
-                        <form action="add_to_cart.php" method="POST" class="mt-4">
-                            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['maAnPham']); ?>">
-                            <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
-                            <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($product['Giathue']); ?>">
-                            <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($product['hinhAnh_dauap']); ?>">
+                        <form action="add_to_cart.php" method="POST" class="mt-4" novalidate>
+                            <input type="hidden" name="product_id"
+                                value="<?php echo htmlspecialchars($product['maAnPham']); ?>">
+                            <input type="hidden" name="product_name"
+                                value="<?php echo htmlspecialchars($product['TenAnPham']); ?>">
+                            <input type="hidden" name="product_price"
+                                value="<?php echo htmlspecialchars($product['Giathue']); ?>">
+                            <input type="hidden" name="product_image"
+                                value="<?php echo htmlspecialchars($product['hinhAnh_dauap']); ?>">
 
                             <div class="mb-3">
                                 <label for="quantity" class="form-label">Số lượng:</label>
                                 <input type="number" name="quantity" id="quantity"
-                                    class="form-control" value="1" min="1"
-                                    max="<?php echo htmlspecialchars($max_addable_quantity); ?>" required>
-                                <small class="form-text text-muted">Bạn có thể thêm tối đa <?php echo htmlspecialchars($max_addable_quantity); ?> cuốn.</small>
+                                    class="form-control <?php echo !empty($quantity_error) ? 'is-invalid' : ''; ?>" value="1"
+                                    min="1" max="<?php echo htmlspecialchars($max_addable_quantity); ?>" required>
+                                <small class="form-text text-muted">Bạn có thể thêm tối đa
+                                    <?php echo htmlspecialchars($max_addable_quantity); ?> cuốn.</small>
+                                <?php if (!empty($quantity_error)): ?>
+                                    <div class="invalid-feedback">
+                                        <?php echo htmlspecialchars($quantity_error); ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-
                             <div class="mb-3">
                                 <label for="return_date" class="form-label">Ngày trả sách:</label>
-                                <input type="date" name="return_date" id="return_date" class="form-control" required
-                                    min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+15 days')); ?>">
+                                <input type="date" name="return_date" id="return_date"
+                                    class="form-control <?php echo !empty($return_date_error) ? 'is-invalid' : ''; ?>" required
+                                    min="<?php echo date('Y-m-d'); ?>"
+                                    max="<?php echo date('Y-m-d', strtotime('+15 days')); ?>">
+                                <small class="form-text text-muted">Ngày trả sách phải từ hôm nay đến tối đa 15 ngày
+                                    sau.</small>
+                                <?php if (!empty($return_date_error)): ?>
+                                    <div class="invalid-feedback">
+                                        <?php echo htmlspecialchars($return_date_error); ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <button type="submit" name="add_to_cart" class="btn btn-primary">
@@ -118,7 +153,8 @@ if ($product) {
                         </form>
                     <?php else: ?>
                         <div class="alert alert-warning" role="alert">
-                            Bạn đã thêm tối đa số lượng sản phẩm này vào giỏ hàng. Vui lòng kiểm tra lại số lượng hoặc liên hệ với chúng tôi nếu bạn cần thêm.
+                            Bạn đã thêm tối đa số lượng sản phẩm này vào giỏ hàng. Vui lòng kiểm tra lại số lượng hoặc liên hệ
+                            với chúng tôi nếu bạn cần thêm.
                         </div>
                     <?php endif; ?>
                 </div>
@@ -128,15 +164,51 @@ if ($product) {
                 Sản phẩm không tồn tại.
             </div>
         <?php endif; ?>
+
+
+
+        <!-- Các Đánh Giá -->
+        <div class="mt-5">
+            <h3 class="custom-title">Đánh Giá Từ Khách Hàng</h3>
+            <?php if (!empty($reviews)): ?>
+                <?php foreach ($reviews as $review): ?>
+                    <div class="card review-card">
+                        <div class="card-body">
+                            <div class="review-header">
+                                <strong><?php echo htmlspecialchars($review['tenNguoiDung']); ?></strong>
+                                <span class="star-rating">
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                        <i class="<?php echo ($i <= $review['diemSo']) ? 'fas fa-star' : 'far fa-star'; ?>"></i>
+                                    <?php endfor; ?>
+                                </span>
+                            </div>
+                            <?php if (!empty($review['hinhAnh'])): ?>
+                                <div class="mb-3">
+                                    <img src="uploads/<?php echo htmlspecialchars($review['hinhAnh']); ?>" alt="Hình ảnh đánh giá"
+                                        class="review-image" style="width: 250px; height: auto;">
+                                </div>
+                            <?php endif; ?>
+                            <p class="review-comment"><?php echo nl2br(htmlspecialchars($review['binhLuan'])); ?></p>
+                            <small class="text-muted">Ngày đánh giá:
+                                <?php echo date('d-m-Y H:i', strtotime($review['ngayDanhGia'])); ?></small>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Chưa có đánh giá nào cho ấn phẩm này. Hãy là người đầu tiên đánh giá!</p>
+            <?php endif; ?>
+        </div>
+
     </div>
+
 
     <!-- Footer -->
     <footer class="bg-light text-center py-4">
         <?php require_once 'layout/footer.php'; ?>
     </footer>
 
-    <!-- Thêm Bootstrap JS và các phụ thuộc từ CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Thêm JavaScript -->
+    <script src="../FE/js/main1.js"></script>
 </body>
 
 </html>

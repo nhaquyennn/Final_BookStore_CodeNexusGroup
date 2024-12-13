@@ -33,6 +33,7 @@ if (isset($_GET['data'])) {
 
       <!--Start container-fluid-->
       <div class="container-fluid">
+
         <!--Start sidebar-wrapper-->
         <?php require_once "../../layout/left_sidebar.php"; ?>
         <!--End sidebar-wrapper-->
@@ -42,6 +43,7 @@ if (isset($_GET['data'])) {
           <?php require_once "../../layout/topbar.php"; ?>
         </header>
         <!--End topbar header-->
+
         <!--Start Dashboard Content-->
         <div class="card">
           <div class="card-header bg-primary text-white text-center">
@@ -76,7 +78,7 @@ if (isset($_GET['data'])) {
                     <td>
                       <span
                         class="badge 
-                                        <?php echo ($phieuMuonDetails['tinhTrang'] === 'Đã duyệt') ? 'bg-success' : 'bg-warning'; ?>">
+                                        <?php echo ($phieuMuonDetails['tinhTrang'] === 'Đã xác nhận') ? 'bg-success' : 'bg-warning'; ?>">
                         <?php echo htmlspecialchars($phieuMuonDetails['tinhTrang']); ?>
                       </span>
                     </td>
@@ -89,7 +91,8 @@ if (isset($_GET['data'])) {
               </div>
             <?php endif; ?>
             <div class="mt-4 text-center">
-              <a href="formTimKiem.php" class="btn btn-secondary">Quay lại Tìm kiếm</a>
+              <a href="/Final_BookStore_CodeNexus/ADMIN/view/order/formTimKiem.php" class="btn btn-secondary">Quay lại
+                Tìm kiếm</a>
             </div>
           </div>
         </div>

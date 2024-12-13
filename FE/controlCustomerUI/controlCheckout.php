@@ -50,7 +50,7 @@ function getCustomerIdFromPhieuMuon($conn)
 function getCoupons($conn)
 {
     // Truy vấn dữ liệu từ bảng khuyenmai
-    $sql = "SELECT MaKhuyenMai, TenKhuyenMai, PhanTramGiamGia, NgayKetThuc, NgayBatDau, maCTPM
+    $sql = "SELECT MaKhuyenMai, TenKhuyenMai, PhanTramGiamGia, NgayKetThuc, NgayBatDau
             FROM khuyenmai";
 
     // Thực thi truy vấn
@@ -103,12 +103,11 @@ function getCartDetails($conn)
         error_log("User ID: " . $userId);  // In ra log để kiểm tra giá trị của userId
 
         // Truy vấn kết hợp bảng giỏ hàng và bảng anpham qua khóa maAnPham, lọc theo maNguoiDung
-        $query = "SELECT giohang.*, anpham.TenAnPham, anpham.Giathue, anpham.PhiThue, dauap.hinhAnh,
-                         NOW() AS NgayMuon
-                  FROM giohang
-                  INNER JOIN anpham ON giohang.maAnPham = anpham.maAnPham
-                  INNER JOIN dauap ON anpham.maDauAp = dauap.maDauAp
-                  WHERE giohang.maNguoiDung = ?";
+        $query = "  SELECT giohang.*, anpham.TenAnPham, anpham.Giathue, anpham.PhiThue, dauap.hinhAnh, anpham.tinhTrang, NOW() AS NgayMuon
+                    FROM giohang
+                    INNER JOIN anpham ON giohang.maAnPham = anpham.maAnPham
+                    INNER JOIN dauap ON anpham.maDauAp = dauap.maDauAp
+                    WHERE giohang.maNguoiDung = ?";
 
         $stmt = $conn->prepare($query);
         $stmt->bind_param("i", $userId); // Liên kết với maNguoiDung trong câu truy vấn

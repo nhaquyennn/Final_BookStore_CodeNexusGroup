@@ -1,12 +1,12 @@
 <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
     <div class="brand-logo">
         <a href="index.html">
-            <img src="/Final_BookStore_CodeNexusGroup/ADMIN/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+            <img src="/Final_BookStore_CodeNexus/ADMIN/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
             <h5 class="logo-text">Admin</h5>
         </a>
     </div>
     <ul class="sidebar-menu do-nicescrol">
-        <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/index.php" class="sidebar-link"><span>Dashboard</span></a></li>
+        <li><a href="/Final_BookStore_CodeNexus/ADMIN/index.php" class="sidebar-link"><span>Dashboard</span></a></li>
         <li>
             <hr>
         </li>
@@ -23,9 +23,10 @@
             </ul>
         </li>
 
-        <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/promotion.html" class="sidebar-link"><span>Khuyến mãi</span></a>
+        <li><a href="/Final_BookStore_CodeNexus/ADMIN/view/khuyenmai/index.php" class="sidebar-link"><span>Khuyến
+                    mãi</span></a>
         </li>
-        <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/product.php" class="sidebar-link"><span>Ấn phẩm</span></a></li>
+        <li><a href="/Final_BookStore_CodeNexus/ADMIN/product.php" class="sidebar-link"><span>Ấn phẩm</span></a></li>
 
         <!-- Đơn hàng -->
         <li class="dropdown">
@@ -35,9 +36,9 @@
             </a>
             <!-- Danh sách ngày tháng năm -->
             <ul id="orderForm" class="dropdown-menu">
-                <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/order/formTimKiem.php">Tìm kiếm
+                <li><a href="/Final_BookStore_CodeNexus/ADMIN/view/order/formTimKiem.php">Tìm kiếm
                         Đơn Hàng</a></li>
-                <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/order/danhSachDonHang.php">Duyệt
+                <li><a href="/Final_BookStore_CodeNexus/ADMIN/view/order/danhSachDonHang.php">Duyệt
                         đơn hàng</a></li>
             </ul>
         </li>
@@ -52,11 +53,11 @@
             </a>
             <!-- Danh sách ngày tháng năm -->
             <ul id="dateListPublications" class="dropdown-menu">
-                <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/thongke/thongKeSanPhamTheoNgay.php">Ngày</a>
+                <li><a href="/Final_BookStore_CodeNexus/ADMIN/view/report/thongke/thongKeSanPhamTheoNgay.php">Ngày</a>
                 </li>
-                <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/thongke/thongKeSanPhamTheoThang.php">Tháng</a>
+                <li><a href="/Final_BookStore_CodeNexus/ADMIN/view/report/thongke/thongKeSanPhamTheoThang.php">Tháng</a>
                 </li>
-                <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/thongke/thongKeSanPhamTheoNam.php">Năm</a>
+                <li><a href="/Final_BookStore_CodeNexus/ADMIN/view/report/thongke/thongKeSanPhamTheoNam.php">Năm</a>
                 </li>
             </ul>
         </li>
@@ -68,23 +69,23 @@
             </a>
             <!-- Danh sách ngày tháng năm -->
             <ul id="dateListRevenue" class="dropdown-menu" style="display: none; padding-left: 20px; font-size: 14px;">
-                <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a>
+                <li><a href="/Final_BookStore_CodeNexus/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNgay.php">Ngày</a>
                 </li>
-                <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/baocao/baoCaoDoanhThuTheoThang.php">Tháng</a>
+                <li><a href="/Final_BookStore_CodeNexus/ADMIN/view/report/baocao/baoCaoDoanhThuTheoThang.php">Tháng</a>
                 </li>
-                <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNam.php">Năm</a>
+                <li><a href="/Final_BookStore_CodeNexus/ADMIN/view/report/baocao/baoCaoDoanhThuTheoNam.php">Năm</a>
                 </li>
             </ul>
         </li>
         <li><a href="bill.html" class="sidebar-link"><span>Hóa đơn</span></a></li>
-        <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/customers.php" class="sidebar-link"><span>Khách hàng</span></a>
+        <li><a href="/Final_BookStore_CodeNexus/ADMIN/customers.php" class="sidebar-link"><span>Khách hàng</span></a>
         </li>
         <li>
             <hr>
         </li>
-        <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/profile.php" class="sidebar-link"><span>Thông tin cá
+        <li><a href="/Final_BookStore_CodeNexus/ADMIN/profile.php" class="sidebar-link"><span>Thông tin cá
                     nhân</span></a></li>
-        <li><a href="/Final_BookStore_CodeNexusGroup/ADMIN/user/logout.php" class="sidebar-link"><span>Đăng xuất</span></a>
+        <li><a href="/Final_BookStore_CodeNexus/ADMIN/user/logout.php" class="sidebar-link"><span>Đăng xuất</span></a>
         </li>
     </ul>
 </div>

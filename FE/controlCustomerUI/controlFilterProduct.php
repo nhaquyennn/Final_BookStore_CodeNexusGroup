@@ -39,7 +39,7 @@ function filterProducts($conn, $params)
 
     // Lọc theo năm xuất bản
     if (!empty($params['year'])) {
-        $conditions[] = "YEAR(dauap.ngayXB) = " . intval($params['year']);
+        $conditions[] = "YEAR(anpham.ngayXB) = " . intval($params['year']);
     }
 
     // Thêm điều kiện vào query

@@ -28,6 +28,7 @@ $total_price = calculate_total($cart);
     <link rel="stylesheet" href="css/shopping-cart.css">
     <!-- Thêm Font Awesome để sử dụng icon xóa (nếu cần) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Thêm Bootstrap CSS từ CDN (nếu chưa được bao gồm trong header.php) -->
 </head>
 
 <body>
@@ -84,34 +85,55 @@ $total_price = calculate_total($cart);
                                             <tr>
                                                 <td class="shoping__cart__item">
                                                     <?php
+                                                    // **Thêm cập nhật: Kiểm tra người dùng đã đăng nhập hay chưa để lấy hình ảnh**
+                                                    if (isset($item['product_info'])) {
+                                                        // Người dùng chưa đăng nhập
+                                                        $product_info = $item['product_info'];
+                                                    } else {
+                                                        // Người dùng đã đăng nhập
+                                                        $product_info = get_product_info($item['id']); // Hoặc lấy từ DB
+                                                    }
+
                                                     // Kiểm tra nếu hình ảnh không tồn tại, sử dụng hình ảnh mặc định
-                                                    $image = !empty($item['image']) ? $item['image'] : 'default.png';
+                                                    $image = !empty($product_info['hinhAnh_dauap']) ? $product_info['hinhAnh_dauap'] : 'default.png';
                                                     ?>
                                                     <img src="img/products/<?php echo htmlspecialchars($image); ?>"
-                                                        alt="<?php echo htmlspecialchars($item['name']); ?>"
+                                                        alt="<?php echo htmlspecialchars($product_info['TenAnPham'] ?? ''); ?>"
                                                         class="product-image">
                                                     <div class="sp">
-                                                        <h5><?php echo htmlspecialchars($item['name']); ?></h5>
+                                                        <h5><?php echo htmlspecialchars($product_info['TenAnPham'] ?? ''); ?></h5>
                                                     </div>
                                                 </td>
                                                 <td class="shoping__cart__price">
-                                                    <?php echo number_format($item['price'], 0, ',', '.'); ?> VND
+                                                    <?php
+                                                    // **Thêm cập nhật: Lấy giá từ product_info nếu có**
+                                                    $price = isset($product_info['Giathue']) ? $product_info['Giathue'] : $item['price'];
+                                                    echo number_format($price, 0, ',', '.') . ' VND';
+                                                    ?>
                                                 </td>
                                                 <td class="shoping__cart__quantity">
                                                     <!-- Hiển thị lỗi nếu có -->
                                                     <?php if (isset($_SESSION['errors'][$item['id']])): ?>
-                                                        <div class="error">
+                                                        <div class="error text-danger">
                                                             <?php echo htmlspecialchars($_SESSION['errors'][$item['id']]); ?>
                                                         </div>
                                                     <?php endif; ?>
+                                                    <!-- **Thêm cập nhật: Xác thực nhập liệu bằng JavaScript** -->
                                                     <input type="number"
                                                         name="quantities[<?php echo htmlspecialchars($item['id']); ?>]"
                                                         value="<?php echo htmlspecialchars($item['quantity']); ?>"
-                                                        min="1" max="<?php echo htmlspecialchars($item['soLuongTonKho']); ?>"
-                                                        required>
+                                                        min="1"
+                                                        max="<?php echo htmlspecialchars($product_info['soLuongTonKho'] ?? 1000); ?>"
+                                                        required
+                                                        oninvalid="this.setCustomValidity('Số lượng không hợp lệ! Vui lòng nhập lại')"
+                                                        oninput="this.setCustomValidity('')"
+                                                        onchange="if (this.value < 1 || this.value > <?php echo htmlspecialchars($product_info['soLuongTonKho'] ?? 1000); ?>) {this.setCustomValidity('Số lượng không hợp lệ. Vui lòng chọn lại.');} else {this.setCustomValidity('');}">
                                                 </td>
                                                 <td class="shoping__cart__total">
-                                                    <?php echo number_format($item['price'] * $item['quantity'], 0, ',', '.'); ?> VND
+                                                    <?php
+                                                    $total_item = $price * $item['quantity'];
+                                                    echo number_format($total_item, 0, ',', '.') . ' VND';
+                                                    ?>
                                                 </td>
                                                 <td class="shoping__cart__item__close">
                                                     <!-- Link để yêu cầu xác nhận xóa sản phẩm -->
@@ -142,8 +164,8 @@ $total_price = calculate_total($cart);
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__checkout">
-                        <h5>Tổng tiền: <?php echo number_format($total_price, 0, ',', '.'); ?> VND</h5>
-                        <!-- Bạn có thể thêm các nút thanh toán hoặc tiếp tục mua sắm ở đây -->
+                        <h5>Tổng tiền: <?php echo number_format($total_price, 0, ',', '.') . ' VND'; ?></h5>
+                        <!-- nút thanh toán  -->
                         <a href="checkout.php" class="primary-btn">Thanh toán</a>
                     </div>
                 </div>
@@ -153,13 +175,18 @@ $total_price = calculate_total($cart);
     <!-- Shoping Cart Section End -->
 
     <?php require_once 'layout/footer.php'; ?>
+    <!-- **Thêm cập nhật: Nhúng file JavaScript tùy chỉnh để cải thiện giao diện và chức năng** -->
+    <script src="../FE/js/main1.js"></script>
 
-    <!-- Nhúng file CSS đã tách ra -->
-    <!-- Loại bỏ việc bao gồm lại CSS ở cuối body -->
-    <!-- <link rel="stylesheet" href="css/shopping-cart.css"> -->
 
-    <!-- Thêm JavaScript để tự động ẩn thông báo -->
 
 </body>
 
 </html>
+<?php
+// Đóng kết nối cơ sở dữ liệu nếu chưa đóng
+if (isset($conn) && $conn) {
+    // **Đã Thêm từ Ver2: Sử dụng phương thức đóng kết nối phù hợp**
+    $conn->close();
+}
+?>

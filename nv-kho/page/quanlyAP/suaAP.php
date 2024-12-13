@@ -46,18 +46,18 @@ if($result->num_rows > 0){
                         
 
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Tên đầu ấn phẩm</label>
-                            <input type="text" class="form-control" id="tenDanhMuc" value="<?php echo $tenAP?>" name="tenAP">
+                            <label class="form-label fw-bold">Tên ấn phẩm</label>
+                            <input type="text" class="form-control" id="tenDanhMuc" value="<?php echo $tenAP?>" name="tenAP" required>
                         </div>
 
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Giá thuê</label>
-                            <input type="number" class="form-control" id="moTa" value="<?php echo $giaThue ?>" name="giaThue"></input>
+                            <input type="number" class="form-control" id="moTa" value="<?php echo $giaThue ?>" name="giaThue" required>
                         </div>
                         <div class="mb-3">
                                 <label class="form-label fw-bold">Tình trạng</label>
-                                <input type="text" class="form-control" id="NXB" value="<?php echo $tinhTrang ?>" name="tinhTrang">
+                                <input type="text" class="form-control" id="NXB" value="<?php echo $tinhTrang ?>" name="tinhTrang" required>
                         </div>
                         <div class="mb-3">
                                 <label class="form-label fw-bold">Đầu ấn phẩm</label>

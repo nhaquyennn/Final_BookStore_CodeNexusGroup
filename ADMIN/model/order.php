@@ -13,7 +13,7 @@ class OrderModel
   // Hàm tìm kiếm phiếu mượn theo mã chi tiết phiếu mượn
   public function selectTheoMaChiTietPhieuMuon($idCTPM)
   {
-    $sql = "SELECT * FROM chitietphieumuon WHERE maPhieuMuon LIKE ?";
+    $sql = "SELECT * FROM chitietpm WHERE MaPhieuMuon LIKE ?";
     $stmt = $this->conn->prepare($sql);
     $searchTerm = "%$idCTPM%";
     $stmt->bind_param("s", $searchTerm);

@@ -1,4 +1,3 @@
-
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -21,6 +20,7 @@
 <!-- Icons CSS-->
 <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
 <!-- Sidebar CSS-->
-<link href="assets/css/sidebar-menu.css" rel="stylesheet" />
+<link href="assets/css/sidebar_final.css" rel="stylesheet" />
 <!-- Custom Style-->
 <link rel="stylesheet" href="assets/css/main.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

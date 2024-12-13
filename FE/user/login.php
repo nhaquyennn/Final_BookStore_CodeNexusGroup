@@ -18,6 +18,25 @@
   <link href="../assets/css/icons.css" rel="stylesheet" type="text/css" />
   <!-- Custom Style-->
   <link href="../assets/css/app-style.css" rel="stylesheet" />
+  <style>
+    .back-to-home-btn {
+      display: inline-block;
+      padding: 10px 10px;
+      background-color: white;
+      color: black;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .back-to-home-btn:hover {
+      background-color: #14ABEF;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 
 <body class="bg-theme bg-theme9 d-flex justify-content-center align-items-center vh-100">
@@ -26,6 +45,9 @@
     <div class="card card-authentication1 mx-auto my-5">
       <div class="card-body">
         <div class="card-content p-2">
+          <div style="text-align: center; margin-top: 20px;">
+            <a href="../index.php" class="back-to-home-btn">Quay trở lại trang chủ</a>
+          </div>
           <div class="card-title text-uppercase text-center py-3">ĐĂNG NHẬP</div>
 
           <?php

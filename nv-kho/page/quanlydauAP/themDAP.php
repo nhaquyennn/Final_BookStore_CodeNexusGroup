@@ -40,7 +40,7 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label fw-bold">Số lượng</label>
-                                <input type="number" class="form-control" id="soluong" placeholder="Số lượng" name="soLuong" required>
+                                <input type="number" class="form-control" id="soluong" placeholder="Số lượng" name="soLuong" min="1" required>
                             </div>
                             <div class="col-md-3">
                                 <label for="form-label fw-bold">Chọn danh mục sách</label>

@@ -1,0 +1,83 @@
+ /* Tùy chỉnh thêm nếu cần */
+ 
+ .table-responsive {
+     overflow-x: auto;
+ }
+ 
+ .product-image {
+     width: 80px;
+     height: auto;
+     object-fit: cover;
+ }
+ 
+ .alert-success {
+     animation: fadeOut 5s forwards;
+ }
+ 
+ .alert-danger {
+     animation: fadeOut 5s forwards;
+ }
+ 
+ @keyframes fadeOut {
+     0% {
+         opacity: 1;
+     }
+     80% {
+         opacity: 1;
+     }
+     100% {
+         opacity: 0;
+     }
+ }
+ 
+ body {
+     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+ }
+ /* orderDetailsView.css */
+ 
+ .table-fixed th,
+ .table-fixed td {
+     padding: 12px 15px;
+ }
+ 
+ .table-fixed th {
+     background-color: #343a40;
+     color: #fff;
+     text-align: center;
+ }
+ 
+ .table-fixed td {
+     text-align: left;
+ }
+ 
+ .table-fixed td img {
+     border-radius: 5px;
+ }
+ 
+ .card-header {
+     font-weight: bold;
+     font-size: 1.1rem;
+ }
+ 
+ .table thead th {
+     vertical-align: middle;
+     text-align: center;
+ }
+ 
+ .table tbody td {
+     vertical-align: middle;
+ }
+ 
+ .badge {
+     font-size: 0.9rem;
+ }
+ 
+ .custom-title {
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     font-weight: 600;
+     color: #333;
+ }
+ 
+ .custom-container {
+     max-width: 1200px;
+ }

@@ -1,4 +1,3 @@
-
 <?php
 if (!isset($_GET['page'])) {
     $page = 'suaDAP';
@@ -57,7 +56,8 @@ if ($result->num_rows > 0) {
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Nhà xuất bản</label>
-                            <input type="text" class="form-control" id="NXB" value="<?php echo $nhaXB ?>" name="nhaXB" required>
+                            <input type="text" class="form-control" id="NXB" value="<?php echo $nhaXB ?>" name="nhaXB"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Số lượng</label>
@@ -66,7 +66,7 @@ if ($result->num_rows > 0) {
                         </div>
                         <div class="mb-3">
                             <label for="form-label fw-bold">Chọn danh mục sách</label>
-                            <select id="book-category" name="DM" value="<?php echo $danhMuc ?>" >
+                            <select id="book-category" name="DM" value="<?php echo $danhMuc ?>">
                                 <?php
                                 $sql = "SELECT MaDanhMuc, TenDanhMuc FROM danhmucap";
                                 $result = $conn->query($sql);

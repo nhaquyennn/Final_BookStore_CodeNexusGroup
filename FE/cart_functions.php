@@ -101,14 +101,28 @@ function calculate_total($cart)
  * @param int $user_id ID người dùng
  * @return array Giỏ hàng
  */
+
 function get_cart_from_db($user_id)
 {
     global $conn;
+
+    // Thêm kiểm tra kết nối
+    if (!$conn->ping()) {
+        error_log("Kết nối đã bị đóng trước khi thực hiện get_cart_from_db.");
+        return [];
+    }
+
+    // Thêm kiểm tra kiểu dữ liệu của $user_id
+    if (!is_int($user_id) && !ctype_digit($user_id)) {
+        error_log("Lỗi: get_cart_from_db được gọi với user_id không hợp lệ: " . var_export($user_id, true));
+        return [];
+    }
+
     $sql = "SELECT g.maAnPham, a.TenAnPham, a.Giathue, a.soLuongTonKho, d.hinhAnh AS hinhAnh_dauap, g.soLuong, g.ngayTra
-            FROM giohang g
-            JOIN anpham a ON g.maAnPham = a.maAnPham
-            JOIN dauap d ON a.madauAP = d.madauAP
-            WHERE g.maNguoiDung = ?";
+              FROM giohang g
+              JOIN anpham a ON g.maAnPham = a.maAnPham
+              JOIN dauap d ON a.madauAP = d.madauAP
+              WHERE g.maNguoiDung = ?";
     $cart = [];
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("i", $user_id);
@@ -131,6 +145,7 @@ function get_cart_from_db($user_id)
     }
     return $cart;
 }
+
 
 /**
  * Hàm thêm vào giỏ hàng trong DB với return_date
@@ -201,21 +216,31 @@ function update_cart_db($user_id, $product_id, $quantity, $return_date = null)
  * @param int $user_id ID người dùng
  * @param int $product_id ID sản phẩm
  * @return bool Trả về true nếu thành công, ngược lại false
+ * @throws Exception Nếu gặp lỗi kỹ thuật
  */
 function remove_from_cart_db($user_id, $product_id)
 {
     global $conn;
 
+    if (!$conn) {
+        throw new Exception("Lỗi kết nối cơ sở dữ liệu.");
+    }
+
     $sql = "DELETE FROM giohang WHERE maNguoiDung = ? AND maAnPham = ?";
     $stmt = $conn->prepare($sql);
     if ($stmt) {
         $stmt->bind_param('ii', $user_id, $product_id);
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            // Nếu execute thất bại, ném ngoại lệ
+            $stmt->close();
+            throw new Exception("Không thể xóa sản phẩm khỏi giỏ hàng.");
+        }
         $affected_rows = $stmt->affected_rows;
         $stmt->close();
         return $affected_rows > 0;
     }
-    return false;
+    // Nếu prepare thất bại, ném ngoại lệ
+    throw new Exception("Lỗi kỹ thuật. Vui lòng thử lại sau.");
 }
 
 /**
@@ -287,6 +312,17 @@ function get_product_by_id($cart, $product_id)
     return null;
 }
 
+// Lấy giỏ hàng hiện tại
+$maNguoiDung = $_SESSION['maNguoiDung'] ?? null;
+if ($maNguoiDung) {
+    $cart = get_cart_from_db($maNguoiDung);
+} else {
+    $cart = get_cart();
+}
+
+// Tính tổng tiền giỏ hàng
+$total_price = calculate_total($cart);
+
 /**
  * Hàm xử lý xóa sản phẩm khỏi giỏ hàng
  *
@@ -304,22 +340,27 @@ function process_delete_product($delete_id)
         exit();
     }
 
-    // Thực hiện xóa sản phẩm từ giỏ hàng
-    if (isset($_SESSION['maNguoiDung'])) {
-        // Người dùng đã đăng nhập, xóa từ DB
-        if (remove_from_cart_db($_SESSION['maNguoiDung'], $delete_id)) {
-            $_SESSION['shopping_cart'] = get_cart_from_db($_SESSION['maNguoiDung']);
-            $_SESSION['success_remove'] = "Sản phẩm đã được xóa khỏi giỏ hàng.";
+    try {
+        // Thực hiện xóa sản phẩm từ giỏ hàng
+        if (isset($_SESSION['maNguoiDung'])) {
+            // Người dùng đã đăng nhập, xóa từ DB
+            if (remove_from_cart_db($_SESSION['maNguoiDung'], $delete_id)) {
+                $_SESSION['shopping_cart'] = get_cart_from_db($_SESSION['maNguoiDung']);
+                $_SESSION['success_remove'] = "Sản phẩm đã được xóa khỏi giỏ hàng.";
+            } else {
+                $_SESSION['errors'][] = "Không thể xóa sản phẩm khỏi giỏ hàng.";
+            }
         } else {
-            $_SESSION['errors'][] = "Không thể xóa sản phẩm khỏi giỏ hàng.";
+            // Người dùng chưa đăng nhập, xóa từ session
+            if (remove_from_cart_session($delete_id)) {
+                $_SESSION['success_remove'] = "Sản phẩm đã được xóa khỏi giỏ hàng.";
+            } else {
+                $_SESSION['errors'][] = "Sản phẩm không tồn tại trong giỏ hàng.";
+            }
         }
-    } else {
-        // Người dùng chưa đăng nhập, xóa từ session
-        if (remove_from_cart_session($delete_id)) {
-            $_SESSION['success_remove'] = "Sản phẩm đã được xóa khỏi giỏ hàng.";
-        } else {
-            $_SESSION['errors'][] = "Sản phẩm không tồn tại trong giỏ hàng.";
-        }
+    } catch (Exception $e) {
+        // Nếu gặp lỗi kỹ thuật, thiết lập thông báo lỗi
+        $_SESSION['errors'][] = "Lỗi. Vui lòng thử lại sau.";
     }
 
     header("Location: shopping-cart.php");
@@ -340,6 +381,7 @@ function process_update_cart()
                 // Nếu số lượng nhỏ hơn 1, xóa sản phẩm khỏi giỏ hàng
                 if (isset($_SESSION['maNguoiDung'])) {
                     if (remove_from_cart_db($_SESSION['maNguoiDung'], $product_id)) {
+                        $_SESSION['shopping_cart'] = get_cart_from_db($_SESSION['maNguoiDung']);
                         $_SESSION['success_remove'] = "Một số sản phẩm đã được xóa khỏi giỏ hàng.";
                     } else {
                         $_SESSION['errors'][] = "Không thể xóa sản phẩm với ID: " . htmlspecialchars($product_id);

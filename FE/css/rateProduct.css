@@ -1,0 +1,46 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.rating-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.rating-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.rating-header img {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.rating-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.star-rating i {
+    color: #ccc;
+    font-size: 2rem;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-rating i.fas {
+    color: #ffc107;
+}
+
+.submit-btn {
+    width: 100%;
+}

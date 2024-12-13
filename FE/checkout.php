@@ -4,6 +4,36 @@
 include 'controlCustomerUI/controlCheckout.php';
 $cartItems = getCartDetails($conn); // Lấy dữ liệu giỏ hàng từ controller
 $coupons = getCoupons($conn);
+function getCustomerIdFromNguoiDung($conn)
+{
+    // Kiểm tra nếu người dùng đã đăng nhập
+    if (isset($_SESSION['maNguoiDung'])) {
+        $maNguoiDung = $_SESSION['maNguoiDung'];
+
+        // Câu truy vấn SQL
+        $query = "
+                    SELECT kh.maKH 
+                    FROM khachhang kh
+                    JOIN nguoidung nd ON kh.maNguoiDung = nd.maNguoiDung
+                    WHERE nd.maNguoiDung = ?
+                ";
+
+        // Thực thi câu lệnh SQL
+        if ($stmt = mysqli_prepare($conn, $query)) {
+            mysqli_stmt_bind_param($stmt, 'i', $maNguoiDung);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_bind_result($stmt, $maKH);
+            mysqli_stmt_fetch($stmt);
+            mysqli_stmt_close($stmt);
+
+            return isset($maKH) ? $maKH : null;  // Trả về maKH hoặc null nếu không tìm thấy
+        }
+    }
+
+    // Trả về null nếu chưa đăng nhập hoặc không tìm thấy maKH
+    return null;
+}
+$maKH = getCustomerIdFromNguoiDung($conn);
 ?>
 
 <head>
@@ -56,11 +86,13 @@ $coupons = getCoupons($conn);
                                     <thead>
                                         <tr>
                                             <th>Ấn phẩm</th>
+                                            <th>Tình trạng</th>
                                             <th>Số lượng</th>
                                             <th>Đơn giá</th>
                                             <th>Ngày mượn</th>
                                             <th>Ngày trả</th>
-                                            <th style="color: red">Phí thuê (5% giá trị ấn phẩm * số lượng * số ngày mượn)</th> <!-- Added new column for Rental Fee -->
+                                            <th style="color: red">Phí thuê (2% giá trị ấn phẩm * số lượng * số ngày
+                                                mượn)</th> <!-- Added new column for Rental Fee -->
                                             <th>Tổng cộng</th>
                                         </tr>
                                     </thead>
@@ -70,20 +102,25 @@ $coupons = getCoupons($conn);
                                         $totalRentalFee = 0; // Initialize total rental fee
                                         
                                         foreach ($cartItems as $item):
-                                            // Calculate rental fee: PhiThue * 0.05 * (NgayMuon - NgayTra)
-                                            $rentalFee = $item['PhiThue'] * $item['SoLuong'] * 0.05 * (strtotime($item['NgayTra']) - strtotime($item['NgayMuon'])) / (60 * 60 * 24); // Convert days to seconds
+                                            $daysDifference = (strtotime($item['NgayTra']) - strtotime($item['NgayMuon'])) / (60 * 60 * 24);
+                                            $daysDifference = (int) $daysDifference; // Chuyển về kiểu số nguyên (int)
+                                            $rentalFee = $item['PhiThue'] * $item['SoLuong'] * $daysDifference; // Convert days to seconds
                                             $totalRentalFee += $rentalFee;
+
 
                                             // Add to total amount
                                             $totalAmount += ($item['Giathue'] * $item['SoLuong']) + $rentalFee;
                                             ?>
                                             <tr>
                                                 <td><?php echo htmlspecialchars($item['TenAnPham']); ?></td>
+                                                <td><?php echo htmlspecialchars($item['tinhTrang']); ?></td>
                                                 <td><?php echo htmlspecialchars($item['SoLuong']); ?></td>
-                                                <td><?php echo number_format($item['Giathue'], 0, '', '.')  . ' VND'; ?></td>
+                                                <td><?php echo number_format($item['Giathue'], 0, '', '.') . ' VND'; ?>
+                                                </td>
                                                 <td><?php echo date('d/m/Y', strtotime($item['NgayMuon'])); ?></td>
-                                                <td><?php echo date('d/m/Y', strtotime($item['NgayTra'])); ?></td>
-                                                <td><?php echo number_format($rentalFee, 0, '', '.') . ' VND'; ?></td>
+                                                <td><?php echo date('d/m/Y', timestamp: strtotime($item['NgayTra'])); ?>
+                                                </td>
+                                                <td><?php echo number_format($totalRentalFee, 0, '', '.') . ' VND'; ?></td>
                                                 <!-- Display rental fee -->
                                                 <td><?php echo number_format(($item['Giathue'] * $item['SoLuong']) + $rentalFee, 0, '', '.') . ' VND'; ?>
                                                 </td> <!-- Display total with rental fee -->
@@ -101,7 +138,7 @@ $coupons = getCoupons($conn);
                                 // Tính tổng tiền giỏ hàng gốc (trước giảm giá)
                                 $totalAmount = 0;
                                 foreach ($cartItems as $item) {
-                                    $rentalFee = $item['PhiThue'] * 0.05 * (strtotime($item['NgayTra']) - strtotime($item['NgayMuon'])) / (60 * 60 * 24); // Recalculate for the total amount
+                                    $rentalFee = $item['PhiThue'] * $item['SoLuong'] * $daysDifference; // Convert days to seconds
                                     $totalAmount += ($item['Giathue'] * $item['SoLuong']) + $rentalFee;
                                 }
 
@@ -110,7 +147,6 @@ $coupons = getCoupons($conn);
 
                                 // Tính giá trị sau khi áp dụng khuyến mãi
                                 $discountedPrice = calculateDiscountedPrice($totalAmount, $couponCode, $conn);
-
                                 // Tính số tiền giảm giá
                                 $discountAmount = $totalAmount - $discountedPrice;
 
@@ -129,7 +165,7 @@ $coupons = getCoupons($conn);
                                         $coupons = getCoupons($conn);
 
                                         // Kiểm tra số lượng sách khách hàng đã thuê trong tháng
-                                        $customerId = getCustomerIdFromPhieuMuon($conn); // Lấy id của khách hàng từ session hoặc cơ sở dữ liệu
+                                        $customerId = getCustomerIdFromPhieuMuon($conn);
                                         $month = date('m'); // Tháng hiện tại
                                         $year = date('Y'); // Năm hiện tại
                                         $query = "
@@ -148,22 +184,36 @@ $coupons = getCoupons($conn);
                                         // Kiểm tra nếu khách hàng đã thuê >= 10 cuốn sách trong tháng
                                         $showCoupon4 = ($totalBooks >= 10); // Biến kiểm tra xem có đủ điều kiện để hiển thị mã 4
                                         
+                                        // Kiểm tra xem khách hàng có phải là thành viên không (ví dụ: vaitro = 'member')
+                                        $isMember = false;
+                                        $customerQuery = "SELECT ThanhVien FROM khachhang WHERE maKH = '$maKH'";
+                                        $customerResult = mysqli_query($conn, $customerQuery);
+                                        if ($customerResult) {
+                                            $customerRow = mysqli_fetch_assoc($customerResult);
+                                            $isMember = ($customerRow['ThanhVien'] == 'Có');
+                                        }
+
                                         // Duyệt qua các khuyến mãi và tạo option cho mỗi khuyến mãi
                                         foreach ($coupons as $coupon) {
                                             // Nếu khách hàng không đủ điều kiện và mã khuyến mãi là 4, thì ẩn đi
                                             if ($coupon['MaKhuyenMai'] == 4 && !$showCoupon4) {
                                                 continue;
                                             }
+
+                                            // Nếu khách hàng không phải thành viên và mã khuyến mãi là 6, thì ẩn đi
+                                            if ($coupon['MaKhuyenMai'] == 6 && !$isMember) {
+                                                continue;
+                                            }
+
                                             echo '<option value="' . htmlspecialchars($coupon['MaKhuyenMai']) . '">' . htmlspecialchars($coupon['TenKhuyenMai']) . '</option>';
                                         }
                                         ?>
                                     </select>
                                 </div>
-
                                 <!-- Hiển thị số tiền giảm giá -->
                                 <div class="checkout__order__total">
                                     Giảm giá:
-                                    <span id="discountAmount">
+                                    <span id="discountAmount" name="discountAmount">
                                         <?php
                                         // Hiển thị số tiền giảm (discountAmount)
                                         echo number_format($discountAmount, 0, '', '.') . ' VND';
@@ -173,7 +223,7 @@ $coupons = getCoupons($conn);
 
                                 <!-- Hàng phí giao hàng -->
                                 <div class="checkout__order__total">Phí giao hàng
-                                    <span id="shippingFee">
+                                    <span id="shippingFee" name="shippingFee">
                                         <?php
                                         // Hiển thị phí giao hàng
                                         echo number_format($shippingFee, 0, '', '.') . ' VND';
@@ -184,37 +234,19 @@ $coupons = getCoupons($conn);
                                 <!-- Hiển thị tổng tiền -->
                                 <div class="checkout__order__total">
                                     Tổng cộng:
-                                    <span id="discountText">
+                                    <span id="discountText" name="discountText">
                                         <?php
                                         // Hiển thị tổng tiền sau giảm giá và phí giao hàng
                                         echo number_format($finalPrice, 0, '', '.') . ' VND';
                                         ?>
                                     </span>
                                 </div>
-
-                                <div>
-                                    <h5 class="checkout__payment__title">Phương thức thanh toán</h5>
-                                    <div class="checkout__input__checkbox">
-                                        <label for="payment">
-                                            MOMO
-                                            <input type="checkbox" id="payment" name="phuongThucThanhToan">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="checkout__input__checkbox">
-                                        <label for="paypal">
-                                            VNPAY
-                                            <input type="checkbox" id="paypal" name="phuongThucThanhToan">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
                             <button type="submit" class="site-btn">THANH TOÁN</button>
                         </div>
 
-                        <input type="hidden" name="tongTien" value="<?php echo $finalPrice; ?>">
-                        <input type="hidden" name="giamGia" value="<?php echo $discountAmount; ?>">
+                        <input type="hidden" name="shippingFee" value="<?php echo $shippingFee; ?>">
+                        <input type="hidden" name="totalRentalFee" value="<?php echo $totalRentalFee; ?>">
                         <input type="hidden" name="maKH" value="<?php echo $customerId; ?>">
                         <input type="hidden" name="cartItems" value='<?php echo json_encode($cartItems); ?>'>
                     </div>
@@ -230,22 +262,41 @@ $coupons = getCoupons($conn);
     <script>
         $(document).ready(function () {
             $('#coupon_code').change(function () {
-                var couponCode = $(this).val();
+                var couponCode = $(this).val(); // Lấy mã khuyến mãi đã chọn
 
                 $.ajax({
-                    url: 'controlCustomerUI/controlUpdateCoupon.php',
+                    url: 'controlCustomerUI/controlUpdateCoupon.php', // URL xử lý
                     type: 'POST',
-                    data: { coupon_code: couponCode },
+                    data: { coupon_code: couponCode }, // Gửi mã khuyến mãi lên server
                     success: function (response) {
                         try {
-                            var data = JSON.parse(response);
+                            var data = JSON.parse(response); // Chuyển phản hồi JSON từ server thành đối tượng JavaScript
 
-                            // Cập nhật thông tin giảm giá và tổng tiền
-                            $('#discountAmount').text(data.discountText);
-                            $('#discountText').text(data.totalPrice);
+                            // Truyền giá trị từ response vào các biến JavaScript
+                            var discountAmount = data.discountText; // Giá trị giảm giá
+                            var totalPrice = data.totalPrice; // Tổng tiền sau khi giảm giá
+                            var totalBooks = data.totalBooks; // Số lượng sách đã thuê
 
-                            // Hiển thị số lượng sách đã thuê
-                            console.log("Số lượng sách đã thuê trong tháng: " + data.totalBooks);
+                            // Cập nhật thông tin trên giao diện người dùng
+                            $('#discountAmount').text(discountAmount); // Hiển thị số tiền giảm giá
+                            $('#discountText').text(totalPrice); // Hiển thị tổng tiền sau khi giảm
+
+                            // Gửi giá trị vào PHP thông qua AJAX để xử lý
+                            $.ajax({
+                                url: 'controlCustomerUI/controlPayment.php',  // Script xử lý ở server
+                                type: 'POST',
+                                data: {
+                                    discountAmount: discountAmount,
+                                    totalPrice: totalPrice
+                                },
+                                success: function (response) {
+                                    console.log('Dữ liệu đã được gửi tới PHP và xử lý thành công');
+                                },
+                                error: function () {
+                                    alert('Có lỗi xảy ra khi gửi dữ liệu tới PHP.');
+                                }
+                            });
+
                         } catch (error) {
                             alert('Phản hồi không hợp lệ từ server.');
                             console.error(error);
@@ -257,6 +308,7 @@ $coupons = getCoupons($conn);
                 });
             });
         });
+
     </script>
     <footer>
         <?php require_once 'layout/footer.php' ?>

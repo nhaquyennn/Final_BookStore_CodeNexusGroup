@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 // Kiểm tra nếu session 'user' không tồn tại 
 if (!isset($_SESSION['user'])) {
@@ -11,12 +12,13 @@ if (!isset($_SESSION['user'])) {
 //FE
 include('layout/header.php');
 include('layout/left_sidebar.php');
-include('layout/right_sidebar.php');
 include('layout/topbar.php');
 include('layout/script.php');
 //page
 //Danhmuc
-if (isset($_GET['page']) && $_GET['page'] == 'quanlyDM') {
+if (isset($_GET['page']) && $_GET['page'] == 'timkiem') {
+    include('page/timkiem/timkiem.php');
+} else if (isset($_GET['page']) && $_GET['page'] == 'quanlyDM') {
     include('page/quanlyDM/danhMucAP.php');
 }else if (isset($_GET['page']) && $_GET['page'] == 'themDM') {
     include('page/quanlyDM/themDM.php');
@@ -49,6 +51,8 @@ if (isset($_GET['page']) && $_GET['page'] == 'quanlyDM') {
     include('page/hoadonNhap/themHDnhap.php');
 }else if (isset($_GET['page']) && $_GET['page'] == 'chitietHD') {
     include('page/hoadonNhap/ctHDnhap.php');
+}else {
+    include('page/trangchu.php');
 }
 
 // include('page/hoadonNhap/ctHDnhap.php');

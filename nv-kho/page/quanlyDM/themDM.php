@@ -1,7 +1,6 @@
-
 <?php
- if (!isset($_GET['page'])) {
-    $page ='themDM' ;
+if (!isset($_GET['page'])) {
+    $page = 'themDM';
 } else {
     $page = $_GET['page'];
 }
@@ -14,7 +13,7 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
     <div class="content-wrapper">
         <div class="container-fluid">
             <!-- Sidebar -->
-           
+
 
             <!-- Form thêm phiếu nhập -->
             <div class="row mt-5">
@@ -23,18 +22,21 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                     <form class="form-createAP" action="#" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Mã danh mục</label>
-                            <input type="text" class="form-control" id="idDanhMuc" placeholder="Nhập mã danh mục" name="maDM" required>
+                            <input type="text" class="form-control" id="idDanhMuc" placeholder="Nhập mã danh mục"
+                                name="maDM" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Tên danh mục</label>
-                            <input type="text" class="form-control" id="tenDanhMuc" placeholder="Nhập tên danh mục" name="tenDM" required>
+                            <input type="text" class="form-control" id="tenDanhMuc" placeholder="Nhập tên danh mục"
+                                name="tenDM" required>
                         </div>
 
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Mô tả</label>
-                            <textarea type="text" class="form-control" id="tenAnPham" placeholder="Nhập mô tả" name="moTa" required></textarea>
+                            <textarea type="text" class="form-control" id="tenAnPham" placeholder="Nhập mô tả"
+                                name="moTa" required></textarea>
                         </div>
 
                         <div class="mt-4">
@@ -44,16 +46,16 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
 
                     </form>
                     <?php
-                    if(isset($_POST['themDM'])){
+                    if (isset($_POST['themDM'])) {
                         $maDM = $_POST['maDM'];
                         $tenDM = $_POST['tenDM'];
                         $moTa = $_POST['moTa'];
-                        if($conn){
-                            $str= "insert into danhmucap (MaDanhMuc, TenDanhMuc, MoTa)
+                        if ($conn) {
+                            $str = "insert into danhmucap (MaDanhMuc, TenDanhMuc, MoTa)
                                     values ('$maDM','$tenDM', '$moTa')";
-                            if($conn->query($str)){
+                            if ($conn->query($str)) {
                                 echo "<script>alert('Thêm danh mục thành công'); window.location.href='index.php?page=quanlyDM'</script>";
-                            }else {
+                            } else {
                                 echo "<script>alert('Thêm danh mục thất bại'); window.location.href='index.php?page=quanlyDM'</script>";
                             }
                         }
@@ -63,7 +65,7 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
             </div>
         </div>
 
-    
+
 </body>
 
 </html>

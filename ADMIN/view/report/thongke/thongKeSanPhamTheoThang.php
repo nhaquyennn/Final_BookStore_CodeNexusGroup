@@ -42,12 +42,10 @@ if (empty($data)) {
 
     <div class="content-wrapper">
       <div class="container-fluid">
-        <!-- Sidebar -->
         <?php require_once "../../../layout/left_sidebar.php"; ?>
         <header class="topbar-nav">
           <?php require_once "../../../layout/topbar.php"; ?>
         </header>
-
         <div class="card mt-3">
           <div class="card-body">
             <?php if (!empty($error)): ?>

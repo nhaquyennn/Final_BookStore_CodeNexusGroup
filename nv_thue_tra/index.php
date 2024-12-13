@@ -1,12 +1,52 @@
+
 <?php
-//header,nav,...
-include("layout/header.php");
-include("layout/left_sidebar.php");
-include("layout/right_sidebar.php");
-include("layout/script.php");
-include("layout/topbar.php");
-//body
-include("page/taoYCxoa.php");
-//footer
-include("layout/footer.php");
+session_start();
+// Kiểm tra nếu session 'user' không tồn tại 
+if (!isset($_SESSION['user'])) {
+  // Nếu chưa đăng nhập, chuyển hướng về trang login
+header("Location: user/login.php?error=Vui lòng đăng nhập.");
+exit();
+}
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <?php require_once "layout/header.php" ?>
+
+</head>
+
+<body class="bg-theme bg-theme2">
+    <div class="clearfix"></div>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- Start wrapper-->
+            <div id="wrapper">
+
+                <!--Start sidebar-wrapper-->
+                <?php require_once "layout/left_sidebar.php" ?>
+                <!--End sidebar-wrapper-->
+
+                <!--Start topbar header-->
+                <header class="topbar-nav">
+                    <?php require_once "layout/topbar.php" ?>
+                </header>
+                <!--End topbar header-->
+
+                <!--Start main content-->
+
+                <!-- CODE Ở ĐÂY -->
+                <div class="row">
+                    <div class="col-9 col-lg-12">
+                        <div class="card">
+                            <div class="rental-voucher">XIN CHÀO NHÂN VIÊN CỬA HÀNG!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

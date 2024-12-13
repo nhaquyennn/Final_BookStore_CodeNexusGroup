@@ -34,7 +34,7 @@ function getAllPublishers($conn)
 
 function getAllPublishYears($conn)
 {
-    $query = "SELECT DISTINCT YEAR(ngayXB) AS NamXB FROM dauap";
+    $query = "SELECT DISTINCT YEAR(ngayXB) AS NamXB FROM anpham";
     $result = mysqli_query($conn, $query);
     $years = [];
     while ($row = mysqli_fetch_assoc($result)) {
@@ -65,7 +65,7 @@ function getAllRentalPrices($conn)
 
 
 // Truy vấn lấy dữ liệu từ các bảng, chỉ lấy các sản phẩm có tinhTrang là "Mới"
-$sql_new = "SELECT a.TenAnPham, a.Giathue, a.tinhTrang, a.maAnPham, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, d.ngayXB, dm.TenDanhMuc
+$sql_new = "SELECT a.TenAnPham, a.Giathue, a.tinhTrang, a.maAnPham, a.ngayXB, d.TenDauAnPham AS TenDauAp, d.Tacgia, d.NXB, d.hinhAnh, dm.TenDanhMuc
         FROM anpham a
         INNER JOIN dauap d ON a.madauAP = d.madauAP
         INNER JOIN danhmucap dm ON d.MaDanhMuc = dm.MaDanhMuc
