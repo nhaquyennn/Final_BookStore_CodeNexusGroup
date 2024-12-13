@@ -50,10 +50,6 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                                 <input type="number" class="form-control" id="giaThue" name="giaThue" min="0" required>
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label fw-bold">Phí thuê</label>
-                                <input type="number" class="form-control" id="PhiThue" name="PhiThue" min="0" required>
-                            </div>
-                            <div class="col-md-3">
                                 <label class="form-label fw-bold">Ngày xuất bản</label>
                                 <input type="date" class="form-control" id="ngayXB" placeholder="Ngày xuất bản"
                                     name="ngayXB" required>
@@ -85,11 +81,10 @@ $conn = mysqli_connect(hostname: 'localhost', username: 'root', password: '', da
                         $ngayXB = date(format: "Y-m-d", timestamp: strtotime(datetime: $_POST['ngayXB']));
                         $tinhTrang = $_POST['tinhTrang'];
                         $dauAP = $_POST['dauAP'];
-                        $PhiThue = $_POST['PhiThue'];
                         if ($conn) {
 
-                            $str = "insert into anpham (maAnPham, TenAnPham,Giathue, ngayXB, tinhTrang, madauAP, PhiThue)
-                                    values ('$maAP','$tenAP', '$giaThue','$ngayXB', '$tinhTrang','$dauAP','$PhiThue')";
+                            $str = "insert into anpham (maAnPham, TenAnPham,Giathue, ngayXB, tinhTrang, madauAP)
+                                    values ('$maAP','$tenAP', '$giaThue','$ngayXB', '$tinhTrang','$dauAP')";
                             if ($conn->query($str)) {
                                 echo "<script>alert('Thêm ấn phẩm thành công'); window.location.href='index.php?page=quanlyAP'</script>";
                             } else {
