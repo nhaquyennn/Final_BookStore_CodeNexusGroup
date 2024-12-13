@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 13, 2024 lúc 01:16 AM
+-- Thời gian đã tạo: Th12 13, 2024 lúc 01:29 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -70,6 +70,17 @@ INSERT INTO `anpham` (`maAnPham`, `TenAnPham`, `Giathue`, `tinhTrang`, `soLuongC
 (24, 'Tạp Chí Bóng Đá Plus - Tháng 11/2024', 10000, 'Mới', 0, 30, 15, 200, '2024-11-01'),
 (25, 'Đẹp Magazine - Tháng 12/2024', 10000, 'Mới', 2, 28, 14, 200, '2024-12-01'),
 (100, 'Test', 1323330, 'Test', 0, 0, 15, 26467, '2024-12-29');
+
+--
+-- Bẫy `anpham`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_UpdatePhiThue` BEFORE INSERT ON `anpham` FOR EACH ROW BEGIN
+    -- Cập nhật giá trị PhiThue trước khi thêm bản ghi mới
+    SET NEW.PhiThue = NEW.Giathue * 0.05;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
